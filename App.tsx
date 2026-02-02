@@ -27,8 +27,8 @@ import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
 const WHATSAPP_LINK = "https://wa.me/555532176378";
 const DISPLAY_PHONE = "55 55 3217-6378";
 const FULL_ADDRESS = "Alameda Montevideo, 322, Sala 108, Ed. Miguel Reale - Nossa Senhora das Dores, Santa Maria - RS, 97050-030";
-// URL da imagem fornecida pelo usuário
-const LAWYER_IMAGE = "https://drive.google.com/uc?export=view&id=1p9cJLDx_MRV9xFj1yvmkQozwcK-io2KJ";
+// Caminho local da imagem conforme solicitado
+const LAWYER_IMAGE = "/images/advogado.png";
 
 // --- UI Components ---
 
