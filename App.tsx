@@ -27,6 +27,7 @@ import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
 const WHATSAPP_LINK = "https://wa.me/555532176378";
 const DISPLAY_PHONE = "55 55 3217-6378";
 const FULL_ADDRESS = "Alameda Montevideo, 322, Sala 108, Ed. Miguel Reale - Nossa Senhora das Dores, Santa Maria - RS, 97050-030";
+// URL da imagem fornecida pelo usuário
 const LAWYER_IMAGE = "https://drive.google.com/uc?export=view&id=1p9cJLDx_MRV9xFj1yvmkQozwcK-io2KJ";
 
 // --- UI Components ---
@@ -420,7 +421,7 @@ export default function App() {
       <section id="sobre" className="py-40 bg-white overflow-hidden">
         <div className="container mx-auto px-8">
           <div className="flex flex-col lg:flex-row items-center gap-24">
-            <div className="lg:w-1/2 relative">
+            <div className="lg:w-1/2 relative group">
               <motion.div 
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
@@ -429,7 +430,7 @@ export default function App() {
                 <img 
                   src={LAWYER_IMAGE}
                   alt="Matheus Lang Cardoso" 
-                  className="rounded-none shadow-3xl grayscale w-full max-w-md mx-auto border-[1px] border-slate-100 p-2"
+                  className="w-full grayscale group-hover:grayscale-0 transition-all duration-1000 rounded-none shadow-3xl max-w-md mx-auto border-[1px] border-slate-100 p-2"
                 />
               </motion.div>
               <div className="absolute -bottom-10 -left-10 w-64 h-64 bg-slate-50 -z-0"></div>
