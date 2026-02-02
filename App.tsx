@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { 
   Building2, 
@@ -21,18 +20,21 @@ import {
   ExternalLink,
   ChevronDown
 } from 'lucide-react';
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion';
 
 // --- Assets & Constants ---
 const WHATSAPP_LINK = "https://wa.me/555532176378";
 const INSTAGRAM_LINK = "https://www.instagram.com/langcardosoadvocacia?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==";
-const MAPS_LINK = "https://share.google/ldozPbWAM9Ef0ioy2";
+const MAPS_LINK = "https://maps.app.goo.gl/efHVKMHhRBSw2PXd8";
 const EMAIL = "langcardosoadvocacia@gmail.com";
 const MAILTO_LINK = `mailto:${EMAIL}`;
 const DISPLAY_PHONE = "55 55 3217-6378";
 const FULL_ADDRESS = "Alameda Montevideo, 322, Sala 108, Ed. Miguel Reale - Nossa Senhora das Dores, Santa Maria - RS, 97050-030";
-// Caminho local da imagem conforme solicitado
 const LAWYER_IMAGE = "/images/advogado.png";
+
+// Premium Easing Constant
+// Fix: Specify the type as a tuple of 4 numbers to match Framer Motion's cubic-bezier Easing type
+const PREMIUM_EASE: [number, number, number, number] = [0.23, 1, 0.32, 1];
 
 // --- UI Components ---
 
@@ -52,33 +54,97 @@ const Logo: React.FC<{ light?: boolean }> = ({ light }) => (
 );
 
 const GlassCard3D: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = "" }) => {
-  const [rotateX, setRotateX] = useState(0);
-  const [rotateY, setRotateY] = useState(0);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    setRotateX((y - centerY) / 10);
-    setRotateY((centerX - x) / 10);
-  };
+  // Softer spring physics for a more "expensive" weighted feel
+  const springConfig = { stiffness: 80, damping: 25 };
+  
+  const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [15, -15]), springConfig);
+  const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-15, 15]), springConfig);
+
+  const glareX = useSpring(useTransform(x, [-0.5, 0.5], [0, 100]), springConfig);
+  const glareY = useSpring(useTransform(y, [-0.5, 0.5], [0, 100]), springConfig);
+
+  function handleMouseMove(event: React.MouseEvent<HTMLDivElement>) {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseXPos = event.clientX - rect.left;
+    const mouseYPos = event.clientY - rect.top;
+
+    const xPct = mouseXPos / width - 0.5;
+    const yPct = mouseYPos / height - 0.5;
+
+    x.set(xPct);
+    y.set(yPct);
+  }
+
+  function handleMouseLeave() {
+    x.set(0);
+    y.set(0);
+  }
 
   return (
     <motion.div 
       onMouseMove={handleMouseMove}
-      onMouseLeave={() => { setRotateX(0); setRotateY(0); }}
+      onMouseLeave={handleMouseLeave}
       style={{ 
         rotateX, 
         rotateY, 
-        perspective: 1000,
+        perspective: 1200,
         transformStyle: "preserve-3d" 
       }}
-      transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      className={`glass rounded-3xl p-10 shadow-luxury border-white/40 transition-shadow hover:shadow-2xl ${className}`}
+      className={`group relative glass rounded-3xl p-10 shadow-luxury border-white/40 transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] hover:shadow-[0_40px_100px_-30px_rgba(0,0,0,0.15)] hover:border-blue-400/30 ${className}`}
     >
-      <div style={{ transform: "translateZ(50px)" }}>
+      {/* Glare effect */}
+      <motion.div 
+        className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-3xl"
+        style={{
+          background: useTransform(
+            [glareX, glareY],
+            ([gx, gy]) => `radial-gradient(circle at ${gx}% ${gy}%, rgba(255,255,255,0.3) 0%, transparent 80%)`
+          )
+        }}
+      />
+
+      {/* Vibrant Blue Pulsing Neon Border - Slowed down for luxury feel */}
+      <motion.div 
+        initial={false}
+        animate={{ 
+          opacity: [0.2, 0.5, 0.2],
+          boxShadow: [
+            "inset 0 0 2px #00d4ff",
+            "inset 0 0 12px #00d4ff",
+            "inset 0 0 2px #00d4ff"
+          ]
+        }}
+        transition={{ 
+          duration: 3, 
+          repeat: Infinity, 
+          ease: "easeInOut" 
+        }}
+        className="absolute inset-0 rounded-3xl border border-blue-400/40 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-700 blur-[0.3px]"
+      />
+      
+      {/* Outer Glow Pulse - More subtle and slower */}
+      <motion.div 
+        animate={{ 
+          boxShadow: [
+            "0 0 0px rgba(0, 212, 255, 0)",
+            "0 0 25px rgba(0, 212, 255, 0.15)",
+            "0 0 0px rgba(0, 212, 255, 0)"
+          ]
+        }}
+        transition={{ 
+          duration: 4, 
+          repeat: Infinity, 
+          ease: "easeInOut" 
+        }}
+        className="absolute -inset-[1px] rounded-[1.8rem] opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-1000"
+      />
+
+      <div style={{ transform: "translateZ(60px)", transformStyle: "preserve-3d" }}>
         {children}
       </div>
     </motion.div>
@@ -90,7 +156,7 @@ const SectionHeading: React.FC<{ title: string; subtitle: string; centered?: boo
     <motion.div
       initial={{ opacity: 0, letterSpacing: "0.2em" }}
       whileInView={{ opacity: 1, letterSpacing: "0.6em" }}
-      transition={{ duration: 1 }}
+      transition={{ duration: 1.2, ease: PREMIUM_EASE }}
     >
       <span className="text-[10px] font-bold uppercase text-slate-400 block mb-6">
         {subtitle}
@@ -99,7 +165,7 @@ const SectionHeading: React.FC<{ title: string; subtitle: string; centered?: boo
     <motion.h2 
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
+      transition={{ duration: 1, ease: PREMIUM_EASE }}
       className="text-4xl md:text-6xl font-serif text-slate-900 leading-tight"
     >
       {title}
@@ -107,6 +173,7 @@ const SectionHeading: React.FC<{ title: string; subtitle: string; centered?: boo
     <motion.div 
       initial={{ width: 0 }}
       whileInView={{ width: 80 }}
+      transition={{ duration: 1.5, ease: PREMIUM_EASE }}
       className={`h-[2px] bg-black mt-8 ${centered ? 'mx-auto' : ''}`}
     />
   </div>
@@ -143,8 +210,8 @@ const Navbar = () => {
               href={link.href}
               className="group relative text-[10px] font-bold uppercase tracking-[0.2em] text-slate-900 overflow-hidden"
             >
-              <span className="block transition-transform duration-500 group-hover:-translate-y-full">{link.name}</span>
-              <span className="absolute top-full left-0 block transition-transform duration-500 group-hover:-translate-y-full text-slate-400">{link.name}</span>
+              <span className="block transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:-translate-y-full">{link.name}</span>
+              <span className="absolute top-full left-0 block transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:-translate-y-full text-slate-400">{link.name}</span>
             </a>
           ))}
           <motion.a 
@@ -153,7 +220,7 @@ const Navbar = () => {
             href={WHATSAPP_LINK} 
             target="_blank" 
             rel="noopener noreferrer" 
-            className="px-10 py-4 bg-black text-white text-[10px] font-bold uppercase tracking-[0.3em] hover:bg-slate-800 transition-all shadow-2xl"
+            className="px-10 py-4 bg-black text-white text-[10px] font-bold uppercase tracking-[0.3em] hover:bg-slate-800 transition-all duration-500 shadow-2xl"
           >
             WhatsApp
           </motion.a>
@@ -170,6 +237,7 @@ const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.5, ease: PREMIUM_EASE }}
             className="lg:hidden absolute top-full left-0 w-full bg-white border-b border-slate-100 p-8 flex flex-col gap-8 shadow-2xl"
           >
             {links.map((link) => (
@@ -200,7 +268,6 @@ export default function App() {
       <section className="relative min-h-screen flex items-center pt-20 overflow-hidden perspective-2000">
         <div className="absolute inset-0 bg-soft-gradient opacity-50"></div>
         
-        {/* Floating Background Elements */}
         <motion.div 
           style={{ y: yRange }}
           className="absolute top-1/4 right-10 w-[500px] h-[500px] bg-slate-50 rounded-full blur-[120px] -z-10 opacity-60"
@@ -214,12 +281,12 @@ export default function App() {
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1.2, ease: "circOut" }}
+            transition={{ duration: 1.5, ease: PREMIUM_EASE }}
           >
             <motion.div 
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
-              transition={{ duration: 1, delay: 0.5 }}
+              transition={{ duration: 1.2, delay: 0.5, ease: PREMIUM_EASE }}
               className="h-[1px] w-20 bg-slate-200 mb-10 origin-left"
             />
             <h1 className="text-6xl md:text-8xl font-serif text-slate-900 leading-[0.95] mb-12">
@@ -232,6 +299,7 @@ export default function App() {
             <div className="flex flex-col sm:flex-row gap-8 items-center lg:items-start">
               <motion.a 
                 whileHover={{ y: -5, boxShadow: "0 25px 50px -12px rgba(0,0,0,0.5)" }}
+                transition={{ duration: 0.4, ease: PREMIUM_EASE }}
                 href={WHATSAPP_LINK} 
                 target="_blank" 
                 rel="noopener noreferrer" 
@@ -248,7 +316,7 @@ export default function App() {
           <motion.div 
             initial={{ opacity: 0, scale: 0.9, rotateY: 10 }}
             animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-            transition={{ duration: 1.5, ease: "circOut" }}
+            transition={{ duration: 1.8, ease: PREMIUM_EASE }}
             className="relative flex justify-center lg:justify-end"
           >
             <motion.div 
@@ -266,7 +334,6 @@ export default function App() {
               </div>
             </motion.div>
             
-            {/* 3D Decorative Layers */}
             <div className="absolute -top-10 -right-10 w-full h-full border border-slate-100 -z-10 translate-x-4 translate-y-4"></div>
             <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-slate-50 -z-10 animate-pulse"></div>
           </motion.div>
@@ -274,7 +341,7 @@ export default function App() {
         
         <motion.div 
           animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
+          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
           className="absolute bottom-10 left-1/2 -translate-x-1/2 text-slate-300 flex flex-col items-center gap-2 cursor-pointer"
         >
           <span className="text-[8px] font-bold uppercase tracking-[0.4em]">Scroll</span>
@@ -295,6 +362,7 @@ export default function App() {
                 <motion.p 
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 1, ease: PREMIUM_EASE }}
                   className="border-l-4 border-black pl-8"
                 >
                   Mudamos a forma de atuar para oferecer uma <span className="text-slate-900 font-medium">gestão jurídica integral</span>, onde o Direito é o motor da viabilidade operacional da sua empresa.
@@ -313,8 +381,9 @@ export default function App() {
               ].map((item, i) => (
                 <motion.div 
                   key={i}
-                  whileHover={{ y: -10 }}
-                  className="bg-slate-50 p-10 flex flex-col items-center justify-center text-center gap-4 border border-slate-100 transition-shadow hover:shadow-xl"
+                  whileHover={{ y: -10, rotateZ: 2 }}
+                  transition={{ duration: 0.5, ease: PREMIUM_EASE }}
+                  className="bg-slate-50 p-10 flex flex-col items-center justify-center text-center gap-4 border border-slate-100 transition-all hover:shadow-xl hover:bg-white"
                 >
                   <div className="text-black">{item.icon}</div>
                   <span className="text-[9px] font-bold uppercase tracking-widest">{item.label}</span>
@@ -358,11 +427,11 @@ export default function App() {
               }
             ].map((item, idx) => (
               <GlassCard3D key={idx}>
-                <div className="mb-10 text-slate-300 transition-colors group-hover:text-black">{item.icon}</div>
-                <h3 className="text-2xl font-serif mb-6 text-slate-900">{item.title}</h3>
-                <p className="text-sm text-slate-500 leading-relaxed font-light mb-10">{item.desc}</p>
-                <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 text-[10px] font-bold uppercase tracking-widest text-black group">
-                  Agendar Consulta <ArrowRight size={14} className="transition-transform group-hover:translate-x-2" />
+                <div className="mb-10 text-slate-300 transition-colors duration-700 group-hover:text-black" style={{ transform: "translateZ(30px)" }}>{item.icon}</div>
+                <h3 className="text-2xl font-serif mb-6 text-slate-900" style={{ transform: "translateZ(40px)" }}>{item.title}</h3>
+                <p className="text-sm text-slate-500 leading-relaxed font-light mb-10" style={{ transform: "translateZ(20px)" }}>{item.desc}</p>
+                <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 text-[10px] font-bold uppercase tracking-widest text-black group" style={{ transform: "translateZ(50px)" }}>
+                  Agendar Consulta <ArrowRight size={14} className="transition-transform duration-500 group-hover:translate-x-2" />
                 </a>
               </GlassCard3D>
             ))}
@@ -390,16 +459,16 @@ export default function App() {
               </p>
               
               <div className="grid gap-10">
-                <div className="group p-8 border border-white/10 transition-all hover:bg-white/5 cursor-default">
+                <div className="group p-8 border border-white/10 transition-all duration-700 hover:bg-white/5 cursor-default">
                   <div className="flex items-center gap-6 mb-4">
-                    <Scale size={28} className="text-white/40 group-hover:text-white transition-colors" />
+                    <Scale size={28} className="text-white/40 group-hover:text-white transition-colors duration-500" />
                     <h4 className="text-2xl font-serif">Direito Civil Estratégico</h4>
                   </div>
                   <p className="text-slate-500 font-light ml-14">Gestão de conflitos e preservação de direitos fundamentais e patrimoniais.</p>
                 </div>
-                <div className="group p-8 border border-white/10 transition-all hover:bg-white/5 cursor-default">
+                <div className="group p-8 border border-white/10 transition-all duration-700 hover:bg-white/5 cursor-default">
                   <div className="flex items-center gap-6 mb-4">
-                    <ShieldAlert size={28} className="text-white/40 group-hover:text-white transition-colors" />
+                    <ShieldAlert size={28} className="text-white/40 group-hover:text-white transition-colors duration-500" />
                     <h4 className="text-2xl font-serif">Direito Criminal Especializado</h4>
                   </div>
                   <p className="text-slate-500 font-light ml-14">Defesa técnica em infrações de ordem econômica, fiscal e ambiental.</p>
@@ -408,7 +477,7 @@ export default function App() {
             </div>
             
             <div className="lg:w-1/2 relative group">
-              <div className="absolute inset-0 bg-slate-800 translate-x-10 translate-y-10 group-hover:translate-x-14 group-hover:translate-y-14 transition-all duration-700"></div>
+              <div className="absolute inset-0 bg-slate-800 translate-x-10 translate-y-10 group-hover:translate-x-14 group-hover:translate-y-14 transition-all duration-1000 ease-[cubic-bezier(0.23,1,0.32,1)]"></div>
               <div className="relative glass bg-white/5 p-4 overflow-hidden">
                 <img 
                   src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=2070&auto=format&fit=crop" 
@@ -429,6 +498,7 @@ export default function App() {
               <motion.div 
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 1.5, ease: PREMIUM_EASE }}
                 className="relative z-10"
               >
                 <img 
@@ -440,7 +510,7 @@ export default function App() {
               <div className="absolute -bottom-10 -left-10 w-64 h-64 bg-slate-50 -z-0"></div>
               <motion.div 
                 animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
                 className="absolute top-0 right-0 w-32 h-32 border-t-2 border-slate-200 rounded-full"
               />
             </div>
@@ -468,7 +538,7 @@ export default function App() {
                     "Especializado em Direito Empresarial e Societário"
                   ].map((edu, i) => (
                     <div key={i} className="flex items-center gap-4 group">
-                      <div className="w-2 h-2 bg-black group-hover:w-6 transition-all shrink-0"></div>
+                      <div className="w-2 h-2 bg-black group-hover:w-6 transition-all duration-500 shrink-0"></div>
                       <span className="text-[11px] font-bold uppercase tracking-widest">{edu}</span>
                     </div>
                   ))}
@@ -476,6 +546,7 @@ export default function App() {
                 <div className="pt-12">
                   <motion.a 
                     whileHover={{ x: 10 }}
+                    transition={{ duration: 0.4, ease: PREMIUM_EASE }}
                     href={WHATSAPP_LINK} 
                     target="_blank" 
                     rel="noopener noreferrer" 
@@ -503,7 +574,7 @@ export default function App() {
             <div className="grid md:grid-cols-3 gap-12 mb-24">
               <GlassCard3D className="bg-white/40">
                 <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" className="block h-full">
-                  <div className="p-6 bg-slate-900 text-white inline-block mb-10"><MessageCircle size={32} strokeWidth={1}/></div>
+                  <div className="p-6 bg-slate-900 text-white inline-block mb-10 transition-transform duration-500 group-hover:scale-110"><MessageCircle size={32} strokeWidth={1}/></div>
                   <h4 className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-4">WhatsApp</h4>
                   <p className="text-xl font-medium text-slate-900">{DISPLAY_PHONE}</p>
                 </a>
@@ -511,7 +582,7 @@ export default function App() {
               
               <GlassCard3D className="bg-white/40">
                 <a href={MAILTO_LINK} className="block h-full">
-                  <div className="p-6 bg-slate-900 text-white inline-block mb-10"><Mail size={32} strokeWidth={1}/></div>
+                  <div className="p-6 bg-slate-900 text-white inline-block mb-10 transition-transform duration-500 group-hover:scale-110"><Mail size={32} strokeWidth={1}/></div>
                   <h4 className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-4">E-mail</h4>
                   <p className="text-sm font-medium text-slate-900 break-all">{EMAIL}</p>
                 </a>
@@ -519,7 +590,7 @@ export default function App() {
               
               <GlassCard3D className="bg-white/40">
                 <a href={MAPS_LINK} target="_blank" rel="noopener noreferrer" className="block h-full">
-                  <div className="p-6 bg-slate-900 text-white inline-block mb-10"><MapPin size={32} strokeWidth={1}/></div>
+                  <div className="p-6 bg-slate-900 text-white inline-block mb-10 transition-transform duration-500 group-hover:scale-110"><MapPin size={32} strokeWidth={1}/></div>
                   <h4 className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-4">Endereço</h4>
                   <p className="text-[11px] font-medium text-slate-900 leading-relaxed uppercase tracking-widest">
                     {FULL_ADDRESS}
@@ -532,12 +603,12 @@ export default function App() {
               whileHover={{ scale: 1.02 }}
               className="relative group inline-block"
             >
-              <div className="absolute -inset-4 bg-black/5 rounded-full blur-2xl group-hover:bg-black/10 transition-all"></div>
+              <div className="absolute -inset-4 bg-black/5 rounded-full blur-2xl group-hover:bg-black/10 transition-all duration-700"></div>
               <a 
                 href={WHATSAPP_LINK} 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="relative px-24 py-10 bg-black text-white font-bold uppercase text-sm tracking-[0.6em] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] transition-all flex items-center gap-6"
+                className="relative px-24 py-10 bg-black text-white font-bold uppercase text-sm tracking-[0.6em] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] transition-all duration-700 flex items-center gap-6"
               >
                 Agendar Consulta Online <ExternalLink size={20} />
               </a>
@@ -555,8 +626,8 @@ export default function App() {
             </div>
             
             <div className="flex gap-12">
-               <motion.a whileHover={{ y: -5 }} href={INSTAGRAM_LINK} target="_blank" rel="noopener noreferrer" className="text-slate-300 hover:text-black transition-colors"><Instagram size={28} strokeWidth={1}/></motion.a>
-               <motion.a whileHover={{ y: -5 }} href="#" className="text-slate-300 hover:text-black transition-colors"><Linkedin size={28} strokeWidth={1}/></motion.a>
+               <motion.a whileHover={{ y: -5 }} transition={{ duration: 0.4 }} href={INSTAGRAM_LINK} target="_blank" rel="noopener noreferrer" className="text-slate-300 hover:text-black transition-colors duration-500"><Instagram size={28} strokeWidth={1}/></motion.a>
+               <motion.a whileHover={{ y: -5 }} transition={{ duration: 0.4 }} href="#" className="text-slate-300 hover:text-black transition-colors duration-500"><Linkedin size={28} strokeWidth={1}/></motion.a>
             </div>
           </div>
 
