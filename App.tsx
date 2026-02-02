@@ -25,6 +25,10 @@ import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
 
 // --- Assets & Constants ---
 const WHATSAPP_LINK = "https://wa.me/555532176378";
+const INSTAGRAM_LINK = "https://www.instagram.com/langcardosoadvocacia?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==";
+const MAPS_LINK = "https://share.google/ldozPbWAM9Ef0ioy2";
+const EMAIL = "langcardosoadvocacia@gmail.com";
+const MAILTO_LINK = `mailto:${EMAIL}`;
 const DISPLAY_PHONE = "55 55 3217-6378";
 const FULL_ADDRESS = "Alameda Montevideo, 322, Sala 108, Ed. Miguel Reale - Nossa Senhora das Dores, Santa Maria - RS, 97050-030";
 // Caminho local da imagem conforme solicitado
@@ -453,15 +457,18 @@ export default function App() {
                 <p className="text-lg">
                   Especialista em Direito Imobiliário e Penal, com visão estratégica multidisciplinar focada em gestão contábil e preservação de ativos corporativos.
                 </p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
                   {[
                     "OAB/RS 12.585",
-                    "Mestrando em Direito (Ambra)",
-                    "Esp. Direito Imobiliário",
-                    "Esp. Direito Penal"
+                    "Mestrando em Direito pela Ambra University",
+                    "Especialista em Direito Imobiliário",
+                    "Especialista em Direito Penal",
+                    "Especialista em Tribunal do Júri",
+                    "Especializado em Cobrança Jurídica",
+                    "Especializado em Direito Empresarial e Societário"
                   ].map((edu, i) => (
                     <div key={i} className="flex items-center gap-4 group">
-                      <div className="w-2 h-2 bg-black group-hover:w-6 transition-all"></div>
+                      <div className="w-2 h-2 bg-black group-hover:w-6 transition-all shrink-0"></div>
                       <span className="text-[11px] font-bold uppercase tracking-widest">{edu}</span>
                     </div>
                   ))}
@@ -495,23 +502,29 @@ export default function App() {
             
             <div className="grid md:grid-cols-3 gap-12 mb-24">
               <GlassCard3D className="bg-white/40">
-                <div className="p-6 bg-slate-900 text-white inline-block mb-10"><MessageCircle size={32} strokeWidth={1}/></div>
-                <h4 className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-4">WhatsApp</h4>
-                <p className="text-xl font-medium text-slate-900">{DISPLAY_PHONE}</p>
+                <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" className="block h-full">
+                  <div className="p-6 bg-slate-900 text-white inline-block mb-10"><MessageCircle size={32} strokeWidth={1}/></div>
+                  <h4 className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-4">WhatsApp</h4>
+                  <p className="text-xl font-medium text-slate-900">{DISPLAY_PHONE}</p>
+                </a>
               </GlassCard3D>
               
               <GlassCard3D className="bg-white/40">
-                <div className="p-6 bg-slate-900 text-white inline-block mb-10"><Mail size={32} strokeWidth={1}/></div>
-                <h4 className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-4">E-mail</h4>
-                <p className="text-sm font-medium text-slate-900 break-all">matheuslangadvocacia@gmail.com</p>
+                <a href={MAILTO_LINK} className="block h-full">
+                  <div className="p-6 bg-slate-900 text-white inline-block mb-10"><Mail size={32} strokeWidth={1}/></div>
+                  <h4 className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-4">E-mail</h4>
+                  <p className="text-sm font-medium text-slate-900 break-all">{EMAIL}</p>
+                </a>
               </GlassCard3D>
               
               <GlassCard3D className="bg-white/40">
-                <div className="p-6 bg-slate-900 text-white inline-block mb-10"><MapPin size={32} strokeWidth={1}/></div>
-                <h4 className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-4">Endereço</h4>
-                <p className="text-[11px] font-medium text-slate-900 leading-relaxed uppercase tracking-widest">
-                  {FULL_ADDRESS}
-                </p>
+                <a href={MAPS_LINK} target="_blank" rel="noopener noreferrer" className="block h-full">
+                  <div className="p-6 bg-slate-900 text-white inline-block mb-10"><MapPin size={32} strokeWidth={1}/></div>
+                  <h4 className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-4">Endereço</h4>
+                  <p className="text-[11px] font-medium text-slate-900 leading-relaxed uppercase tracking-widest">
+                    {FULL_ADDRESS}
+                  </p>
+                </a>
               </GlassCard3D>
             </div>
 
@@ -542,7 +555,7 @@ export default function App() {
             </div>
             
             <div className="flex gap-12">
-               <motion.a whileHover={{ y: -5 }} href="#" className="text-slate-300 hover:text-black transition-colors"><Instagram size={28} strokeWidth={1}/></motion.a>
+               <motion.a whileHover={{ y: -5 }} href={INSTAGRAM_LINK} target="_blank" rel="noopener noreferrer" className="text-slate-300 hover:text-black transition-colors"><Instagram size={28} strokeWidth={1}/></motion.a>
                <motion.a whileHover={{ y: -5 }} href="#" className="text-slate-300 hover:text-black transition-colors"><Linkedin size={28} strokeWidth={1}/></motion.a>
             </div>
           </div>
