@@ -18,7 +18,8 @@ import {
   ShieldAlert,
   MessageCircle,
   ExternalLink,
-  ChevronDown
+  ChevronDown,
+  Briefcase
 } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion';
 
@@ -33,7 +34,6 @@ const FULL_ADDRESS = "Alameda Montevideo, 322, Sala 108, Ed. Miguel Reale - Noss
 const LAWYER_IMAGE = "/images/advogado.png";
 
 // Premium Easing Constant
-// Fix: Specify the type as a tuple of 4 numbers to match Framer Motion's cubic-bezier Easing type
 const PREMIUM_EASE: [number, number, number, number] = [0.23, 1, 0.32, 1];
 
 // --- UI Components ---
@@ -57,7 +57,6 @@ const GlassCard3D: React.FC<{ children: React.ReactNode; className?: string }> =
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
-  // Softer spring physics for a more "expensive" weighted feel
   const springConfig = { stiffness: 80, damping: 25 };
   
   const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [15, -15]), springConfig);
@@ -97,7 +96,6 @@ const GlassCard3D: React.FC<{ children: React.ReactNode; className?: string }> =
       }}
       className={`group relative glass rounded-3xl p-10 shadow-luxury border-white/40 transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] hover:shadow-[0_40px_100px_-30px_rgba(0,0,0,0.15)] hover:border-blue-400/30 ${className}`}
     >
-      {/* Glare effect */}
       <motion.div 
         className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-3xl"
         style={{
@@ -108,7 +106,6 @@ const GlassCard3D: React.FC<{ children: React.ReactNode; className?: string }> =
         }}
       />
 
-      {/* Vibrant Blue Pulsing Neon Border - Slowed down for luxury feel */}
       <motion.div 
         initial={false}
         animate={{ 
@@ -127,7 +124,6 @@ const GlassCard3D: React.FC<{ children: React.ReactNode; className?: string }> =
         className="absolute inset-0 rounded-3xl border border-blue-400/40 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-700 blur-[0.3px]"
       />
       
-      {/* Outer Glow Pulse - More subtle and slower */}
       <motion.div 
         animate={{ 
           boxShadow: [
@@ -523,26 +519,55 @@ export default function App() {
               <p className="text-2xl text-slate-400 font-light mb-12 italic leading-relaxed">
                 "Nosso compromisso é com a viabilidade do negócio. Transformamos o Direito em uma ferramenta de eficiência prática."
               </p>
-              <div className="space-y-8 text-slate-600">
-                <p className="text-lg">
-                  Especialista em Direito Imobiliário e Penal, com visão estratégica multidisciplinar focada em gestão contábil e preservação de ativos corporativos.
-                </p>
-                <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
-                  {[
-                    "OAB/RS 12.585",
-                    "Mestrando em Direito pela Ambra University",
-                    "Especialista em Direito Imobiliário",
-                    "Especialista em Direito Penal",
-                    "Especialista em Tribunal do Júri",
-                    "Especializado em Cobrança Jurídica",
-                    "Especializado em Direito Empresarial e Societário"
-                  ].map((edu, i) => (
-                    <div key={i} className="flex items-center gap-4 group">
-                      <div className="w-2 h-2 bg-black group-hover:w-6 transition-all duration-500 shrink-0"></div>
-                      <span className="text-[11px] font-bold uppercase tracking-widest">{edu}</span>
-                    </div>
-                  ))}
+              
+              <div className="space-y-12">
+                <div className="space-y-8 text-slate-600">
+                  <p className="text-lg">
+                    Especialista em Direito Imobiliário e Penal, com visão estratégica multidisciplinar focada em gestão contábil e preservação de ativos corporativos.
+                  </p>
+                  <div className="grid grid-cols-1 gap-6">
+                    {[
+                      "OAB/RS 12.585",
+                      "Mestrando em Direito pela Ambra University",
+                      "Especialista em Direito Imobiliário",
+                      "Especialista em Direito Penal",
+                      "Especialista em Tribunal do Júri",
+                      "Especializado em Cobrança Jurídica",
+                      "Especializado em Direito Empresarial e Societário"
+                    ].map((edu, i) => (
+                      <div key={i} className="flex items-center gap-4 group">
+                        <div className="w-2 h-2 bg-black group-hover:w-6 transition-all duration-500 shrink-0"></div>
+                        <span className="text-[11px] font-bold uppercase tracking-widest">{edu}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
+
+                {/* Atuação Pública Section */}
+                <div className="pt-8 border-t border-slate-100">
+                  <div className="flex items-center gap-3 mb-8">
+                    <Briefcase size={20} className="text-slate-400" />
+                    <h4 className="text-xs font-bold uppercase tracking-[0.3em] text-slate-900">Atuação Pública e Especializada</h4>
+                  </div>
+                  <p className="text-sm text-slate-500 mb-6 font-light leading-relaxed">
+                    Atuação destacada como <span className="font-bold text-slate-900">Advogado Dativo</span> em processos cíveis, criminais, audiências de custódia e Tribunal do Júri nas seguintes comarcas:
+                  </p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {[
+                      "1ª Vara Judicial de Santa Maria (Júri)",
+                      "5º Juizado Especial Cível de Porto Alegre",
+                      "1ª Vara Judicial de Portão",
+                      "Vara Judicial de Tapera",
+                      "2ª Vara Judicial de Rosário do Sul"
+                    ].map((comarca, idx) => (
+                      <div key={idx} className="flex items-center gap-3 p-3 bg-slate-50 border border-slate-100/50 hover:bg-white hover:shadow-sm transition-all duration-300">
+                        <MapPin size={12} className="text-slate-400" />
+                        <span className="text-[10px] font-medium text-slate-700 tracking-wider uppercase">{comarca}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
                 <div className="pt-12">
                   <motion.a 
                     whileHover={{ x: 10 }}
