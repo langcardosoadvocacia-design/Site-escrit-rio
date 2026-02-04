@@ -5,8 +5,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    <title>Lang Cardoso Advocacia | Estratégia Jurídica de Elite</title>
-    <meta name="description" content="Lang Cardoso Advocacia: Assessoria jurídica premium em Santa Maria/RS. Estratégia empresarial e defesa criminal de alta performance." />
+    <title>Lang Cardoso Advocacia | Advocacia Empresarial, Direito Cível e Defesa Criminal em Santa Maria RS</title>
+    <meta name="description" content="Escritório de advocacia em Santa Maria RS especializado em advocacia empresarial, direito cível e defesa criminal. Estratégia jurídica de elite e resultados de alta performance para empresas e indivíduos." />
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
@@ -30,7 +30,6 @@
         background: #D4AF37;
       }
       
-      /* Glassmorphism for Light Theme */
       .glass-light {
         background: rgba(255, 255, 255, 0.6);
         backdrop-filter: blur(25px);
@@ -51,6 +50,16 @@
         background-clip: text;
         -webkit-background-clip: text;
         color: transparent;
+      }
+
+      @keyframes neonPulse {
+        0%, 100% { box-shadow: 0 0 15px rgba(0, 191, 255, 0.2), inset 0 0 5px rgba(0, 191, 255, 0.1); }
+        50% { box-shadow: 0 0 25px rgba(0, 191, 255, 0.5), inset 0 0 10px rgba(0, 191, 255, 0.2); }
+      }
+
+      .neon-glow-hover:hover {
+        animation: neonPulse 2s infinite ease-in-out;
+        border-color: rgba(0, 191, 255, 0.4);
       }
 
       ::selection {
