@@ -25,7 +25,7 @@ import {
   Phone
 } from 'lucide-react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
-// Mantendo o HashRouter para corrigir o erro de link quebrado
+// AQUI ESTÁ A CORREÇÃO DA #: Usamos HashRouter para corrigir o erro de link/404
 import { HashRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
 
 // --- IMPORTAÇÃO BLINDADA DA IMAGEM ---
@@ -37,6 +37,7 @@ const LINK_INSTAGRAM = "https://www.instagram.com/langcardosoadvocacia";
 const LINK_MAPA = "https://www.google.com/maps/search/?api=1&query=Alameda+Montevideo,+322,+Sala+108,+Santa+Maria+-+RS";
 const EMAIL_CONTATO = "contato@langcardoso.adv.br";
 
+// Agora usamos a imagem importada
 const IMAGEM_ADVOGADO = fotoAdvogado;
 
 const TRANSICAO_SUAVE: [number, number, number, number] = [0.23, 1, 0.32, 1];
@@ -235,10 +236,7 @@ const PaginaInicial = () => {
             <span className="text-[10px] font-bold uppercase tracking-[0.5em] text-black/30 mb-6 block">
               Excelência Jurídica em Santa Maria/RS
             </span>
-            {/* AQUI ESTÁ A ATUALIZAÇÃO DO SEU TEXTO DE ESTRATÉGIA/ATUAÇÃO */}
             <h1 className="text-5xl sm:text-7xl md:text-9xl font-serif text-black leading-[1.1] mb-10 tracking-tighter">
-              Estratégia <br /> <span className="italic text-gray-400">Infalível.</span>
-              <br className="hidden md:block" /> 
               Atuação <br /> <span className="italic text-gray-400">Consciente.</span>
             </h1>
             <p className="text-lg md:text-2xl text-black/50 font-light leading-relaxed mb-12 max-w-3xl border-l border-black/10 pl-8">
@@ -416,18 +414,18 @@ const Rodape = () => {
 const PaginaEmpresarial = () => (
   <ModeloPaginaServico 
     area="Direito Corporativo"
-    titulo="Proteção de Ativos."
+    titulo="Direito Cível"
     subtitulo="Consultoria estratégica focada na segurança patrimonial e viabilidade econômica do seu negócio."
     dores={[
-      { t: "Risco Fiscal", d: "Defesa técnica contra autuações e bloqueios administrativos." },
-      { t: "Gestão de Ativos", d: "Blindagem societária e arquitetura de proteção de bens." },
-      { t: "Passivos", d: "Reestruturação de dívidas e proteção contra execuções." },
-      { t: "Contratos", d: "Revisão rigorosa de acordos comerciais de alto valor." }
+      { t: "Cobranças", d: "Cobrança judicial e extrajudicial para recuperação de créditos. Atuação estratégica em execuções, negociações, acordos e ações de cobrança para pessoas físicas e jurídicas." },
+      { t: "CONTRATOS", d: "Criação, revisão e segurança jurídica contratual. Elaboração e análise de contratos civis e comerciais, com foco em prevenção de riscos e proteção legal." },
+      { t: "FAMÍLIA", d: "Pensão, divórcio, guarda e revisões judiciais. Atuação técnica e humanizada em demandas familiares, buscando soluções jurídicas eficientes." },
+      { t: "CONSULTORIA CONTRATUAL", d: "Análise estratégica de contratos e relações jurídicas. Suporte contínuo para empresas e pessoas físicas na tomada de decisões contratuais." }
     ]}
     servicos={[
-      { t: "Cível Estratégico", d: "Resolução de conflitos de alta complexidade.", i: <Scale size={28} /> },
-      { t: "Direito Imobiliário", d: "Transações premium e regularização de holdings.", i: <Landmark size={28} /> },
-      { t: "Tributário", d: "Otimização de carga fiscal e defesas técnicas.", i: <ReceiptText size={28} /> }
+      { t: "DIREITO IMOBILIÁRIO", d: "Regularização e segurança jurídica em imóveis. Assessoria em compra e venda, contratos, análise documental e desburocratização imobiliária.", i: <Scale size={28} /> },
+      { t: "REESTRUTURAÇÃO DE DÍVIDAS", d: "Negociação e reorganização financeira. Atuação na revisão de financiamentos, acordos, redução de encargos e renegociação de passivos.", i: <Landmark size={28} /> },
+      { t: "REGULARIZAÇÃO JURÍDICA", d: "Soluções legais para pendências patrimoniais e empresariais. Atuação em regularização de imóveis, documentos, registros, estrutura societária e resolução de entraves legais.", i: <ReceiptText size={28} /> }
     ]}
   />
 );
