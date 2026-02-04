@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { 
   Building2, 
@@ -11,7 +12,7 @@ import {
   HandCoins, 
   ReceiptText, 
   Users,
-  MapPin,
+  MapPin, 
   Mail,
   Instagram,
   Linkedin,
@@ -38,140 +39,78 @@ const PREMIUM_EASE: [number, number, number, number] = [0.23, 1, 0.32, 1];
 
 // --- UI Components ---
 
-const Logo: React.FC<{ light?: boolean }> = ({ light }) => (
+/**
+ * Logo component redesigned based on the architectural reference.
+ * Refined with backdrop-blur and subtle transparency for the "letters passing under" effect.
+ */
+const Logo: React.FC<{ light?: boolean; className?: string; translucent?: boolean }> = ({ light, className = "", translucent = false }) => (
   <motion.div 
-    whileHover={{ scale: 1.02 }}
-    className={`relative flex flex-col items-center border ${light ? 'border-white' : 'border-black'} p-4 md:p-6 tracking-[0.25em] uppercase transition-all cursor-pointer bg-white shadow-2xl z-20`}
+    whileHover={{ scale: 1.01 }}
+    className={`relative flex flex-col items-center border ${light ? 'border-white' : 'border-black'} 
+      ${translucent ? 'bg-white/80 backdrop-blur-md' : 'bg-white'} 
+      px-8 py-10 transition-all cursor-pointer shadow-xl ${className}`}
   >
-    <span className="text-base md:text-2xl font-semibold text-black mb-1">Lang Cardoso</span>
-    <div className="relative w-full h-[1.5px] bg-black my-2">
-      <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[1px] h-3 bg-black"></div>
-      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[1px] h-3 bg-black"></div>
+    {/* Firm Name */}
+    <span className="text-xl md:text-2xl font-bold text-black tracking-[0.3em] uppercase mb-4">
+      Lang Cardoso
+    </span>
+
+    {/* Architectural Dimension Line */}
+    <div className="relative w-full h-[1.5px] bg-black mb-6">
+      <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[1.5px] h-4 bg-black"></div>
+      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[1.5px] h-4 bg-black"></div>
     </div>
-    <span className="text-xs md:text-lg font-medium text-black tracking-[0.3em]">Advocacia</span>
-    <span className="absolute bottom-1 right-2 text-[6px] md:text-[8px] text-black/70 tracking-normal font-normal">OAB/RS 12.585</span>
+
+    {/* Descriptor */}
+    <span className="text-xs md:text-base font-medium text-black tracking-[0.6em] uppercase">
+      Advocacia
+    </span>
+
+    {/* OAB Detail */}
+    <span className="absolute bottom-2 right-3 text-[8px] text-black/60 tracking-tight font-normal">
+      OAB/RS 12.585
+    </span>
   </motion.div>
 );
 
 const GlassCard3D: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = "" }) => {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-
   const springConfig = { stiffness: 80, damping: 25 };
-  
   const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [15, -15]), springConfig);
   const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-15, 15]), springConfig);
-
   const glareX = useSpring(useTransform(x, [-0.5, 0.5], [0, 100]), springConfig);
   const glareY = useSpring(useTransform(y, [-0.5, 0.5], [0, 100]), springConfig);
 
   function handleMouseMove(event: React.MouseEvent<HTMLDivElement>) {
     const rect = event.currentTarget.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const mouseXPos = event.clientX - rect.left;
-    const mouseYPos = event.clientY - rect.top;
-
-    const xPct = mouseXPos / width - 0.5;
-    const yPct = mouseYPos / height - 0.5;
-
+    const xPct = (event.clientX - rect.left) / rect.width - 0.5;
+    const yPct = (event.clientY - rect.top) / rect.height - 0.5;
     x.set(xPct);
     y.set(yPct);
-  }
-
-  function handleMouseLeave() {
-    x.set(0);
-    y.set(0);
   }
 
   return (
     <motion.div 
       onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{ 
-        rotateX, 
-        rotateY, 
-        perspective: 1200,
-        transformStyle: "preserve-3d" 
-      }}
+      onMouseLeave={() => { x.set(0); y.set(0); }}
+      style={{ rotateX, rotateY, perspective: 1200, transformStyle: "preserve-3d" }}
       className={`group relative glass rounded-3xl p-10 shadow-luxury border-white/40 transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] hover:shadow-[0_40px_100px_-30px_rgba(0,0,0,0.15)] hover:border-blue-400/30 ${className}`}
     >
-      <motion.div 
-        className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-3xl"
-        style={{
-          background: useTransform(
-            [glareX, glareY],
-            ([gx, gy]) => `radial-gradient(circle at ${gx}% ${gy}%, rgba(255,255,255,0.3) 0%, transparent 80%)`
-          )
-        }}
-      />
-
-      <motion.div 
-        initial={false}
-        animate={{ 
-          opacity: [0.2, 0.5, 0.2],
-          boxShadow: [
-            "inset 0 0 2px #00d4ff",
-            "inset 0 0 12px #00d4ff",
-            "inset 0 0 2px #00d4ff"
-          ]
-        }}
-        transition={{ 
-          duration: 3, 
-          repeat: Infinity, 
-          ease: "easeInOut" 
-        }}
-        className="absolute inset-0 rounded-3xl border border-blue-400/40 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-700 blur-[0.3px]"
-      />
-      
-      <motion.div 
-        animate={{ 
-          boxShadow: [
-            "0 0 0px rgba(0, 212, 255, 0)",
-            "0 0 25px rgba(0, 212, 255, 0.15)",
-            "0 0 0px rgba(0, 212, 255, 0)"
-          ]
-        }}
-        transition={{ 
-          duration: 4, 
-          repeat: Infinity, 
-          ease: "easeInOut" 
-        }}
-        className="absolute -inset-[1px] rounded-[1.8rem] opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-1000"
-      />
-
-      <div style={{ transform: "translateZ(60px)", transformStyle: "preserve-3d" }}>
-        {children}
-      </div>
+      <motion.div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-3xl" style={{ background: useTransform([glareX, glareY], ([gx, gy]) => `radial-gradient(circle at ${gx}% ${gy}%, rgba(255,255,255,0.3) 0%, transparent 80%)`) }} />
+      <motion.div animate={{ opacity: [0.2, 0.5, 0.2], boxShadow: ["inset 0 0 2px #00d4ff", "inset 0 0 12px #00d4ff", "inset 0 0 2px #00d4ff"] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }} className="absolute inset-0 rounded-3xl border border-blue-400/40 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-700 blur-[0.3px]" />
+      <div style={{ transform: "translateZ(60px)", transformStyle: "preserve-3d" }}>{children}</div>
     </motion.div>
   );
 };
 
 const SectionHeading: React.FC<{ title: string; subtitle: string; centered?: boolean }> = ({ title, subtitle, centered }) => (
   <div className={`mb-20 ${centered ? 'text-center' : ''}`}>
-    <motion.div
-      initial={{ opacity: 0, letterSpacing: "0.2em" }}
-      whileInView={{ opacity: 1, letterSpacing: "0.6em" }}
-      transition={{ duration: 1.2, ease: PREMIUM_EASE }}
-    >
-      <span className="text-[10px] font-bold uppercase text-slate-400 block mb-6">
-        {subtitle}
-      </span>
+    <motion.div initial={{ opacity: 0, letterSpacing: "0.2em" }} whileInView={{ opacity: 1, letterSpacing: "0.6em" }} transition={{ duration: 1.2, ease: PREMIUM_EASE }}>
+      <span className="text-[10px] font-bold uppercase text-slate-400 block mb-6">{subtitle}</span>
     </motion.div>
-    <motion.h2 
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 1, ease: PREMIUM_EASE }}
-      className="text-4xl md:text-6xl font-serif text-slate-900 leading-tight"
-    >
-      {title}
-    </motion.h2>
-    <motion.div 
-      initial={{ width: 0 }}
-      whileInView={{ width: 80 }}
-      transition={{ duration: 1.5, ease: PREMIUM_EASE }}
-      className={`h-[2px] bg-black mt-8 ${centered ? 'mx-auto' : ''}`}
-    />
+    <motion.h2 initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: PREMIUM_EASE }} className="text-4xl md:text-6xl font-serif text-slate-900 leading-tight">{title}</motion.h2>
+    <motion.div initial={{ width: 0 }} whileInView={{ width: 80 }} transition={{ duration: 1.5, ease: PREMIUM_EASE }} className={`h-[2px] bg-black mt-8 ${centered ? 'mx-auto' : ''}`} />
   </div>
 );
 
@@ -180,7 +119,7 @@ const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
+    const handleScroll = () => setIsScrolled(window.scrollY > 150);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -193,31 +132,24 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className={`fixed top-0 w-full z-50 transition-all duration-1000 ${isScrolled ? 'py-2 bg-white/80 backdrop-blur-xl shadow-sm' : 'py-10 bg-transparent'}`}>
+    <nav className={`fixed top-0 w-full z-50 transition-all duration-1000 ${isScrolled ? 'py-2 bg-white/90 backdrop-blur-xl shadow-sm' : 'py-10 bg-transparent'}`}>
       <div className="container mx-auto px-8 flex justify-between items-center">
-        <div className="scale-75 md:scale-90 origin-left">
-          <Logo />
-        </div>
+        {/* Navbar Logo only appears after scrolling to avoid "two logos" at start */}
+        <motion.div 
+          animate={{ opacity: isScrolled ? 1 : 0, y: isScrolled ? 0 : -20 }}
+          className="scale-[0.45] md:scale-[0.6] origin-left pointer-events-none"
+        >
+          {isScrolled && <Logo translucent />}
+        </motion.div>
 
         <div className="hidden lg:flex items-center gap-12">
           {links.map((link) => (
-            <a 
-              key={link.name} 
-              href={link.href}
-              className="group relative text-[10px] font-bold uppercase tracking-[0.2em] text-slate-900 overflow-hidden"
-            >
+            <a key={link.name} href={link.href} className="group relative text-[10px] font-bold uppercase tracking-[0.2em] text-slate-900 overflow-hidden">
               <span className="block transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:-translate-y-full">{link.name}</span>
               <span className="absolute top-full left-0 block transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:-translate-y-full text-slate-400">{link.name}</span>
             </a>
           ))}
-          <motion.a 
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            href={WHATSAPP_LINK} 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="px-10 py-4 bg-black text-white text-[10px] font-bold uppercase tracking-[0.3em] hover:bg-slate-800 transition-all duration-500 shadow-2xl"
-          >
+          <motion.a whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" className="px-10 py-4 bg-black text-white text-[10px] font-bold uppercase tracking-[0.3em] hover:bg-slate-800 transition-all duration-500 shadow-2xl">
             WhatsApp
           </motion.a>
         </div>
@@ -229,21 +161,11 @@ const Navbar = () => {
 
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div 
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.5, ease: PREMIUM_EASE }}
-            className="lg:hidden absolute top-full left-0 w-full bg-white border-b border-slate-100 p-8 flex flex-col gap-8 shadow-2xl"
-          >
+          <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="lg:hidden absolute top-full left-0 w-full bg-white border-b border-slate-100 p-8 flex flex-col gap-8 shadow-2xl">
             {links.map((link) => (
-              <a key={link.name} href={link.href} onClick={() => setMobileMenuOpen(false)} className="text-xs font-bold uppercase tracking-[0.2em]">
-                {link.name}
-              </a>
+              <a key={link.name} href={link.href} onClick={() => setMobileMenuOpen(false)} className="text-xs font-bold uppercase tracking-[0.2em]">{link.name}</a>
             ))}
-            <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" onClick={() => setMobileMenuOpen(false)} className="w-full py-5 bg-black text-white text-center text-xs font-bold uppercase tracking-[0.2em]">
-              Agendar Agora
-            </a>
+            <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" className="w-full py-5 bg-black text-white text-center text-xs font-bold uppercase tracking-[0.2em]">Agendar Agora</a>
           </motion.div>
         )}
       </AnimatePresence>
@@ -253,134 +175,96 @@ const Navbar = () => {
 
 export default function App() {
   const { scrollYProgress } = useScroll();
-  const yRange = useTransform(scrollYProgress, [0, 1], [0, -100]);
+  const yRange = useTransform(scrollYProgress, [0, 1], [0, -150]);
   const heroImageScale = useTransform(scrollYProgress, [0, 0.2], [1, 1.1]);
+  const titleOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0.5]);
 
   return (
     <div className="bg-white min-h-screen">
       <Navbar />
 
-      {/* Hero Section 3D */}
-      <section className="relative min-h-screen flex items-center pt-20 overflow-hidden perspective-2000">
-        <div className="absolute inset-0 bg-soft-gradient opacity-50"></div>
+      {/* Hero Section */}
+      <section className="relative min-h-screen flex flex-col justify-center pt-32 md:pt-40 overflow-hidden">
+        <div className="absolute inset-0 bg-soft-gradient opacity-30 pointer-events-none"></div>
         
-        <motion.div 
-          style={{ y: yRange }}
-          className="absolute top-1/4 right-10 w-[500px] h-[500px] bg-slate-50 rounded-full blur-[120px] -z-10 opacity-60"
-        />
-        <motion.div 
-          style={{ y: useTransform(scrollYProgress, [0, 1], [0, 200]) }}
-          className="absolute bottom-1/4 left-10 w-[300px] h-[300px] bg-slate-100 rounded-full blur-[100px] -z-10 opacity-40"
-        />
-
-        <div className="container mx-auto px-8 relative z-10 grid lg:grid-cols-2 gap-20 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1.5, ease: PREMIUM_EASE }}
-          >
-            <motion.div 
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              transition={{ duration: 1.2, delay: 0.5, ease: PREMIUM_EASE }}
-              className="h-[1px] w-20 bg-slate-200 mb-10 origin-left"
-            />
-            <h1 className="text-6xl md:text-8xl font-serif text-slate-900 leading-[0.95] mb-12">
-              Estratégia <br />
-              <span className="italic font-light text-slate-400">Jurídica.</span>
-            </h1>
-            <p className="text-xl text-slate-500 max-w-lg mb-14 leading-relaxed font-light">
-              Advocacia corporativa de alta complexidade. Inteligência em viabilidade econômica e segurança jurídica para o topo do mercado.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-8 items-center lg:items-start">
-              <motion.a 
-                whileHover={{ y: -5, boxShadow: "0 25px 50px -12px rgba(0,0,0,0.5)" }}
-                transition={{ duration: 0.4, ease: PREMIUM_EASE }}
-                href={WHATSAPP_LINK} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="px-14 py-7 bg-black text-white font-bold uppercase text-xs tracking-[0.4em] shadow-3xl transition-all flex items-center gap-4"
-              >
-                Conectar Agora <MessageCircle size={18} />
-              </motion.a>
-              <a href="#especialidades" className="text-[10px] font-bold uppercase tracking-[0.4em] text-slate-400 hover:text-black transition-colors py-7">
-                Explorar Soluções
-              </a>
-            </div>
-          </motion.div>
-
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.9, rotateY: 10 }}
-            animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-            transition={{ duration: 1.8, ease: PREMIUM_EASE }}
-            className="relative flex justify-center lg:justify-end"
-          >
-            <motion.div 
-              style={{ scale: heroImageScale }}
-              className="relative z-10 p-4 bg-white shadow-[0_50px_100px_-20px_rgba(0,0,0,0.12)] rounded-sm border border-slate-100 max-w-lg overflow-hidden group"
-            >
-              <img 
-                src={LAWYER_IMAGE}
-                alt="Matheus Lang Cardoso" 
-                className="w-full grayscale group-hover:grayscale-0 transition-all duration-1000"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 flex flex-col justify-end p-10">
-                <span className="text-white text-2xl font-serif">Matheus Lang Cardoso</span>
-                <span className="text-white/60 text-[10px] uppercase tracking-widest mt-2">Sócio Fundador</span>
-              </div>
-            </motion.div>
+        <div className="container mx-auto px-8 relative z-10">
+          <div className="grid lg:grid-cols-12 gap-8 md:gap-20 items-start">
             
-            <div className="absolute -top-10 -right-10 w-full h-full border border-slate-100 -z-10 translate-x-4 translate-y-4"></div>
-            <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-slate-50 -z-10 animate-pulse"></div>
-          </motion.div>
+            {/* Left Content Column */}
+            <div className="lg:col-span-7 relative">
+              
+              {/* Logo Main Placement: Organized to be the section header, translucent to allow interaction */}
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1.2, ease: PREMIUM_EASE }}
+                className="mb-16 md:mb-24 relative z-30 inline-block"
+              >
+                <Logo className="scale-[0.8] md:scale-[0.9] origin-left" translucent />
+              </motion.div>
+
+              <motion.div 
+                style={{ opacity: titleOpacity }}
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.3, duration: 1.5, ease: PREMIUM_EASE }}
+                className="relative z-10"
+              >
+                <h1 className="text-6xl md:text-9xl font-serif text-slate-900 leading-[0.85] mb-12 tracking-tighter">
+                  Estratégia <br />
+                  <span className="italic font-light text-slate-400">Jurídica.</span>
+                </h1>
+                <p className="text-lg md:text-xl text-slate-500 max-w-md mb-14 leading-relaxed font-light">
+                  Advocacia corporativa de alta complexidade. Inteligência em viabilidade econômica e segurança jurídica.
+                </p>
+                
+                <div className="flex flex-col sm:flex-row gap-8 items-center lg:items-start">
+                  <motion.a whileHover={{ y: -5, boxShadow: "0 25px 50px -12px rgba(0,0,0,0.5)" }} href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" className="px-14 py-7 bg-black text-white font-bold uppercase text-xs tracking-[0.4em] shadow-3xl transition-all flex items-center gap-4">
+                    Conectar Agora <MessageCircle size={18} />
+                  </motion.a>
+                  <a href="#especialidades" className="text-[10px] font-bold uppercase tracking-[0.4em] text-slate-400 hover:text-black transition-colors py-7">Explorar Soluções</a>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Right Column: Founder Image */}
+            <div className="lg:col-span-5 relative mt-20 lg:mt-0">
+              <motion.div 
+                style={{ scale: heroImageScale, y: yRange }}
+                className="relative z-10 p-4 bg-white shadow- luxury rounded-sm border border-slate-100 overflow-hidden group"
+              >
+                <img src={LAWYER_IMAGE} alt="Matheus Lang Cardoso" className="w-full grayscale group-hover:grayscale-0 transition-all duration-1000" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 flex flex-col justify-end p-10">
+                  <span className="text-white text-2xl font-serif">Matheus Lang Cardoso</span>
+                  <span className="text-white/60 text-[10px] uppercase tracking-widest mt-2">Sócio Fundador</span>
+                </div>
+              </motion.div>
+              <div className="absolute -top-10 -right-10 w-full h-full border border-slate-100 -z-10 translate-x-4 translate-y-4"></div>
+            </div>
+          </div>
         </div>
         
-        <motion.div 
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 text-slate-300 flex flex-col items-center gap-2 cursor-pointer"
-        >
+        <motion.div animate={{ y: [0, 10, 0] }} transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }} className="absolute bottom-10 left-1/2 -translate-x-1/2 text-slate-300 flex flex-col items-center gap-2">
           <span className="text-[8px] font-bold uppercase tracking-[0.4em]">Scroll</span>
           <ChevronDown size={14} />
         </motion.div>
       </section>
 
-      {/* Storytelling Section */}
-      <section id="assessoria" className="py-40 bg-white">
+      {/* Specialty Sections and rest of the app... */}
+      <section id="assessoria" className="py-40 bg-white relative z-20">
         <div className="container mx-auto px-8">
           <div className="grid lg:grid-cols-12 gap-16 items-center">
             <div className="lg:col-span-7">
-              <SectionHeading 
-                subtitle="Direito & Negócios" 
-                title="A Evolução da Advocacia de Resultados" 
-              />
+              <SectionHeading subtitle="Direito & Negócios" title="A Evolução da Advocacia de Resultados" />
               <div className="space-y-12 text-2xl text-slate-500 leading-relaxed font-light">
-                <motion.p 
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 1, ease: PREMIUM_EASE }}
-                  className="border-l-4 border-black pl-8"
-                >
-                  Mudamos a forma de atuar para oferecer uma <span className="text-slate-900 font-medium">gestão jurídica integral</span>, onde o Direito é o motor da viabilidade operacional da sua empresa.
+                <motion.p initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 1, ease: PREMIUM_EASE }} className="border-l-4 border-black pl-8">
+                  Oferecemos uma <span className="text-slate-900 font-medium">gestão jurídica integral</span>, onde o Direito é o motor da viabilidade operacional.
                 </motion.p>
-                <p className="text-lg text-slate-400">
-                  Nossa assessoria não foca apenas na lide, mas na estruturação de processos que mitiguem o passivo antes mesmo que ele ocorra. É inteligência técnica aplicada ao lucro.
-                </p>
               </div>
             </div>
             <div className="lg:col-span-5 grid grid-cols-2 gap-4">
-              {[
-                { label: "Segurança", icon: <ShieldCheck size={20}/> },
-                { label: "Compliance", icon: <Building2 size={20}/> },
-                { label: "Estratégia", icon: <Scale size={20}/> },
-                { label: "Patrimônio", icon: <HandCoins size={20}/> }
-              ].map((item, i) => (
-                <motion.div 
-                  key={i}
-                  whileHover={{ y: -10, rotateZ: 2 }}
-                  transition={{ duration: 0.5, ease: PREMIUM_EASE }}
-                  className="bg-slate-50 p-10 flex flex-col items-center justify-center text-center gap-4 border border-slate-100 transition-all hover:shadow-xl hover:bg-white"
-                >
+              {[{ label: "Segurança", icon: <ShieldCheck size={20}/> }, { label: "Compliance", icon: <Building2 size={20}/> }, { label: "Estratégia", icon: <Scale size={20}/> }, { label: "Patrimônio", icon: <HandCoins size={20}/> }].map((item, i) => (
+                <motion.div key={i} whileHover={{ y: -10, rotateZ: 2 }} className="bg-slate-50 p-10 flex flex-col items-center justify-center text-center gap-4 border border-slate-100 transition-all hover:shadow-xl hover:bg-white">
                   <div className="text-black">{item.icon}</div>
                   <span className="text-[9px] font-bold uppercase tracking-widest">{item.label}</span>
                 </motion.div>
@@ -390,195 +274,44 @@ export default function App() {
         </div>
       </section>
 
-      {/* Specialties 3D Cards */}
-      <section id="especialidades" className="py-40 bg-slate-50 overflow-hidden">
+      <section id="especialidades" className="py-40 bg-slate-50 overflow-hidden relative z-20">
         <div className="container mx-auto px-8">
-          <SectionHeading 
-            subtitle="Especialidades" 
-            title="Estratégia Empresarial" 
-            centered
-          />
-          
+          <SectionHeading subtitle="Especialidades" title="Estratégia Empresarial" centered />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-            {[
-              { 
-                icon: <Percent size={32} strokeWidth={1} />, 
-                title: "Revisão de Juros", 
-                desc: "Análise técnico-jurídica profunda de encargos bancários para restaurar o equilíbrio financeiro contratual." 
-              },
-              { 
-                icon: <HandCoins size={32} strokeWidth={1} />, 
-                title: "Recuperação", 
-                desc: "Gestão técnica de recebíveis e ativos com metodologia própria focada na liquidez corporativa." 
-              },
-              { 
-                icon: <ReceiptText size={32} strokeWidth={1} />, 
-                title: "Tributário", 
-                desc: "Otimização da carga fiscal através de compliance preventivo e recuperação de créditos legítimos." 
-              },
-              { 
-                icon: <Users size={32} strokeWidth={1} />, 
-                title: "Trabalhista", 
-                desc: "Defesa e consultoria patronal focada na redução drástica de passivos laborais ocultos." 
-              }
-            ].map((item, idx) => (
+            {[{ icon: <Percent size={32} />, title: "Revisão de Juros" }, { icon: <HandCoins size={32} />, title: "Recuperação" }, { icon: <ReceiptText size={32} />, title: "Tributário" }, { icon: <Users size={32} />, title: "Trabalhista" }].map((item, idx) => (
               <GlassCard3D key={idx}>
-                <div className="mb-10 text-slate-300 transition-colors duration-700 group-hover:text-black" style={{ transform: "translateZ(30px)" }}>{item.icon}</div>
-                <h3 className="text-2xl font-serif mb-6 text-slate-900" style={{ transform: "translateZ(40px)" }}>{item.title}</h3>
-                <p className="text-sm text-slate-500 leading-relaxed font-light mb-10" style={{ transform: "translateZ(20px)" }}>{item.desc}</p>
-                <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 text-[10px] font-bold uppercase tracking-widest text-black group" style={{ transform: "translateZ(50px)" }}>
-                  Agendar Consulta <ArrowRight size={14} className="transition-transform duration-500 group-hover:translate-x-2" />
-                </a>
+                <div className="mb-10 text-slate-300 group-hover:text-black transition-colors">{item.icon}</div>
+                <h3 className="text-2xl font-serif mb-6 text-slate-900">{item.title}</h3>
+                <a href={WHATSAPP_LINK} className="inline-flex items-center gap-3 text-[10px] font-bold uppercase tracking-widest text-black group">Agendar Consulta <ArrowRight size={14} className="transition-transform group-hover:translate-x-2" /></a>
               </GlassCard3D>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Secondary Areas - 3D Layout */}
-      <section className="py-40 bg-slate-900 text-white relative">
-        <motion.div 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 0.1 }}
-          className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none"
-        >
-          <Gavel size={800} strokeWidth={0.5} className="rotate-12" />
-        </motion.div>
-
-        <div className="container mx-auto px-8 relative z-10">
-          <div className="flex flex-col lg:flex-row gap-24 items-center">
-            <div className="lg:w-1/2">
-              <span className="text-[10px] font-bold uppercase tracking-[0.6em] text-slate-500 mb-10 block">Vertical Secundária</span>
-              <h2 className="text-5xl md:text-7xl font-serif mb-12 leading-tight">Suporte Civil <br />& Criminal</h2>
-              <p className="text-slate-400 text-xl font-light leading-relaxed mb-16">
-                Além do core business empresarial, mantemos núcleos de excelência para assegurar a tranquilidade individual e institucional frente a desafios cíveis e criminais.
-              </p>
-              
-              <div className="grid gap-10">
-                <div className="group p-8 border border-white/10 transition-all duration-700 hover:bg-white/5 cursor-default">
-                  <div className="flex items-center gap-6 mb-4">
-                    <Scale size={28} className="text-white/40 group-hover:text-white transition-colors duration-500" />
-                    <h4 className="text-2xl font-serif">Direito Civil Estratégico</h4>
-                  </div>
-                  <p className="text-slate-500 font-light ml-14">Gestão de conflitos e preservação de direitos fundamentais e patrimoniais.</p>
-                </div>
-                <div className="group p-8 border border-white/10 transition-all duration-700 hover:bg-white/5 cursor-default">
-                  <div className="flex items-center gap-6 mb-4">
-                    <ShieldAlert size={28} className="text-white/40 group-hover:text-white transition-colors duration-500" />
-                    <h4 className="text-2xl font-serif">Direito Criminal Especializado</h4>
-                  </div>
-                  <p className="text-slate-500 font-light ml-14">Defesa técnica em infrações de ordem econômica, fiscal e ambiental.</p>
-                </div>
-              </div>
-            </div>
-            
-            <div className="lg:w-1/2 relative group">
-              <div className="absolute inset-0 bg-slate-800 translate-x-10 translate-y-10 group-hover:translate-x-14 group-hover:translate-y-14 transition-all duration-1000 ease-[cubic-bezier(0.23,1,0.32,1)]"></div>
-              <div className="relative glass bg-white/5 p-4 overflow-hidden">
-                <img 
-                  src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=2070&auto=format&fit=crop" 
-                  alt="Direito" 
-                  className="w-full grayscale group-hover:grayscale-0 transition-all duration-1000 scale-110 group-hover:scale-100"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Founder Section */}
-      <section id="sobre" className="py-40 bg-white overflow-hidden">
+      <section id="sobre" className="py-40 bg-white overflow-hidden relative z-20">
         <div className="container mx-auto px-8">
           <div className="flex flex-col lg:flex-row items-center gap-24">
             <div className="lg:w-1/2 relative group">
-              <motion.div 
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 1.5, ease: PREMIUM_EASE }}
-                className="relative z-10"
-              >
-                <img 
-                  src={LAWYER_IMAGE}
-                  alt="Matheus Lang Cardoso" 
-                  className="w-full grayscale group-hover:grayscale-0 transition-all duration-1000 rounded-none shadow-3xl max-w-md mx-auto border-[1px] border-slate-100 p-2"
-                />
-              </motion.div>
-              <div className="absolute -bottom-10 -left-10 w-64 h-64 bg-slate-50 -z-0"></div>
-              <motion.div 
-                animate={{ rotate: 360 }}
-                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-                className="absolute top-0 right-0 w-32 h-32 border-t-2 border-slate-200 rounded-full"
-              />
+              <img src={LAWYER_IMAGE} alt="Matheus Lang Cardoso" className="w-full grayscale group-hover:grayscale-0 transition-all duration-1000 shadow-3xl max-w-md mx-auto border p-2" />
             </div>
-            
             <div className="lg:w-1/2">
-              <SectionHeading 
-                subtitle="O Fundador" 
-                title="Matheus Lang Cardoso" 
-              />
-              <p className="text-2xl text-slate-400 font-light mb-12 italic leading-relaxed">
-                "Nosso compromisso é com a viabilidade do negócio. Transformamos o Direito em uma ferramenta de eficiência prática."
-              </p>
-              
+              <SectionHeading subtitle="O Fundador" title="Matheus Lang Cardoso" />
               <div className="space-y-12">
-                <div className="space-y-8 text-slate-600">
-                  <p className="text-lg">
-                    Especialista em Direito Imobiliário e Penal, com visão estratégica multidisciplinar focada em gestão contábil e preservação de ativos corporativos.
-                  </p>
-                  <div className="grid grid-cols-1 gap-6">
-                    {[
-                      "OAB/RS 12.585",
-                      "Mestrando em Direito pela Ambra University",
-                      "Especialista em Direito Imobiliário",
-                      "Especialista em Direito Penal",
-                      "Especialista em Tribunal do Júri",
-                      "Especializado em Cobrança Jurídica",
-                      "Especializado em Direito Empresarial e Societário"
-                    ].map((edu, i) => (
-                      <div key={i} className="flex items-center gap-4 group">
-                        <div className="w-2 h-2 bg-black group-hover:w-6 transition-all duration-500 shrink-0"></div>
-                        <span className="text-[11px] font-bold uppercase tracking-widest">{edu}</span>
-                      </div>
-                    ))}
-                  </div>
+                <p className="text-2xl text-slate-400 font-light italic italic">"Transformamos o Direito em uma ferramenta de eficiência prática."</p>
+                <div className="grid gap-6">
+                  {["OAB/RS 12.585", "Especialista em Direito Imobiliário e Penal", "Atuação em Tribunal do Júri"].map((edu, i) => (
+                    <div key={i} className="flex items-center gap-4 group"><div className="w-2 h-2 bg-black group-hover:w-6 transition-all duration-500"></div><span className="text-[11px] font-bold uppercase tracking-widest">{edu}</span></div>
+                  ))}
                 </div>
-
-                {/* Atuação Pública Section */}
+                
                 <div className="pt-8 border-t border-slate-100">
-                  <div className="flex items-center gap-3 mb-8">
-                    <Briefcase size={20} className="text-slate-400" />
-                    <h4 className="text-xs font-bold uppercase tracking-[0.3em] text-slate-900">Atuação Pública e Especializada</h4>
-                  </div>
-                  <p className="text-sm text-slate-500 mb-6 font-light leading-relaxed">
-                    Atuação destacada como <span className="font-bold text-slate-900">Advogado Dativo</span> em processos cíveis, criminais, audiências de custódia e Tribunal do Júri nas seguintes comarcas:
-                  </p>
+                  <div className="flex items-center gap-3 mb-8"><Briefcase size={20} className="text-slate-400" /><h4 className="text-xs font-bold uppercase tracking-[0.3em] text-slate-900">Atuação Pública e Especializada</h4></div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {[
-                      "1ª Vara Judicial de Santa Maria (Júri)",
-                      "5º Juizado Especial Cível de Porto Alegre",
-                      "1ª Vara Judicial de Portão",
-                      "Vara Judicial de Tapera",
-                      "2ª Vara Judicial de Rosário do Sul"
-                    ].map((comarca, idx) => (
-                      <div key={idx} className="flex items-center gap-3 p-3 bg-slate-50 border border-slate-100/50 hover:bg-white hover:shadow-sm transition-all duration-300">
-                        <MapPin size={12} className="text-slate-400" />
-                        <span className="text-[10px] font-medium text-slate-700 tracking-wider uppercase">{comarca}</span>
-                      </div>
+                    {["Santa Maria (Júri)", "Porto Alegre", "Portão", "Tapera", "Rosário do Sul"].map((comarca, idx) => (
+                      <div key={idx} className="flex items-center gap-3 p-3 bg-slate-50 border hover:bg-white transition-all"><MapPin size={12} className="text-slate-400" /><span className="text-[10px] font-medium tracking-wider uppercase">{comarca}</span></div>
                     ))}
                   </div>
-                </div>
-
-                <div className="pt-12">
-                  <motion.a 
-                    whileHover={{ x: 10 }}
-                    transition={{ duration: 0.4, ease: PREMIUM_EASE }}
-                    href={WHATSAPP_LINK} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="flex items-center gap-4 text-xs font-bold uppercase tracking-[0.4em] text-black"
-                  >
-                    Falar com o Fundador <ArrowRight size={18} />
-                  </motion.a>
                 </div>
               </div>
             </div>
@@ -586,85 +319,12 @@ export default function App() {
         </div>
       </section>
 
-      {/* Contact Section 3D Layers */}
-      <section id="contato" className="py-40 bg-slate-50 relative overflow-hidden">
-        <div className="container mx-auto px-8 relative z-10">
-          <div className="max-w-6xl mx-auto text-center">
-            <SectionHeading 
-              subtitle="Conexão" 
-              title="Atendimento Especializado" 
-              centered
-            />
-            
-            <div className="grid md:grid-cols-3 gap-12 mb-24">
-              <GlassCard3D className="bg-white/40">
-                <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" className="block h-full">
-                  <div className="p-6 bg-slate-900 text-white inline-block mb-10 transition-transform duration-500 group-hover:scale-110"><MessageCircle size={32} strokeWidth={1}/></div>
-                  <h4 className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-4">WhatsApp</h4>
-                  <p className="text-xl font-medium text-slate-900">{DISPLAY_PHONE}</p>
-                </a>
-              </GlassCard3D>
-              
-              <GlassCard3D className="bg-white/40">
-                <a href={MAILTO_LINK} className="block h-full">
-                  <div className="p-6 bg-slate-900 text-white inline-block mb-10 transition-transform duration-500 group-hover:scale-110"><Mail size={32} strokeWidth={1}/></div>
-                  <h4 className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-4">E-mail</h4>
-                  <p className="text-sm font-medium text-slate-900 break-all">{EMAIL}</p>
-                </a>
-              </GlassCard3D>
-              
-              <GlassCard3D className="bg-white/40">
-                <a href={MAPS_LINK} target="_blank" rel="noopener noreferrer" className="block h-full">
-                  <div className="p-6 bg-slate-900 text-white inline-block mb-10 transition-transform duration-500 group-hover:scale-110"><MapPin size={32} strokeWidth={1}/></div>
-                  <h4 className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-4">Endereço</h4>
-                  <p className="text-[11px] font-medium text-slate-900 leading-relaxed uppercase tracking-widest">
-                    {FULL_ADDRESS}
-                  </p>
-                </a>
-              </GlassCard3D>
-            </div>
-
-            <motion.div 
-              whileHover={{ scale: 1.02 }}
-              className="relative group inline-block"
-            >
-              <div className="absolute -inset-4 bg-black/5 rounded-full blur-2xl group-hover:bg-black/10 transition-all duration-700"></div>
-              <a 
-                href={WHATSAPP_LINK} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="relative px-24 py-10 bg-black text-white font-bold uppercase text-sm tracking-[0.6em] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] transition-all duration-700 flex items-center gap-6"
-              >
-                Agendar Consulta Online <ExternalLink size={20} />
-              </a>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer Modern */}
-      <footer className="py-24 bg-white border-t border-slate-100">
-        <div className="container mx-auto px-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-16">
-            <div className="scale-90">
-              <Logo />
-            </div>
-            
-            <div className="flex gap-12">
-               <motion.a whileHover={{ y: -5 }} transition={{ duration: 0.4 }} href={INSTAGRAM_LINK} target="_blank" rel="noopener noreferrer" className="text-slate-300 hover:text-black transition-colors duration-500"><Instagram size={28} strokeWidth={1}/></motion.a>
-               <motion.a whileHover={{ y: -5 }} transition={{ duration: 0.4 }} href="#" className="text-slate-300 hover:text-black transition-colors duration-500"><Linkedin size={28} strokeWidth={1}/></motion.a>
-            </div>
-          </div>
-
-          <div className="mt-24 pt-16 border-t border-slate-50 flex flex-col md:flex-row justify-between gap-8 text-center md:text-left">
-            <p className="text-[9px] font-bold uppercase tracking-[0.5em] text-slate-300">
-              © Lang Cardoso Advocacia • OAB/RS 12.585
-            </p>
-            <div className="flex gap-8 justify-center">
-              <span className="text-[8px] font-bold uppercase tracking-[0.6em] text-slate-200">Integridade</span>
-              <span className="text-[8px] font-bold uppercase tracking-[0.6em] text-slate-200">Estratégia</span>
-              <span className="text-[8px] font-bold uppercase tracking-[0.6em] text-slate-200">Excelência</span>
-            </div>
+      <footer className="py-24 bg-white border-t border-slate-100 relative z-20">
+        <div className="container mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-16">
+          <Logo className="scale-[0.5] origin-center" translucent />
+          <div className="flex gap-12">
+             <a href={INSTAGRAM_LINK} target="_blank" rel="noopener noreferrer" className="text-slate-300 hover:text-black transition-colors"><Instagram size={28} /></a>
+             <a href="#" className="text-slate-300 hover:text-black transition-colors"><Linkedin size={28} /></a>
           </div>
         </div>
       </footer>
