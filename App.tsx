@@ -33,7 +33,7 @@ const LINK_WHATSAPP = "https://wa.me/555532176378";
 const LINK_INSTAGRAM = "https://www.instagram.com/langcardosoadvocacia";
 const LINK_MAPA = "https://www.google.com/maps/search/?api=1&query=Alameda+Montevideo,+322,+Sala+108,+Santa+Maria+-+RS";
 const EMAIL_CONTATO = "contato@langcardoso.adv.br";
-const IMAGEM_ADVOGADO = "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=800"; 
+const advogado.png = "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=800"; 
 const TRANSICAO_SUAVE: [number, number, number, number] = [0.23, 1, 0.32, 1];
 
 // --- Componentes de Interface ---
@@ -69,6 +69,17 @@ const Logotipo: React.FC<{ className?: string; reduzido?: boolean }> = ({
     </motion.div>
   );
 };
+
+const BotaoCTA: React.FC<{ texto: string; className?: string }> = ({ texto, className = "" }) => (
+  <a 
+    href={LINK_WHATSAPP} 
+    target="_blank" 
+    rel="noopener noreferrer" 
+    className={`inline-flex items-center gap-4 px-10 py-6 bg-black text-white font-bold uppercase text-[10px] tracking-[0.3em] transition-all hover:bg-gray-800 shadow-xl ${className}`}
+  >
+    {texto} <ArrowRight size={16} />
+  </a>
+);
 
 const CardInterativo: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = "" }) => {
   const x = useMotionValue(0);
@@ -225,9 +236,7 @@ const PaginaInicial = () => {
             <p className="text-lg md:text-2xl text-black/50 font-light leading-relaxed mb-12 max-w-3xl border-l border-black/10 pl-8">
               Um escritório de advocacia focado na proteção de ativos e na defesa intransigente da liberdade individual e empresarial.
             </p>
-            <a href={LINK_WHATSAPP} className="inline-flex items-center gap-4 px-10 py-6 bg-black text-white font-bold uppercase text-[10px] tracking-[0.3em] transition-all hover:bg-gray-800">
-              Solicitar Consulta <ArrowRight size={18} />
-            </a>
+            <BotaoCTA texto="Solicitar Consulta" />
           </motion.div>
         </div>
       </section>
@@ -254,7 +263,7 @@ const PaginaInicial = () => {
           </div>
         </div>
         <div className="relative">
-          <img src={IMAGEM_ADVOGADO} alt="Escritório" className="w-full grayscale shadow-2xl border border-black/5" />
+          <img src={advogado.png} alt="Escritório" className="w-full grayscale shadow-2xl border border-black/5" />
         </div>
       </section>
 
@@ -299,16 +308,19 @@ const ModeloPaginaServico: React.FC<{
   useEffect(() => { window.scrollTo(0, 0); }, []);
   return (
     <main className="bg-white">
-      <section className="min-h-[70vh] flex flex-col justify-center bg-[#fcfcfc] border-b border-black/5">
+      {/* 1. Botão de topo no final da Hero */}
+      <section className="min-h-[70vh] flex flex-col justify-center bg-[#fcfcfc] border-b border-black/5 pb-20">
         <div className="container mx-auto px-6 md:px-12">
           <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-black/30 mb-6 block">{area}</span>
           <h1 className="text-5xl md:text-8xl font-serif text-black mb-10 tracking-tighter leading-tight">{titulo}</h1>
-          <p className="text-lg md:text-2xl text-black/50 font-light leading-relaxed max-w-3xl border-l border-black/10 pl-8">{subtitulo}</p>
+          <p className="text-lg md:text-2xl text-black/50 font-light leading-relaxed max-w-3xl border-l border-black/10 pl-8 mb-12">{subtitulo}</p>
+          <BotaoCTA texto="Agende uma Reunião" />
         </div>
       </section>
 
-      <section className="py-24 container mx-auto px-6 md:px-12">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {/* Seção Dores */}
+      <section className="py-24 container mx-auto px-6 md:px-12 border-b border-black/5">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
           {dores.map((d, i) => (
             <CardInterativo key={i} className="p-10">
               <AlertCircle className="mb-8 text-black/20" size={32} />
@@ -317,10 +329,15 @@ const ModeloPaginaServico: React.FC<{
             </CardInterativo>
           ))}
         </div>
+        {/* 2. Botão de meio após a seção de dores */}
+        <div className="flex justify-center">
+          <BotaoCTA texto="Chame nosso Escritório" />
+        </div>
       </section>
 
-      <section className="py-24 bg-gray-50">
-        <div className="container mx-auto px-6 md:px-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* Seção Serviços */}
+      <section className="py-24 bg-gray-50 border-b border-black/5">
+        <div className="container mx-auto px-6 md:px-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
           {servicos.map((s, i) => (
             <div key={i} className="p-10 bg-white border border-black/5">
               <div className="mb-8 opacity-30">{s.i}</div>
@@ -329,7 +346,12 @@ const ModeloPaginaServico: React.FC<{
             </div>
           ))}
         </div>
+        {/* 3. Botão final antes do rodapé */}
+        <div className="flex justify-center">
+          <BotaoCTA texto="Fale com Matheus Lang" />
+        </div>
       </section>
+      
       <Rodape />
     </main>
   );
