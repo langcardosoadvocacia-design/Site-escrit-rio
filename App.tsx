@@ -25,7 +25,7 @@ import {
   Phone
 } from 'lucide-react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
+import { HashRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
 
 // --- IMPORTAÇÃO BLINDADA DA IMAGEM ---
 // Certifique-se de que o arquivo 'advogado.png' está na MESMA PASTA deste arquivo App.tsx
@@ -454,7 +454,7 @@ const PaginaCriminal = () => (
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <BarraNavegacao />
       <Routes>
         <Route path="/" element={<PaginaInicial />} />
