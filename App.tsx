@@ -415,17 +415,17 @@ const Rodape = () => {
 const PaginaEmpresarial = () => (
   <ModeloPaginaServico 
     area="Direito Corporativo"
-    titulo="Proteção de Ativos."
+    titulo="Direito Cível"
     subtitulo="Consultoria estratégica focada na segurança patrimonial e viabilidade econômica do seu negócio."
     dores={[
-      { t: "Cobranças e Contratos", d: "Cobrança judicial e extrajudicial, execuções e revisões contratuais. Atuação estratégica na recuperação de créditos, revisão de financiamentos, análise de cláusulas abusivas e elaboração de contratos civis e comerciais." },
-      { t: "Assessoria Empresarial", d: "Consultoria jurídica para empresas e empreendedores. Acompanhamento contínuo na gestão de riscos, criação de contrato social, estruturação societária, relações comerciais e prevenção de passivos jurídicos." },
-      { t: "Direito Imobiliario", d: "Regularização e segurança jurídica em imóveis. Assessoria completa em compra e venda, contratos, análise documental, desburocratização imobiliária e resolução de conflitos patrimoniais." },
-      { t: "Família, Sucessões e Patrimônio", d: "Proteção patrimonial e organização familiar. Atuação em pensão alimentícia, divórcios, inventários judiciais e extrajudiciais, partilha de bens e planejamento sucessório." }
+      { t: "Cobranças", d: "Cobrança judicial e extrajudicial para recuperação de créditos. Atuação estratégica em execuções, negociações, acordos e ações de cobrança para pessoas físicas e jurídicas." },
+      { t: "CONTRATOS", d: "Criação, revisão e segurança jurídica contratual. Elaboração e análise de contratos civis e comerciais, com foco em prevenção de riscos e proteção legal." },
+      { t: "FAMÍLIA", d: "Pensão, divórcio, guarda e revisões judiciais. Atuação técnica e humanizada em demandas familiares, buscando soluções jurídicas eficientes." },
+      { t: "CONSULTORIA CONTRATUAL", d: "Análise estratégica de contratos e relações jurídicas. Suporte contínuo para empresas e pessoas físicas na tomada de decisões contratuais." }
     ]}
     servicos={[
-      { t: "REESTRUTURAÇÃO DE DÍVIDAS", d: "Negociação e reorganização financeira de pessoas e empresas. Atuação na renegociação de passivos, revisão de contratos bancários, acordos judiciais e estratégias para redução de encargos e juros.", i: <Scale size={28} /> },
-      { t: "CONSULTORIA CONTRATUAL", d: "Análise, elaboração e blindagem de contratos. Criação e revisão de contratos civis e comerciais, prevenção de riscos jurídicos e segurança nas relações negociais.", i: <Landmark size={28} /> },
+      { t: "DIREITO IMOBILIÁRIO", d: "Regularização e segurança jurídica em imóveis. Assessoria em compra e venda, contratos, análise documental e desburocratização imobiliária.", i: <Scale size={28} /> },
+      { t: "REESTRUTURAÇÃO DE DÍVIDAS", d: "Negociação e reorganização financeira. Atuação na revisão de financiamentos, acordos, redução de encargos e renegociação de passivos.", i: <Landmark size={28} /> },
       { t: "REGULARIZAÇÃO JURÍDICA", d: "Soluções legais para pendências patrimoniais e empresariais. Atuação em regularização de imóveis, documentos, registros, estrutura societária e resolução de entraves legais.", i: <ReceiptText size={28} /> }
     ]}
   />
