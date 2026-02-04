@@ -237,7 +237,7 @@ const PaginaInicial = () => {
               Excelência Jurídica em Santa Maria/RS
             </span>
             <h1 className="text-5xl sm:text-7xl md:text-9xl font-serif text-black leading-[1.1] mb-10 tracking-tighter">
-              Estratégia <br /> <span className="italic text-gray-400">Infalível.</span>
+              Atuação <br /> <span className="italic text-gray-400">Consciente.</span>
             </h1>
             <p className="text-lg md:text-2xl text-black/50 font-light leading-relaxed mb-12 max-w-3xl border-l border-black/10 pl-8">
               Um escritório de advocacia focado na proteção de ativos e na defesa intransigente da liberdade individual e empresarial.
@@ -437,15 +437,15 @@ const PaginaCriminal = () => (
     titulo="Defesa da Liberdade."
     subtitulo="Atuação tática de urgência com rigor garantista para proteção dos direitos fundamentais."
     dores={[
-      { t: "Plantão 24h", d: "Presença imediata em delegacias e audiências de custódia." },
-      { t: "Tribunal do Júri", d: "Especialista em Plenário com oratória técnica e vigorosa." },
-      { t: "Crimes Econômicos", d: "Defesa em crimes tributários e contra o sistema financeiro." },
-      { t: "Prisões", d: "Controle estrito de legalidade para evitar arbitrariedades." }
+      { t: "VIOLÊNCIA DOMÉSTICA", d: "Atuação em medidas protetivas e defesa criminal. Acompanhamento completo em casos de violência doméstica, desde o registro até a defesa técnica em processos judiciais." },
+      { t: "TRIBUNAL DO JÚRI", d: "Defesa em crimes dolosos contra a vida. Atuação especializada em plenário do júri, com estratégia jurídica, sustentação oral e condução integral do processo." },
+      { t: "AUDIÊNCIA DE CUSTÓDIA", d: "Atendimento imediato em prisões. Atuação urgente para análise da legalidade da prisão, pedido de liberdade provisória e medidas cautelares." },
+      { t: "CRIMES CIBERNÉTICOS", d: "Defesa e investigação de crimes digitais. Atuação em fraudes online, invasão de dispositivos, estelionato eletrônico e crimes praticados na internet." }
     ]}
     servicos={[
-      { t: "Inquéritos", d: "Acompanhamento precoce para evitar abusos de autoridade.", i: <Search size={28} /> },
-      { t: "Recursos", d: "Atuação tática no STJ e STF para nulidades processuais.", i: <FileText size={28} /> },
-      { t: "Compliance Penal", d: "Prevenção de riscos para diretores e sócios.", i: <Lock size={28} /> }
+      { t: "CRIMES EMPRESARIAIS", d: "Responsabilização penal no ambiente corporativo. Defesa em crimes financeiros, tributários, societários e infrações penais ligadas à atividade empresarial.", i: <Search size={28} /> },
+      { t: "PRISÃO EM FLAGRANTE", d: "Atendimento 24h em casos de prisão. Acompanhamento imediato na delegacia, análise do flagrante, pedido de relaxamento ou liberdade.", i: <FileText size={28} /> },
+      { t: "DEFESA CRIMINAL", d: "Atuação técnica em todas as fases do processo. Defesa estratégica desde o inquérito policial até a fase de julgamento e recursos.", i: <Lock size={28} /> }
     ]}
   />
 );
