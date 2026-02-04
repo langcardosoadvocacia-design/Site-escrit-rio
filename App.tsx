@@ -418,10 +418,10 @@ const PaginaEmpresarial = () => (
     titulo="Proteção de Ativos."
     subtitulo="Consultoria estratégica focada na segurança patrimonial e viabilidade econômica do seu negócio."
     dores={[
-      { t: "Risco Fiscal", d: "Defesa técnica contra autuações e bloqueios administrativos." },
-      { t: "Gestão de Ativos", d: "Blindagem societária e arquitetura de proteção de bens." },
-      { t: "Passivos", d: "Reestruturação de dívidas e proteção contra execuções." },
-      { t: "Contratos", d: "Revisão rigorosa de acordos comerciais de alto valor." }
+      { t: "Cobranças e Contratos", d: "Cobrança judicial e extrajudicial, execuções e revisões contratuais. Atuação estratégica na recuperação de créditos, revisão de financiamentos, análise de cláusulas abusivas e elaboração de contratos civis e comerciais." },
+      { t: "Assessoria Empresarial", d: "Consultoria jurídica para empresas e empreendedores. Acompanhamento contínuo na gestão de riscos, criação de contrato social, estruturação societária, relações comerciais e prevenção de passivos jurídicos." },
+      { t: "Direito Imobiliario", d: "Regularização e segurança jurídica em imóveis. Assessoria completa em compra e venda, contratos, análise documental, desburocratização imobiliária e resolução de conflitos patrimoniais." },
+      { t: "Família, Sucessões e Patrimônio", d: "Proteção patrimonial e organização familiar. Atuação em pensão alimentícia, divórcios, inventários judiciais e extrajudiciais, partilha de bens e planejamento sucessório." }
     ]}
     servicos={[
       { t: "Cível Estratégico", d: "Resolução de conflitos de alta complexidade.", i: <Scale size={28} /> },
