@@ -33,10 +33,9 @@ const LINK_INSTAGRAM = "https://www.instagram.com/langcardosoadvocacia";
 const LINK_MAPA = "https://www.google.com/maps/search/?api=1&query=Alameda+Montevideo,+322,+Sala+108,+Santa+Maria+-+RS";
 const EMAIL_CONTATO = "contato@langcardoso.adv.br";
 
-// CORREÇÃO: Caminho da imagem local (na pasta public/imagens) e nome da variável sem ponto
+// CORREÇÃO: Caminho exato para a pasta imagens dentro da public
 const IMAGEM_ADVOGADO = "/imagens/advogado.png"; 
 
-// CORREÇÃO: Tipo 'number' em inglês
 const TRANSICAO_SUAVE: [number, number, number, number] = [0.23, 1, 0.32, 1];
 
 // --- Componentes de Interface ---
@@ -266,7 +265,6 @@ const PaginaInicial = () => {
           </div>
         </div>
         <div className="relative">
-          {/* CORREÇÃO: Uso da variável correta sem erro de sintaxe e com grayscale para estilo */}
           <img src={IMAGEM_ADVOGADO} alt="Escritório" className="w-full grayscale shadow-2xl border border-black/5" />
         </div>
       </section>
