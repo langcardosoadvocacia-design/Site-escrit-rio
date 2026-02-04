@@ -34,7 +34,7 @@ const LINK_MAPA = "https://www.google.com/maps/search/?api=1&query=Alameda+Monte
 const EMAIL_CONTATO = "contato@langcardoso.adv.br";
 
 // CORREÇÃO: Caminho exato para a pasta imagens dentro da public
-const IMAGEM_ADVOGADO = "/imagens/advogado.png"; 
+const IMAGEM_ADVOGADO = "/public/imagens/advogado.png"; 
 
 const TRANSICAO_SUAVE: [number, number, number, number] = [0.23, 1, 0.32, 1];
 
