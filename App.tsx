@@ -424,9 +424,9 @@ const PaginaEmpresarial = () => (
       { t: "Família, Sucessões e Patrimônio", d: "Proteção patrimonial e organização familiar. Atuação em pensão alimentícia, divórcios, inventários judiciais e extrajudiciais, partilha de bens e planejamento sucessório." }
     ]}
     servicos={[
-      { t: "Cível Estratégico", d: "Resolução de conflitos de alta complexidade.", i: <Scale size={28} /> },
-      { t: "Direito Imobiliário", d: "Transações premium e regularização de holdings.", i: <Landmark size={28} /> },
-      { t: "Tributário", d: "Otimização de carga fiscal e defesas técnicas.", i: <ReceiptText size={28} /> }
+      { t: "REESTRUTURAÇÃO DE DÍVIDAS", d: "Negociação e reorganização financeira de pessoas e empresas. Atuação na renegociação de passivos, revisão de contratos bancários, acordos judiciais e estratégias para redução de encargos e juros.", i: <Scale size={28} /> },
+      { t: "CONSULTORIA CONTRATUAL", d: "Análise, elaboração e blindagem de contratos. Criação e revisão de contratos civis e comerciais, prevenção de riscos jurídicos e segurança nas relações negociais.", i: <Landmark size={28} /> },
+      { t: "REGULARIZAÇÃO JURÍDICA", d: "Soluções legais para pendências patrimoniais e empresariais. Atuação em regularização de imóveis, documentos, registros, estrutura societária e resolução de entraves legais.", i: <ReceiptText size={28} /> }
     ]}
   />
 );
