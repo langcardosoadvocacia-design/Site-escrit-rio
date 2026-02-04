@@ -5,8 +5,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    <title>Lang Cardoso Advocacia | Advocacia Empresarial, Direito Cível e Defesa Criminal em Santa Maria RS</title>
-    <meta name="description" content="Escritório de advocacia em Santa Maria RS especializado em advocacia empresarial, direito cível e defesa criminal. Estratégia jurídica de elite e resultados de alta performance para empresas e indivíduos." />
+    <title>Lang Cardoso Advocacia | Escritório de Advocacia em Santa Maria RS</title>
+    <meta name="description" content="Escritório de advocacia em Santa Maria RS especializado em advocacia empresarial, direito cível e defesa criminal. Estratégia jurídica de excelência." />
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
@@ -27,44 +27,50 @@
         background: #fcfcfc;
       }
       ::-webkit-scrollbar-thumb {
-        background: #D4AF37;
+        background: #000000;
       }
       
-      .glass-light {
-        background: rgba(255, 255, 255, 0.6);
-        backdrop-filter: blur(25px);
-        -webkit-backdrop-filter: blur(25px);
-        border: 1px solid rgba(0, 0, 0, 0.04);
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.03);
+      .navegacao-fixa {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
       }
       
-      .text-gold { color: #D4AF37; }
-      .bg-gold { background-color: #D4AF37; }
-      
-      .luxury-shadow {
-        box-shadow: 0 40px 100px -20px rgba(0,0,0,0.08);
+      .sombra-luxo {
+        box-shadow: 0 20px 50px -10px rgba(0,0,0,0.05);
       }
 
-      .text-reveal {
-        background: linear-gradient(to bottom, #000 0%, #333 100%);
+      .texto-revelado {
+        background: linear-gradient(to bottom, #000 0%, #666 100%);
         background-clip: text;
         -webkit-background-clip: text;
         color: transparent;
       }
 
-      @keyframes neonPulse {
-        0%, 100% { box-shadow: 0 0 15px rgba(0, 191, 255, 0.2), inset 0 0 5px rgba(0, 191, 255, 0.1); }
-        50% { box-shadow: 0 0 25px rgba(0, 191, 255, 0.5), inset 0 0 10px rgba(0, 191, 255, 0.2); }
+      @keyframes pulsarSuave {
+        0%, 100% { box-shadow: 0 0 10px rgba(0, 0, 0, 0.05); }
+        50% { box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); }
       }
 
-      .neon-glow-hover:hover {
-        animation: neonPulse 2s infinite ease-in-out;
-        border-color: rgba(0, 191, 255, 0.4);
+      .efeito-hover:hover {
+        animation: pulsarSuave 2s infinite ease-in-out;
+        border-color: rgba(0, 0, 0, 0.3);
       }
 
       ::selection {
         background-color: #000;
         color: #fff;
+      }
+
+      /* Garante que o conteúdo não sobreponha a navbar */
+      main {
+        padding-top: 80px;
+      }
+      @media (min-width: 768px) {
+        main {
+          padding-top: 100px;
+        }
       }
     </style>
   <script type="importmap">
