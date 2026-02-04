@@ -27,14 +27,18 @@ import {
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
 
+// --- IMPORTAÇÃO BLINDADA DA IMAGEM ---
+// Certifique-se de que o arquivo 'advogado.png' está na MESMA PASTA deste arquivo App.tsx
+import fotoAdvogado from './advogado.png'; 
+
 // --- Constantes ---
 const LINK_WHATSAPP = "https://wa.me/555532176378";
 const LINK_INSTAGRAM = "https://www.instagram.com/langcardosoadvocacia";
 const LINK_MAPA = "https://www.google.com/maps/search/?api=1&query=Alameda+Montevideo,+322,+Sala+108,+Santa+Maria+-+RS";
 const EMAIL_CONTATO = "contato@langcardoso.adv.br";
 
-// CORREÇÃO: Caminho exato para a pasta imagens dentro da public
-const IMAGEM_ADVOGADO = "/public/imagens/advogado.png"; 
+// Agora usamos a imagem importada
+const IMAGEM_ADVOGADO = fotoAdvogado;
 
 const TRANSICAO_SUAVE: [number, number, number, number] = [0.23, 1, 0.32, 1];
 
@@ -265,7 +269,8 @@ const PaginaInicial = () => {
           </div>
         </div>
         <div className="relative">
-          <img src={IMAGEM_ADVOGADO} alt="Escritório" className="w-full grayscale shadow-2xl border border-black/5" />
+          {/* AQUI ESTÁ A CORREÇÃO: Usando a variável importada e um alt text profissional */}
+          <img src={IMAGEM_ADVOGADO} alt="Foto Dr. Lang" className="w-full grayscale shadow-2xl border border-black/5" />
         </div>
       </section>
 
