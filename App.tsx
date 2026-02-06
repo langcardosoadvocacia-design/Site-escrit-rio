@@ -25,11 +25,32 @@ import {
   Phone
 } from 'lucide-react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
-// AQUI ESTÁ A CORREÇÃO DA #: Usamos HashRouter para corrigir o erro de link/404
 import { HashRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
 
 // --- IMPORTAÇÃO BLINDADA DA IMAGEM ---
 import fotoAdvogado from './advogado.png'; 
+
+// --- Declaração Global para o Gtag (Para o TypeScript não reclamar) ---
+declare global {
+  interface Window {
+    gtag: (...args: any[]) => void;
+  }
+}
+
+// --- Função de Disparo de Conversão (Estratégia Oculta) ---
+const dispararConversaoWhatsApp = () => {
+  if (typeof window.gtag === 'function') {
+    // Dispara o evento de conversão específico que você criou
+    window.gtag('event', 'conversion', {
+      'send_to': 'AW-17926426473/xB7yCIDz6vIbEOme_uNC',
+      'value': 1.0,
+      'currency': 'BRL'
+    });
+    console.log("Conversão de WhatsApp disparada para o Google Ads");
+  } else {
+    console.warn("Google Tag não encontrada. Verifique o index.html");
+  }
+};
 
 // --- Constantes ---
 const LINK_WHATSAPP = "https://wa.me/555532176378";
@@ -81,7 +102,8 @@ const BotaoCTA: React.FC<{ texto: string; className?: string }> = ({ texto, clas
     href={LINK_WHATSAPP} 
     target="_blank" 
     rel="noopener noreferrer" 
-    className={`inline-flex items-center gap-4 px-10 py-6 bg-black text-white font-bold uppercase text-[10px] tracking-[0.3em] transition-all hover:bg-gray-800 shadow-xl ${className}`}
+    onClick={dispararConversaoWhatsApp} // <--- GATILHO INSTALADO AQUI
+    className={`inline-flex items-center gap-4 px-10 py-6 bg-black text-white font-bold uppercase text-[10px] tracking-[0.3em] transition-all hover:bg-gray-800 shadow-xl cursor-pointer ${className}`}
   >
     {texto} <ArrowRight size={16} />
   </a>
@@ -174,7 +196,8 @@ const BarraNavegacao = () => {
             href={LINK_WHATSAPP} 
             target="_blank" 
             rel="noopener noreferrer" 
-            className="px-6 py-3 bg-black text-white text-[9px] font-bold uppercase tracking-[0.3em] transition-colors hover:bg-gray-800"
+            onClick={dispararConversaoWhatsApp} // <--- GATILHO INSTALADO AQUI
+            className="px-6 py-3 bg-black text-white text-[9px] font-bold uppercase tracking-[0.3em] transition-colors hover:bg-gray-800 cursor-pointer"
           >
             Atendimento
           </a>
@@ -209,7 +232,8 @@ const BarraNavegacao = () => {
             ))}
             <a 
               href={LINK_WHATSAPP} 
-              className="w-full py-4 bg-black text-white text-center text-[10px] font-bold uppercase tracking-[0.3em]"
+              onClick={dispararConversaoWhatsApp} // <--- GATILHO INSTALADO AQUI
+              className="w-full py-4 bg-black text-white text-center text-[10px] font-bold uppercase tracking-[0.3em] cursor-pointer"
             >
               WhatsApp
             </a>
@@ -380,7 +404,13 @@ const Rodape = () => {
               Alameda Montevideo, 322 <br /> Sala 108, Santa Maria - RS <br /> <span className="underline opacity-40">Ver no Google Maps</span>
             </p>
           </a>
-          <a href={LINK_WHATSAPP} target="_blank" rel="noopener noreferrer" className="group block">
+          <a 
+            href={LINK_WHATSAPP} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            onClick={dispararConversaoWhatsApp} // <--- GATILHO INSTALADO AQUI
+            className="group block cursor-pointer"
+          >
             <MessageCircle className="mb-6 text-black group-hover:scale-110 transition-transform" size={32} />
             <h5 className="text-[11px] font-bold uppercase tracking-widest mb-4">WhatsApp</h5>
             <p className="text-xs text-black/50 leading-loose group-hover:text-black transition-colors">
