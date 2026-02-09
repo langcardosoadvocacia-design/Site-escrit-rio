@@ -89,8 +89,8 @@ const PaginaEquipe = () => {
       i: "/images/colaborador1.png" 
     },
     { 
-      n: "Jefferson", 
-      a: "", 
+      n: "Especializações", 
+      a: "Pós Graduado em Direito e Processo do Trabalho; Especialização em Acidentes de Trabalho e Doença Ocupacional, Compliance Esmpresarial;", 
       i: "/images/colaborador2.png" 
     }
   ];
