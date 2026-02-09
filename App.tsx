@@ -90,7 +90,7 @@ const PaginaEquipe = () => {
     },
     { 
       n: "Especializações", 
-      a: "Pós Graduado em Direito e Processo do Trabalho; Especialização em Acidentes de Trabalho e Doença Ocupacional, Compliance Esmpresarial;", 
+      a: "Pós Graduado em Direito e Processo do Trabalho; Especialização em Acidentes de Trabalho e Doença Ocupacional, Compliance Esmpresarial; Especializando em Direito Criminal E Direito Penal", 
       i: "/images/colaborador2.png" 
     }
   ];
