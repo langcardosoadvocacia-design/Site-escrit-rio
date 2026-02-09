@@ -22,7 +22,8 @@ import {
   MapPin,
   Clock,
   Mail,
-  Phone
+  Phone,
+  Briefcase // Ícone novo pra equipe
 } from 'lucide-react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { HashRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
@@ -30,25 +31,24 @@ import { HashRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
 // --- IMPORTAÇÃO BLINDADA DA IMAGEM ---
 import fotoAdvogado from './advogado.png'; 
 
-// --- Declaração Global para o Gtag (Para o TypeScript não reclamar) ---
+// --- Declaração Global para o Gtag ---
 declare global {
   interface Window {
     gtag: (...args: any[]) => void;
   }
 }
 
-// --- Função de Disparo de Conversão (Estratégia Oculta) ---
+// --- Função de Disparo de Conversão ---
 const dispararConversaoWhatsApp = () => {
   if (typeof window.gtag === 'function') {
-    // Dispara o evento de conversão específico que você criou
     window.gtag('event', 'conversion', {
       'send_to': 'AW-17926426473/xB7yCIDz6vIbEOme_uNC',
       'value': 1.0,
       'currency': 'BRL'
     });
-    console.log("Conversão de WhatsApp disparada para o Google Ads");
+    console.log("Conversão de WhatsApp disparada");
   } else {
-    console.warn("Google Tag não encontrada. Verifique o index.html");
+    console.warn("Google Tag não encontrada");
   }
 };
 
@@ -58,8 +58,16 @@ const LINK_INSTAGRAM = "https://www.instagram.com/langcardosoadvocacia";
 const LINK_MAPA = "https://www.google.com/maps/search/?api=1&query=Alameda+Montevideo,+322,+Sala+108,+Santa+Maria+-+RS";
 const EMAIL_CONTATO = "contato@langcardoso.adv.br";
 
-// Agora usamos a imagem importada
+// Imagem do advogado principal
 const IMAGEM_ADVOGADO = fotoAdvogado;
+
+// Imagens novas (Assumindo que estão em public/imagens e são .png)
+const IMG_COLABORADOR_1 = "/imagens/colaborador1.png";
+const IMG_COLABORADOR_2 = "/imagens/colaborador2.png";
+const IMG_COLABORADOR_3 = "/imagens/colaborador3.png";
+const IMG_ESCRITORIO_1 = "/imagens/escritorio1.png";
+const IMG_ESCRITORIO_2 = "/imagens/escritorio2.png";
+const IMG_ESCRITORIO_3 = "/imagens/escritorio3.png";
 
 const TRANSICAO_SUAVE: [number, number, number, number] = [0.23, 1, 0.32, 1];
 
@@ -102,7 +110,7 @@ const BotaoCTA: React.FC<{ texto: string; className?: string }> = ({ texto, clas
     href={LINK_WHATSAPP} 
     target="_blank" 
     rel="noopener noreferrer" 
-    onClick={dispararConversaoWhatsApp} // <--- GATILHO INSTALADO AQUI
+    onClick={dispararConversaoWhatsApp}
     className={`inline-flex items-center gap-4 px-10 py-6 bg-black text-white font-bold uppercase text-[10px] tracking-[0.3em] transition-all hover:bg-gray-800 shadow-xl cursor-pointer ${className}`}
   >
     {texto} <ArrowRight size={16} />
@@ -159,7 +167,9 @@ const BarraNavegacao = () => {
   const links = [
     { nome: 'Início', caminho: '/' },
     { nome: 'Empresarial & Cível', caminho: '/assessoria-empresarial' },
-    { nome: 'Criminal', caminho: '/defesa-criminal' }
+    { nome: 'Criminal', caminho: '/defesa-criminal' },
+    { nome: 'Equipe', caminho: '/equipe' },       // NOVA ABA
+    { nome: 'Estrutura', caminho: '/estrutura' }  // NOVA ABA
   ];
 
   return (
@@ -173,14 +183,14 @@ const BarraNavegacao = () => {
         </Link>
 
         <div className="hidden lg:flex items-center gap-10">
-          <div className="flex items-center gap-8">
+          <div className="flex items-center gap-6 xl:gap-8">
             {links.map((link) => (
               <Link 
                 key={link.caminho}
                 to={link.caminho} 
                 className="group relative py-1"
               >
-                <span className={`text-[10px] font-bold uppercase tracking-[0.2em] transition-colors
+                <span className={`text-[9px] xl:text-[10px] font-bold uppercase tracking-[0.2em] transition-colors
                   ${local.pathname === link.caminho ? 'text-black' : 'text-black/40 hover:text-black'}`}
                 >
                   {link.nome}
@@ -196,7 +206,7 @@ const BarraNavegacao = () => {
             href={LINK_WHATSAPP} 
             target="_blank" 
             rel="noopener noreferrer" 
-            onClick={dispararConversaoWhatsApp} // <--- GATILHO INSTALADO AQUI
+            onClick={dispararConversaoWhatsApp}
             className="px-6 py-3 bg-black text-white text-[9px] font-bold uppercase tracking-[0.3em] transition-colors hover:bg-gray-800 cursor-pointer"
           >
             Atendimento
@@ -232,7 +242,7 @@ const BarraNavegacao = () => {
             ))}
             <a 
               href={LINK_WHATSAPP} 
-              onClick={dispararConversaoWhatsApp} // <--- GATILHO INSTALADO AQUI
+              onClick={dispararConversaoWhatsApp}
               className="w-full py-4 bg-black text-white text-center text-[10px] font-bold uppercase tracking-[0.3em] cursor-pointer"
             >
               WhatsApp
@@ -328,6 +338,108 @@ const PaginaInicial = () => {
   );
 };
 
+const PaginaEquipe = () => {
+  useEffect(() => { window.scrollTo(0, 0); }, []);
+  
+  const colaboradores = [
+    { nome: "Dr. Colaborador 1", area: "Especialista Cível", img: IMG_COLABORADOR_1 },
+    { nome: "Dr. Colaborador 2", area: "Especialista Penal", img: IMG_COLABORADOR_2 },
+    { nome: "Dr. Colaborador 3", area: "Consultor Jurídico", img: IMG_COLABORADOR_3 },
+  ];
+
+  return (
+    <main className="bg-white">
+      <section className="min-h-[60vh] flex flex-col justify-center bg-[#fcfcfc] border-b border-black/5 pb-20 pt-32">
+        <div className="container mx-auto px-6 md:px-12 text-center">
+          <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-black/30 mb-6 block">Nosso Capital Humano</span>
+          <h1 className="text-5xl md:text-8xl font-serif text-black mb-10 tracking-tighter">Equipe Técnica.</h1>
+          <p className="text-lg md:text-2xl text-black/50 font-light leading-relaxed max-w-3xl mx-auto">
+            Profissionais selecionados para entregar excelência e precisão técnica em cada demanda.
+          </p>
+        </div>
+      </section>
+
+      <section className="py-24 bg-white">
+        <div className="container mx-auto px-6 md:px-12 grid md:grid-cols-3 gap-10">
+          {colaboradores.map((colab, i) => (
+            <CardInterativo key={i} className="flex flex-col">
+              <div className="aspect-[3/4] overflow-hidden bg-gray-100 border-b border-black/5">
+                <img 
+                  src={colab.img} 
+                  alt={colab.nome} 
+                  className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                  onError={(e) => {
+                    // Fallback se a imagem não existir
+                    (e.target as HTMLImageElement).src = 'https://via.placeholder.com/400x600?text=Foto+Pendente';
+                  }}
+                />
+              </div>
+              <div className="p-8 text-center bg-white flex-grow flex flex-col justify-center">
+                <h3 className="text-xl font-serif mb-2">{colab.nome}</h3>
+                <span className="text-[10px] font-bold uppercase tracking-widest text-black/40">{colab.area}</span>
+              </div>
+            </CardInterativo>
+          ))}
+        </div>
+        <div className="flex justify-center mt-20">
+          <BotaoCTA texto="Fale com nosso time" />
+        </div>
+      </section>
+
+      <Rodape />
+    </main>
+  );
+};
+
+const PaginaEstrutura = () => {
+  useEffect(() => { window.scrollTo(0, 0); }, []);
+
+  const fotos = [IMG_ESCRITORIO_1, IMG_ESCRITORIO_2, IMG_ESCRITORIO_3];
+
+  return (
+    <main className="bg-white">
+      <section className="min-h-[50vh] flex flex-col justify-center bg-[#fcfcfc] border-b border-black/5 pb-20 pt-32">
+        <div className="container mx-auto px-6 md:px-12">
+          <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-black/30 mb-6 block">Infraestrutura</span>
+          <h1 className="text-5xl md:text-8xl font-serif text-black mb-10 tracking-tighter">O Escritório.</h1>
+          <p className="text-lg md:text-2xl text-black/50 font-light leading-relaxed max-w-2xl border-l border-black/10 pl-8">
+            Um ambiente projetado para a discrição, o foco e o atendimento personalizado que seu caso exige.
+          </p>
+        </div>
+      </section>
+
+      <section className="py-24 bg-white">
+        <div className="container mx-auto px-6 md:px-12 grid gap-12">
+          {fotos.map((foto, i) => (
+            <motion.div 
+              key={i}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="w-full border border-black/5 p-4 bg-white shadow-sm"
+            >
+              <img 
+                src={foto} 
+                alt={`Ambiente do escritório ${i+1}`} 
+                className="w-full h-auto grayscale hover:grayscale-0 transition-all duration-700"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = 'https://via.placeholder.com/1200x600?text=Foto+do+Escritorio+Pendente';
+                }}
+              />
+            </motion.div>
+          ))}
+        </div>
+        <div className="flex justify-center mt-20">
+          <BotaoCTA texto="Venha nos visitar" />
+        </div>
+      </section>
+
+      <Rodape />
+    </main>
+  );
+};
+
 const ModeloPaginaServico: React.FC<{ 
   titulo: string; 
   subtitulo: string; 
@@ -339,7 +451,7 @@ const ModeloPaginaServico: React.FC<{
   return (
     <main className="bg-white">
       {/* 1. Botão de topo no final da Hero */}
-      <section className="min-h-[70vh] flex flex-col justify-center bg-[#fcfcfc] border-b border-black/5 pb-20">
+      <section className="min-h-[70vh] flex flex-col justify-center bg-[#fcfcfc] border-b border-black/5 pb-20 pt-20">
         <div className="container mx-auto px-6 md:px-12">
           <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-black/30 mb-6 block">{area}</span>
           <h1 className="text-5xl md:text-8xl font-serif text-black mb-10 tracking-tighter leading-tight">{titulo}</h1>
@@ -408,7 +520,7 @@ const Rodape = () => {
             href={LINK_WHATSAPP} 
             target="_blank" 
             rel="noopener noreferrer" 
-            onClick={dispararConversaoWhatsApp} // <--- GATILHO INSTALADO AQUI
+            onClick={dispararConversaoWhatsApp}
             className="group block cursor-pointer"
           >
             <MessageCircle className="mb-6 text-black group-hover:scale-110 transition-transform" size={32} />
@@ -489,6 +601,8 @@ export default function App() {
         <Route path="/" element={<PaginaInicial />} />
         <Route path="/assessoria-empresarial" element={<PaginaEmpresarial />} />
         <Route path="/defesa-criminal" element={<PaginaCriminal />} />
+        <Route path="/equipe" element={<PaginaEquipe />} />
+        <Route path="/estrutura" element={<PaginaEstrutura />} />
       </Routes>
     </HashRouter>
   );
