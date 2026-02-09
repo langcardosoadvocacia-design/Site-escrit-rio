@@ -131,7 +131,7 @@ const PaginaInicial = () => (
 const PaginaEquipe = () => {
   const colaboradores = [
     { n: "Dr. Matheus Lang", a: "Sócio Fundador", i: IMAGEM_ADVOGADO },
-    { n: "Nicolas Brito", a: "Produtos Digitais e Modelos de Assinatura (SaaS)", "Marketing Estratégico", "Social Midia", i: IMG_COLABORADOR_1 },
+    { n: "Nicolas Brito", a: "Produtos Digitais e Modelos de Assinatura (SaaS)","Marketing Estratégico","Social Midia", i: IMG_COLABORADOR_1 },
     { n: "Consultoria", a: "Especialista Penal", i: IMG_COLABORADOR_2 },
   ];
   return (
