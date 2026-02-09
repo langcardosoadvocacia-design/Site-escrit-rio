@@ -84,13 +84,13 @@ const PaginaEquipe = () => {
       i: "/images/advogado.png" 
     },
     { 
-      n: "Nicolas", 
-      a: "Especializações: Produtos Digitais e Modelos de Assinatura (SaaS); Marketing Estratégico; Social Media", 
+      n: "Especializações", 
+      a: "Produtos Digitais e Modelos de Assinatura (SaaS); Marketing Estratégico; Social Media", 
       i: "/images/colaborador1.png" 
     },
     { 
       n: "Jefferson", 
-      a: "Consultoria Técnica", 
+      a: "", 
       i: "/images/colaborador2.png" 
     }
   ];
