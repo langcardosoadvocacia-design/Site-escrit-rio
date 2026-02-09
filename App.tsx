@@ -78,23 +78,42 @@ const PaginaInicial = () => (
 
 const PaginaEquipe = () => {
   const equipe = [
-    { n: "Nicolas", a: "Produtos Digitais e Modelos de Assinatura (SaaS)", i: IMAGEM_ADVOGADO },
-    { n: "Nicolas", a: "Marketing Estratégico", i: IMG_COLABORADOR_1 },
-    { n: "Nicolas", a: "Social Media", i: IMG_COLABORADOR_2 }
+    { 
+      n: "Dr. Matheus Lang", 
+      a: "Sócio Fundador", 
+      i: "/images/advogado.png" 
+    },
+    { 
+      n: "Nicolas", 
+      a: "Especializações: Produtos Digitais e Modelos de Assinatura (SaaS); Marketing Estratégico; Social Media", 
+      i: "/images/colaborador1.png" 
+    },
+    { 
+      n: "Jefferson", 
+      a: "Consultoria Técnica", 
+      i: "/images/colaborador2.png" 
+    }
   ];
+
   return (
     <main className="pt-32 pb-20 container mx-auto px-6">
-      <h1 className="text-6xl font-serif mb-8 tracking-tighter">Equipe.</h1>
-      <p className="text-[10px] uppercase tracking-[0.3em] text-black/40 mb-16">Especializações</p>
+      <h1 className="text-6xl font-serif mb-16 tracking-tighter">Equipe.</h1>
       <div className="grid md:grid-cols-3 gap-10">
         {equipe.map((m, idx) => (
-          <div key={idx} className="border border-black/10 bg-white overflow-hidden">
+          <div key={idx} className="border border-black/10 bg-white overflow-hidden flex flex-col">
             <div className="aspect-[3/4] overflow-hidden">
-                <img src={m.i} className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all" alt={m.n} />
+                <img 
+                  src={m.i} 
+                  className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all" 
+                  alt={m.n} 
+                  onError={(e) => (e.currentTarget.src = "https://via.placeholder.com/400x600?text=Foto+Pendente")}
+                />
             </div>
-            <div className="p-6 text-center">
+            <div className="p-6 text-center flex-grow flex flex-col justify-center">
               <h3 className="font-serif text-xl mb-2">{m.n}</h3>
-              <p className="text-[9px] uppercase tracking-widest text-black/40 leading-relaxed px-4">{m.a}</p>
+              <p className="text-[10px] uppercase tracking-widest text-black/40 leading-relaxed whitespace-pre-line">
+                {m.a}
+              </p>
             </div>
           </div>
         ))}
