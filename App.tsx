@@ -8,7 +8,6 @@ import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from
 import { HashRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
 
 // --- CONFIGURAÇÃO DE IMAGENS ---
-// Usando caminhos da pasta public para garantir carregamento
 const IMAGEM_MATHEUS = "/images/advogado.png"; 
 const IMG_NICOLAS = "/images/colaborador1.png";
 const IMG_JEFFERSON = "/images/colaborador2.png";
@@ -92,6 +91,62 @@ const BarraNavegacao = () => {
   );
 };
 
+// --- SEÇÕES REUTILIZÁVEIS ---
+
+const SecaoEquipe = () => {
+  const equipe = [
+    { n: "Dr. Matheus Lang", a: "Sócio Fundador", i: IMAGEM_MATHEUS },
+    { n: "Nicolas Brito", a: "Marketing Estratégico & SaaS", i: IMG_NICOLAS },
+    { n: "Jefferson Cooper", a: "Direito Trabalhista & Previdenciário", i: IMG_JEFFERSON }
+  ];
+  return (
+    <section className="py-24 bg-white border-y border-black/5">
+      <div className="container mx-auto px-6">
+        <div className="mb-16 text-center">
+          <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-black/30 mb-6 block">Nosso Time</span>
+          <h2 className="text-4xl md:text-6xl font-serif tracking-tighter">Inteligência Coletiva.</h2>
+        </div>
+        <div className="grid md:grid-cols-3 gap-10">
+          {equipe.map((m, idx) => (
+            <CardInterativo key={idx} className="flex flex-col">
+              <div className="aspect-[3/4] overflow-hidden grayscale hover:grayscale-0 transition-all duration-500">
+                <img src={m.i} className="w-full h-full object-cover" alt={m.n} />
+              </div>
+              <div className="p-8 text-center bg-white flex-grow flex flex-col justify-center">
+                <h3 className="font-serif text-2xl mb-4">{m.n}</h3>
+                <p className="text-[10px] uppercase tracking-widest text-black/40 leading-loose">{m.a}</p>
+              </div>
+            </CardInterativo>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const SecaoEstrutura = () => (
+  <section className="py-24 bg-[#fcfcfc]">
+    <div className="container mx-auto px-6">
+      <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+        <div>
+          <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-black/30 mb-6 block">Sede Própria</span>
+          <h2 className="text-4xl md:text-6xl font-serif tracking-tighter">Estrutura de Elite.</h2>
+        </div>
+        <Link to="/estrutura" className="text-[10px] font-bold uppercase tracking-[0.3em] border-b border-black pb-1 hover:opacity-50 transition-opacity">
+          Ver galeria completa
+        </Link>
+      </div>
+      <div className="grid md:grid-cols-3 gap-6">
+        {[IMG_ESCRITORIO_1, IMG_ESCRITORIO_2, IMG_ESCRITORIO_3].map((img, i) => (
+          <div key={i} className="aspect-square overflow-hidden border border-black/5 group">
+            <img src={img} className="w-full h-full object-cover grayscale group-hover:scale-105 transition-transform duration-700" alt="Ambiente" />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
 // --- PÁGINAS PRINCIPAIS ---
 
 const PaginaInicial = () => (
@@ -108,11 +163,12 @@ const PaginaInicial = () => (
       </div>
     </section>
 
-    {/* Seção Sobre (Restaurada do código antigo) */}
+    {/* Seção Sobre */}
     <section className="py-24 md:py-40 container mx-auto px-6 grid lg:grid-cols-2 gap-20 items-center">
       <div>
         <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-black/30 mb-8 block">Sobre o Escritório</span>
-        <h2 className="text-4xl md:text-7xl font-serif mb-10 tracking-tighter">Tradição com <br /> Rigor Técnico.</h2>
+        {/* Adicionado classe texto-revelado aqui */}
+        <h2 className="text-4xl md:text-7xl font-serif mb-10 tracking-tighter texto-revelado">Tradição com <br /> Rigor Técnico.</h2>
         <p className="text-base md:text-xl text-black/60 font-light leading-relaxed mb-12">
           O escritório Lang Cardoso Advocacia prioriza o atendimento técnico e personalizado. Não trabalhamos com volume, trabalhamos com soluções estratégicas para casos complexos que exigem atenção absoluta aos detalhes.
         </p>
@@ -155,6 +211,10 @@ const PaginaInicial = () => (
         </Link>
       </div>
     </section>
+
+    {/* NOVAS SEÇÕES INTEGRADAS NA HOME */}
+    <SecaoEquipe />
+    <SecaoEstrutura />
 
     <Rodape />
   </main>
@@ -202,27 +262,13 @@ const ModeloPaginaServico: React.FC<{ titulo: string; subtitulo: string; dores: 
 
 const PaginaEquipe = () => {
   useEffect(() => { window.scrollTo(0, 0); }, []);
-  const equipe = [
-    { n: "Dr. Matheus Lang", a: "Sócio Fundador", i: IMAGEM_MATHEUS },
-    { n: "Nicolas Brito", a: "Marketing Estratégico & SaaS", i: IMG_NICOLAS },
-    { n: "Jefferson Cooper", a: "Direito Trabalhista & Previdenciário", i: IMG_JEFFERSON }
-  ];
   return (
-    <main className="pt-32 pb-20 container mx-auto px-6">
-      <h1 className="text-6xl font-serif mb-16 tracking-tighter">Equipe.</h1>
-      <div className="grid md:grid-cols-3 gap-10">
-        {equipe.map((m, idx) => (
-          <CardInterativo key={idx} className="flex flex-col">
-            <div className="aspect-[3/4] overflow-hidden grayscale hover:grayscale-0 transition-all">
-              <img src={m.i} className="w-full h-full object-cover" alt={m.n} />
-            </div>
-            <div className="p-8 text-center bg-white flex-grow flex flex-col justify-center">
-              <h3 className="font-serif text-2xl mb-4">{m.n}</h3>
-              <p className="text-[10px] uppercase tracking-widest text-black/40 leading-loose">{m.a}</p>
-            </div>
-          </CardInterativo>
-        ))}
+    <main className="pt-32 pb-20">
+      <div className="container mx-auto px-6 mb-16">
+        <h1 className="text-6xl font-serif mb-16 tracking-tighter">Equipe.</h1>
+        <p className="text-xl text-black/50 max-w-2xl font-light">Profissionais multidisciplinares unidos por um único propósito: a defesa dos seus interesses.</p>
       </div>
+      <SecaoEquipe />
       <Rodape />
     </main>
   );
@@ -232,6 +278,9 @@ const Rodape = () => (
   <footer className="py-24 bg-white border-t border-black/5">
     <div className="container mx-auto px-6 flex flex-col items-center gap-10">
       <Logotipo reduzido />
+      {/* Adicionado classe texto-revelado aqui também */}
+      <h2 className="text-4xl md:text-7xl font-serif text-center mb-16 italic texto-revelado">Fale com nosso escritório.</h2>
+      
       <div className="grid md:grid-cols-3 gap-12 border-y border-black/10 py-16 w-full text-center">
         <a href={LINK_MAPA} target="_blank" className="group">
           <MapPin className="mx-auto mb-4 group-hover:scale-110 transition-transform" /> 
@@ -268,11 +317,7 @@ export default function App() {
         <Route path="/estrutura" element={
           <main className="pt-32 container mx-auto px-6">
             <h1 className="text-6xl font-serif mb-16">O Escritório.</h1>
-            <div className="grid gap-10">
-              {[IMG_ESCRITORIO_1, IMG_ESCRITORIO_2, IMG_ESCRITORIO_3].map((img, i) => (
-                <img key={i} src={img} className="w-full grayscale border border-black/5" alt="Ambiente" />
-              ))}
-            </div>
+            <SecaoEstrutura />
             <Rodape />
           </main>
         } />
