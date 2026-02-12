@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { 
   Building2, Scale, ArrowRight, Menu, X, ReceiptText, 
   ShieldAlert, MessageCircle, AlertCircle, Landmark, 
-  FileText, Instagram, Linkedin, MapPin, Mail, Lock, Search, Clock
+  FileText, Instagram, Linkedin, MapPin, Mail, Lock, Search, CheckCircle2
 } from 'lucide-react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { HashRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
@@ -19,8 +19,6 @@ const LINK_WHATSAPP = "https://wa.me/555532176378";
 const EMAIL_CONTATO = "contato@langcardoso.adv.br";
 const LINK_INSTAGRAM = "https://www.instagram.com/langcardosoadvocacia";
 const LINK_MAPA = "https://www.google.com/maps/search/?api=1&query=Alameda+Montevideo,+322,+Sala+108,+Santa+Maria+-+RS";
-
-const TRANSICAO_SUAVE: [number, number, number, number] = [0.23, 1, 0.32, 1];
 
 // --- Declaração Global para o Gtag ---
 declare global {
@@ -47,16 +45,23 @@ const Logotipo: React.FC<{ reduzido?: boolean; className?: string }> = ({ reduzi
   </div>
 );
 
-const BotaoCTA: React.FC<{ texto: string }> = ({ texto }) => (
-  <a href={LINK_WHATSAPP} target="_blank" rel="noopener noreferrer" onClick={dispararConversaoWhatsApp} className="inline-flex items-center gap-4 px-10 py-6 bg-black text-white font-bold uppercase text-[10px] tracking-[0.3em] hover:bg-gray-800 transition-all cursor-pointer shadow-xl">
-    {texto} <ArrowRight size={16} />
+const BotaoCTA: React.FC<{ texto: string; link?: string; primario?: boolean }> = ({ texto, link = LINK_WHATSAPP, primario = true }) => (
+  <a 
+    href={link} 
+    target="_blank" 
+    rel="noopener noreferrer" 
+    onClick={primario ? dispararConversaoWhatsApp : undefined} 
+    className={`inline-flex items-center gap-4 px-10 py-5 font-bold uppercase text-[10px] tracking-[0.3em] transition-all cursor-pointer shadow-lg
+      ${primario ? 'bg-black text-white hover:bg-gray-800' : 'bg-white text-black border border-black hover:bg-gray-50'}`}
+  >
+    {texto} <ArrowRight size={14} />
   </a>
 );
 
 const CardInterativo: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = "" }) => {
   const x = useMotionValue(0); const y = useMotionValue(0);
-  const rx = useTransform(useSpring(y, { stiffness: 300, damping: 30 }), [-0.5, 0.5], ["8deg", "-8deg"]);
-  const ry = useTransform(useSpring(x, { stiffness: 300, damping: 30 }), [-0.5, 0.5], ["-8deg", "8deg"]);
+  const rx = useTransform(useSpring(y, { stiffness: 300, damping: 30 }), [-0.5, 0.5], ["5deg", "-5deg"]);
+  const ry = useTransform(useSpring(x, { stiffness: 300, damping: 30 }), [-0.5, 0.5], ["-5deg", "5deg"]);
   return (
     <motion.div style={{ rotateX: rx, rotateY: ry, transformStyle: "preserve-3d" }} onMouseMove={(e) => { const b = e.currentTarget.getBoundingClientRect(); x.set((e.clientX - b.left) / b.width - 0.5); y.set((e.clientY - b.top) / b.height - 0.5); }} onMouseLeave={() => { x.set(0); y.set(0); }} className={`bg-white border border-black/10 transition-all overflow-hidden ${className}`}>
       {children}
@@ -94,18 +99,19 @@ const BarraNavegacao = () => {
 
 const SecaoEquipe = () => {
   const equipe = [
-    { n: "Dr. Matheus Lang", a: "Sócio Fundador", d: "Advocacia corporativa e criminal de alta complexidade.", i: IMAGEM_MATHEUS },
+    // Matheus já tem destaque, mas mantemos aqui para consistência ou removemos se preferir. 
+    // Vou manter apenas os colaboradores aqui pois Matheus tem a seção FUNDADOR gigante acima.
     { n: "Nicolas Brito", a: "Marketing Estratégico", d: "Produtos Digitais e Modelos de Assinatura (SaaS); Marketing Estratégico; Social Media.", i: IMG_NICOLAS },
-    { n: "Jefferson Cooper", a: "Jurídico Trabalhista", d: "Pós Graduado em Direito e Processo do Trabalho; Especialização em Acidentes de Trabalho e Compliance.", i: IMG_JEFFERSON }
+    { n: "Jefferson Cooper", a: "Jurídico Trabalhista", d: "Pós Graduado em Direito e Processo do Trabalho; Especialização em Acidentes de Trabalho e Doença Ocupacional, Compliance Empresarial; Especializando em Direito Criminal e Direito Penal.", i: IMG_JEFFERSON }
   ];
   return (
     <section className="py-24 bg-white border-y border-black/5">
       <div className="container mx-auto px-6">
         <div className="mb-16 text-center">
           <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-black/30 mb-6 block">Nosso Time</span>
-          <h2 className="text-4xl md:text-6xl font-serif tracking-tighter">Inteligência Coletiva.</h2>
+          <h2 className="text-4xl md:text-6xl font-serif tracking-tighter">Corpo Técnico.</h2>
         </div>
-        <div className="grid md:grid-cols-3 gap-10">
+        <div className="grid md:grid-cols-2 gap-10 max-w-4xl mx-auto">
           {equipe.map((m, idx) => (
             <CardInterativo key={idx} className="flex flex-col">
               <div className="aspect-[3/4] overflow-hidden grayscale hover:grayscale-0 transition-all duration-500">
@@ -147,71 +153,98 @@ const SecaoEstrutura = () => (
   </section>
 );
 
-// --- PÁGINAS ---
+// --- PÁGINA INICIAL ---
 
 const PaginaInicial = () => (
   <main className="bg-white">
-    {/* Hero Section */}
-    <section className="min-h-[85vh] md:min-h-screen flex flex-col justify-center bg-[#fcfcfc] border-b border-black/5 px-6">
+    {/* 1. HERO SECTION (NOVA) */}
+    <section className="min-h-[90vh] flex flex-col justify-center bg-[#fcfcfc] border-b border-black/5 px-6">
       <div className="container mx-auto">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-          <span className="text-[10px] font-bold uppercase tracking-[0.5em] text-black/30 mb-6 block">Excelência Jurídica em Santa Maria/RS</span>
-          <h1 className="text-5xl md:text-9xl font-serif tracking-tighter mb-10 leading-none">Atuação <br /><span className="italic text-gray-400">Consciente.</span></h1>
-          <p className="text-lg md:text-2xl text-black/50 font-light max-w-2xl border-l border-black/10 pl-8 mb-12">Proteção de ativos e defesa intransigente da liberdade individual e empresarial.</p>
-          <BotaoCTA texto="Solicitar Consulta" />
+          <span className="text-[10px] font-bold uppercase tracking-[0.5em] text-black/30 mb-6 block">Lang Cardoso Advocacia</span>
+          <h1 className="text-5xl md:text-9xl font-serif tracking-tighter mb-10 leading-[0.9]">
+            Estratégia <br /> <span className="italic text-gray-400">Jurídica.</span>
+          </h1>
+          <p className="text-lg md:text-2xl text-black/50 font-light max-w-2xl border-l border-black/10 pl-8 mb-12">
+            Advocacia corporativa de alta complexidade. Inteligência em viabilidade econômica e segurança jurídica para o topo do mercado.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4">
+            <BotaoCTA texto="CONECTAR AGORA" primario={true} />
+            <Link to="/assessoria-empresarial">
+               <BotaoCTA texto="EXPLORAR SOLUÇÕES" primario={false} />
+            </Link>
+          </div>
         </motion.div>
       </div>
     </section>
 
-    {/* Seção Sobre (Matheus) */}
-    <section className="py-24 md:py-40 container mx-auto px-6 grid lg:grid-cols-2 gap-20 items-center">
-      <div>
-        <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-black/30 mb-8 block">Sobre o Escritório</span>
-        <h2 className="text-4xl md:text-7xl font-serif mb-10 tracking-tighter texto-revelado">Tradição com <br /> Rigor Técnico.</h2>
-        <p className="text-base md:text-xl text-black/60 font-light leading-relaxed mb-12">
-          O escritório Lang Cardoso Advocacia prioriza o atendimento técnico e personalizado. Não trabalhamos com volume, trabalhamos com soluções estratégicas para casos complexos que exigem atenção absoluta aos detalhes.
-        </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          <div className="p-8 border border-black/5 bg-gray-50">
-            <ShieldAlert className="mb-4 text-black" size={24} />
-            <h4 className="text-[10px] font-bold uppercase tracking-widest mb-2">Segurança Jurídica</h4>
-            <p className="text-xs text-black/40">Proteção robusta contra riscos imprevistos.</p>
+    {/* 2. DIREITO & NEGÓCIOS (NOVA SEÇÃO) */}
+    <section className="py-24 bg-white border-b border-black/5">
+      <div className="container mx-auto px-6 grid lg:grid-cols-2 gap-16">
+        <div>
+          <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-black/30 mb-8 block">Direito & Negócios</span>
+          <h2 className="text-4xl md:text-6xl font-serif mb-10 tracking-tighter leading-tight">
+            A Evolução da <br/> Advocacia de Resultados.
+          </h2>
+          <div className="pl-6 border-l-2 border-black mb-8">
+            <p className="text-lg md:text-xl font-medium text-black mb-4">
+              Mudamos a forma de atuar para oferecer uma <span className="underline">gestão jurídica integral</span>, onde o Direito é o motor da viabilidade operacional da sua empresa.
+            </p>
           </div>
-          <div className="p-8 border border-black/5 bg-gray-50">
-            <Clock className="mb-4 text-black" size={24} />
-            <h4 className="text-[10px] font-bold uppercase tracking-widest mb-2">Prontidão Técnica</h4>
-            <p className="text-xs text-black/40">Respostas ágeis para demandas urgentes.</p>
-          </div>
+          <p className="text-black/60 font-light leading-relaxed mb-10">
+            Nossa assessoria não foca apenas na lide, mas na estruturação de processos que mitiguem o passivo antes mesmo que ele ocorra. É inteligência técnica aplicada ao lucro.
+          </p>
+        </div>
+        <div className="grid grid-cols-2 gap-4 content-center">
+          {["SEGURANÇA", "COMPLIANCE", "ESTRATÉGIA", "PATRIMÔNIO"].map((item, i) => (
+             <div key={i} className="aspect-square flex items-center justify-center border border-black/5 bg-[#fafafa] hover:bg-black hover:text-white transition-all duration-500 cursor-default group">
+                <span className="text-[10px] font-bold tracking-[0.2em] uppercase">{item}</span>
+             </div>
+          ))}
         </div>
       </div>
-      <div className="relative">
-        <img src={IMAGEM_MATHEUS} alt="Foto Dr. Lang" className="w-full grayscale shadow-2xl border border-black/5 hover:grayscale-0 transition-all duration-700" />
+    </section>
+
+    {/* 3. O FUNDADOR (TEXTO EXATO DOS PRINTS) */}
+    <section className="py-24 md:py-40 container mx-auto px-6 grid lg:grid-cols-2 gap-20 items-center border-b border-black/5">
+      <div className="order-2 lg:order-1 relative">
+        <img src={IMAGEM_MATHEUS} alt="Matheus Lang Cardoso" className="w-full grayscale shadow-2xl border border-black/5" />
+        <div className="absolute -bottom-10 -right-10 bg-black text-white p-8 hidden md:block">
+           <span className="text-4xl font-serif block mb-1">10+</span>
+           <span className="text-[9px] uppercase tracking-widest opacity-60">Anos de Experiência</span>
+        </div>
+      </div>
+      <div className="order-1 lg:order-2">
+        <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-black/30 mb-8 block">O Fundador</span>
+        <h2 className="text-5xl font-serif mb-6 tracking-tighter">Matheus Lang Cardoso</h2>
+        <p className="text-xl italic text-black/40 font-serif mb-10 leading-relaxed">
+          "Nosso compromisso é com a viabilidade do negócio. Transformamos o Direito em uma ferramenta de eficiência prática."
+        </p>
+        <p className="text-base text-black/70 font-light leading-relaxed mb-8">
+          Especialista em Direito Imobiliário e Penal, com visão estratégica multidisciplinar focada em gestão contábil e preservação de ativos corporativos.
+        </p>
+        
+        <ul className="space-y-4 mb-12">
+           {[
+             "OAB/RS 12.585",
+             "MESTRANDO EM DIREITO PELA AMBRA UNIVERSITY",
+             "ESPECIALISTA EM DIREITO IMOBILIÁRIO",
+             "ESPECIALISTA EM DIREITO PENAL",
+             "ESPECIALISTA EM TRIBUNAL DO JÚRI",
+             "ESPECIALIZADO EM COBRANÇA JURÍDICA",
+             "ESPECIALIZADO EM DIREITO EMPRESARIAL E SOCIETÁRIO"
+           ].map((item, i) => (
+             <li key={i} className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-widest text-black/80">
+               <CheckCircle2 size={12} className="text-black/30" /> {item}
+             </li>
+           ))}
+        </ul>
+        
+        <BotaoCTA texto="FALAR COM O FUNDADOR" />
       </div>
     </section>
 
-    {/* Áreas de Atuação */}
-    <section className="py-24 md:py-40 bg-[#f9f9f9] border-y border-black/5">
-      <div className="container mx-auto px-6 text-center mb-20">
-        <h2 className="text-4xl md:text-7xl font-serif italic mb-4">Especialidades.</h2>
-        <p className="text-black/30 text-lg font-light tracking-wide uppercase">Atuação técnica dividida em pilares de elite</p>
-      </div>
-      <div className="container mx-auto px-6 grid md:grid-cols-2 gap-8">
-        <Link to="/assessoria-empresarial" className="group p-12 bg-white border border-black/10 transition-all hover:border-black/30">
-          <Building2 className="mb-8 text-black" size={40} strokeWidth={1} />
-          <h3 className="text-3xl font-serif mb-6">Empresarial & Cível</h3>
-          <p className="text-black/40 mb-10 text-lg font-light leading-relaxed">Blindagem patrimonial, gestão de contratos e recuperação de créditos. Segurança para o crescimento do seu negócio.</p>
-          <span className="text-[9px] font-bold uppercase tracking-[0.3em] border-b border-black/20 pb-1 group-hover:border-black transition-all">Saber Mais</span>
-        </Link>
-        <Link to="/defesa-criminal" className="group p-12 bg-white border border-black/10 transition-all hover:border-black/30">
-          <ShieldAlert className="mb-8 text-black" size={40} strokeWidth={1} />
-          <h3 className="text-3xl font-serif mb-6">Defesa Criminal</h3>
-          <p className="text-black/40 mb-10 text-lg font-light leading-relaxed">Atendimento de urgência, tribunal do júri e defesa em crimes econômicos. A liberdade como prioridade máxima.</p>
-          <span className="text-[9px] font-bold uppercase tracking-[0.3em] border-b border-black/20 pb-1 group-hover:border-black transition-all">Saber Mais</span>
-        </Link>
-      </div>
-    </section>
-
-    {/* SEÇÕES ADICIONAIS NA HOME */}
+    {/* 4. SEÇÕES EXTRAS (EQUIPE E ESTRUTURA) */}
     <SecaoEquipe />
     <SecaoEstrutura />
 
@@ -236,8 +269,8 @@ const ModeloPaginaServico: React.FC<{ titulo: string; subtitulo: string; dores: 
           {dores.map((d, i) => (
             <CardInterativo key={i} className="p-10">
               <AlertCircle className="mb-8 text-black/20" size={32} />
-              <h3 className="text-xl font-serif mb-4 uppercase">{d.t}</h3>
-              <p className="text-xs text-black/50 font-light">{d.d}</p>
+              <h3 className="text-xl font-serif mb-4 uppercase tracking-tight">{d.t}</h3>
+              <p className="text-xs text-black/50 leading-relaxed font-light">{d.d}</p>
             </CardInterativo>
           ))}
         </div>
@@ -249,7 +282,7 @@ const ModeloPaginaServico: React.FC<{ titulo: string; subtitulo: string; dores: 
             <div key={i} className="p-10 bg-white border border-black/5">
               <div className="mb-8 opacity-30">{s.i}</div>
               <h3 className="text-2xl font-serif mb-6">{s.t}</h3>
-              <p className="text-sm text-black/40 font-light">{s.d}</p>
+              <p className="text-sm text-black/40 font-light leading-relaxed">{s.d}</p>
             </div>
           ))}
         </div>
@@ -267,7 +300,41 @@ const PaginaEquipe = () => {
         <h1 className="text-6xl font-serif mb-16 tracking-tighter">Equipe.</h1>
         <p className="text-xl text-black/50 max-w-2xl font-light">Profissionais multidisciplinares unidos por um único propósito: a defesa dos seus interesses.</p>
       </div>
-      <SecaoEquipe />
+      {/* Aqui mostramos todos, inclusive o Matheus para a página dedicada de equipe */}
+      <section className="py-12 bg-white">
+        <div className="container mx-auto px-6 grid md:grid-cols-3 gap-10">
+          <CardInterativo className="flex flex-col">
+              <div className="aspect-[3/4] overflow-hidden grayscale hover:grayscale-0 transition-all duration-500">
+                <img src={IMAGEM_MATHEUS} className="w-full h-full object-cover" alt="Dr. Matheus Lang" />
+              </div>
+              <div className="p-8 text-center bg-white flex-grow flex flex-col justify-center">
+                <h3 className="font-serif text-2xl mb-2">Dr. Matheus Lang</h3>
+                <span className="text-[9px] font-bold uppercase tracking-widest text-black/60 mb-4 block">Sócio Fundador</span>
+                <p className="text-[10px] uppercase tracking-wide text-black/40 leading-relaxed">Advocacia corporativa e criminal de alta complexidade.</p>
+              </div>
+          </CardInterativo>
+          <CardInterativo className="flex flex-col">
+              <div className="aspect-[3/4] overflow-hidden grayscale hover:grayscale-0 transition-all duration-500">
+                <img src={IMG_NICOLAS} className="w-full h-full object-cover" alt="Nicolas Brito" />
+              </div>
+              <div className="p-8 text-center bg-white flex-grow flex flex-col justify-center">
+                <h3 className="font-serif text-2xl mb-2">Nicolas Brito</h3>
+                <span className="text-[9px] font-bold uppercase tracking-widest text-black/60 mb-4 block">Marketing Estratégico</span>
+                <p className="text-[10px] uppercase tracking-wide text-black/40 leading-relaxed">Produtos Digitais e Modelos de Assinatura (SaaS); Marketing Estratégico; Social Media.</p>
+              </div>
+          </CardInterativo>
+          <CardInterativo className="flex flex-col">
+              <div className="aspect-[3/4] overflow-hidden grayscale hover:grayscale-0 transition-all duration-500">
+                <img src={IMG_JEFFERSON} className="w-full h-full object-cover" alt="Jefferson Cooper" />
+              </div>
+              <div className="p-8 text-center bg-white flex-grow flex flex-col justify-center">
+                <h3 className="font-serif text-2xl mb-2">Jefferson Cooper</h3>
+                <span className="text-[9px] font-bold uppercase tracking-widest text-black/60 mb-4 block">Jurídico Trabalhista</span>
+                <p className="text-[10px] uppercase tracking-wide text-black/40 leading-relaxed">Pós Graduado em Direito e Processo do Trabalho; Especialização em Acidentes de Trabalho e Doença Ocupacional, Compliance Empresarial; Especializando em Direito Criminal e Direito Penal.</p>
+              </div>
+          </CardInterativo>
+        </div>
+      </section>
       <Rodape />
     </main>
   );
@@ -319,14 +386,32 @@ export default function App() {
         } />
         <Route path="/assessoria-empresarial" element={
           <ModeloPaginaServico area="Direito Corporativo" titulo="Direito Cível" subtitulo="Consultoria estratégica focada na segurança patrimonial e viabilidade econômica do seu negócio." 
-            dores={[{t:"Cobranças", d:"Atuação estratégica na recuperação de ativos financeiros através de métodos de cobrança judicial e extrajudicial. Utilizamos técnicas avançadas de investigação patrimonial e inteligência de dados para localizar bens e garantir a efetividade da execução, transformando títulos de crédito em liquidez imediata para o cliente."}, {t:"CONTRATOS", d:"Desenvolvimento e revisão técnica de instrumentos contratuais personalizados. Nossa prioridade é a blindagem jurídica, antecipando cenários de risco e estabelecendo cláusulas de proteção robustas que garantam a segurança do negócio e minimizem a possibilidade de litígios futuros."}, {t:"FAMÍLIA", d:"Atendimento especializado e humanizado em demandas de alta complexidade, como divórcios, partilhas de bens e fixação ou revisão de pensão alimentícia. Focamos na solução estratégica de conflitos, priorizando a preservação do patrimônio familiar e o bem-estar dos envolvidos através de composições técnicas e precisas."}, {t:"CONSULTORIA", d:"Análise contínua e preventiva de relações jurídicas para identificação de vulnerabilidades. Oferecemos suporte consultivo para a tomada de decisões, garantindo que as operações de pessoas físicas ou jurídicas estejam em total conformidade com a legislação vigente, evitando prejuízos financeiros e reputacionais."}]}
-            servicos={[{t:"IMOBILIÁRIO", d:"Consultoria completa para a regularização de propriedades e estruturação de negócios imobiliários. Atuamos desde o due diligence em transações de compra e venda até a elaboração de contratos de locação e incorporação, desburocratizando processos e garantindo a plena segurança do registro patrimonial.", i:<Scale size={28}/>}, {t:"DÍVIDAS", d:"Atuação técnica na renegociação de passivos bancários e estruturação de cronogramas de pagamento sustentáveis. Protegemos o fluxo de caixa e o patrimônio do cliente através da revisão de cláusulas abusivas, juros extorsivos e propostas de acordo que visem o reequilíbrio financeiro e a viabilidade do negócio.", i:<Landmark size={28}/>}, {t:"REGULARIZAÇÃO", d:"Soluções jurídicas integradas para a resolução de pendências em bens móveis e imóveis. Atuamos na retificação de registros, inventários acumulados e desembaraço de ativos, garantindo que o patrimônio esteja livre de entraves legais para exploração comercial ou transferência sucessória.", i:<ReceiptText size={28}/>}]}
+            dores={[
+              {t:"Cobranças", d:"Atuação estratégica na recuperação de ativos financeiros através de métodos de cobrança judicial e extrajudicial. Utilizamos técnicas avançadas de investigação patrimonial e inteligência de dados para localizar bens e garantir a efetividade da execução, transformando títulos de crédito em liquidez imediata para o cliente."}, 
+              {t:"CONTRATOS", d:"Desenvolvimento e revisão técnica de instrumentos contratuais personalizados. Nossa prioridade é a blindagem jurídica, antecipando cenários de risco e estabelecendo cláusulas de proteção robustas que garantam a segurança do negócio e minimizem a possibilidade de litígios futuros."}, 
+              {t:"FAMÍLIA", d:"Atendimento especializado e humanizado em demandas de alta complexidade, como divórcios, partilhas de bens e fixação ou revisão de pensão alimentícia. Focamos na solução estratégica de conflitos, priorizando a preservação do patrimônio familiar e o bem-estar dos envolvidos através de composições técnicas e precisas."}, 
+              {t:"CONSULTORIA", d:"Análise contínua e preventiva de relações jurídicas para identificação de vulnerabilidades. Oferecemos suporte consultivo para a tomada de decisões, garantindo que as operações de pessoas físicas ou jurídicas estejam em total conformidade com a legislação vigente, evitando prejuízos financeiros e reputacionais."}
+            ]}
+            servicos={[
+              {t:"IMOBILIÁRIO", d:"Consultoria completa para a regularização de propriedades e estruturação de negócios imobiliários. Atuamos desde o due diligence em transações de compra e venda até a elaboração de contratos de locação e incorporação, desburocratizando processos e garantindo a plena segurança do registro patrimonial.", i:<Scale size={28}/>}, 
+              {t:"DÍVIDAS", d:"Atuação técnica na renegociação de passivos bancários e estruturação de cronogramas de pagamento sustentáveis. Protegemos o fluxo de caixa e o patrimônio do cliente através da revisão de cláusulas abusivas, juros extorsivos e propostas de acordo que visem o reequilíbrio financeiro e a viabilidade do negócio.", i:<Landmark size={28}/>}, 
+              {t:"REGULARIZAÇÃO", d:"Soluções jurídicas integradas para a resolução de pendências em bens móveis e imóveis. Atuamos na retificação de registros, inventários acumulados e desembaraço de ativos, garantindo que o patrimônio esteja livre de entraves legais para exploração comercial ou transferência sucessória.", i:<ReceiptText size={28}/>}
+            ]}
           />
         } />
         <Route path="/defesa-criminal" element={
           <ModeloPaginaServico area="Direito Penal de Elite" titulo="Defesa da Liberdade." subtitulo="Atuação tática de urgência com rigor garantista para proteção dos direitos fundamentais."
-            dores={[{t:"VIOLÊNCIA DOMÉSTICA", d:"Atuação técnica e estratégica em casos regidos pela Lei Maria da Penha. Oferecemos suporte completo tanto no requerimento quanto na contestação de medidas protetivas de urgência, além de uma defesa criminal combativa que prioriza a preservação dos direitos e a análise minuciosa das provas apresentadas."}, {t:"TRIBUNAL DO JÚRI", d:"Defesa especializada em crimes dolosos contra a vida. Nossa atuação em plenário combina oratória persuasiva, rigor técnico e análise psicológica de provas, visando a melhor estratégia de convencimento frente ao conselho de sentença para garantir a soberania do veredito e a liberdade do cliente."}, {t:"CUSTÓDIA", d:"Atendimento imediato e presencial em casos de prisão em flagrante. Focamos na análise da legalidade do ato prisional e na articulação de pedidos de liberdade provisória ou substituição por medidas cautelares, garantindo que o cliente não permaneça detido ilegalmente."}, {t:"CIBERNÉTICOS", d:"Defesa e investigação especializada em fraudes online, invasão de dispositivos, estelionato eletrônico e crimes de imagem na rede. Atuamos com suporte pericial para rastreamento de evidências digitais, protegendo sua reputação e seu patrimônio no ambiente virtual."}]}
-            servicos={[{t:"EMPRESARIAIS", d:"Defesa corporativa de alta performance em crimes contra o sistema financeiro, ordem tributária, relações de consumo e lavagem de dinheiro. Atuamos na proteção dos sócios e da empresa, mitigando riscos reputacionais e garantindo a conformidade perante os órgãos de fiscalização.", i:<Search size={28}/>}, {t:"FLAGRANTE", d:"Disponibilidade absoluta para acompanhamento em delegacias e órgãos de investigação a qualquer hora. A presença técnica desde os primeiros momentos da prisão é crucial para evitar nulidades, orientar o depoimento e construir a base de uma defesa sólida.", i:<FileText size={28}/>}, {t:"DEFESA TÉCNICA", d:"Gestão estratégica do processo penal em todas as suas fases: desde o acompanhamento de inquéritos policiais até a sustentação oral em recursos nos Tribunais Superiores (TJ, STJ e STF). Cada etapa é tratada como decisiva para o resultado final do processo.", i:<Lock size={28}/>}]}
+            dores={[
+              {t:"VIOLÊNCIA DOMÉSTICA", d:"Atuação técnica e estratégica em casos regidos pela Lei Maria da Penha. Oferecemos suporte completo tanto no requerimento quanto na contestação de medidas protetivas de urgência, além de uma defesa criminal combativa que prioriza a preservação dos direitos e a análise minuciosa das provas apresentadas."}, 
+              {t:"TRIBUNAL DO JÚRI", d:"Defesa especializada em crimes dolosos contra a vida. Nossa atuação em plenário combina oratória persuasiva, rigor técnico e análise psicológica de provas, visando a melhor estratégia de convencimento frente ao conselho de sentença para garantir a soberania do veredito e a liberdade do cliente."}, 
+              {t:"CUSTÓDIA", d:"Atendimento imediato e presencial em casos de prisão em flagrante. Focamos na análise da legalidade do ato prisional e na articulação de pedidos de liberdade provisória ou substituição por medidas cautelares, garantindo que o cliente não permaneça detido ilegalmente."}, 
+              {t:"CIBERNÉTICOS", d:"Defesa e investigação especializada em fraudes online, invasão de dispositivos, estelionato eletrônico e crimes de imagem na rede. Atuamos com suporte pericial para rastreamento de evidências digitais, protegendo sua reputação e seu patrimônio no ambiente virtual."}
+            ]}
+            servicos={[
+              {t:"EMPRESARIAIS", d:"Defesa corporativa de alta performance em crimes contra o sistema financeiro, ordem tributária, relações de consumo e lavagem de dinheiro. Atuamos na proteção dos sócios e da empresa, mitigando riscos reputacionais e garantindo a conformidade perante os órgãos de fiscalização.", i:<Search size={28}/>}, 
+              {t:"FLAGRANTE", d:"Disponibilidade absoluta para acompanhamento em delegacias e órgãos de investigação a qualquer hora. A presença técnica desde os primeiros momentos da prisão é crucial para evitar nulidades, orientar o depoimento e construir a base de uma defesa sólida.", i:<FileText size={28}/>}, 
+              {t:"DEFESA TÉCNICA", d:"Gestão estratégica do processo penal em todas as suas fases: desde o acompanhamento de inquéritos policiais até a sustentação oral em recursos nos Tribunais Superiores (TJ, STJ e STF). Cada etapa é tratada como decisiva para o resultado final do processo.", i:<Lock size={28}/>}
+            ]}
           />
         } />
       </Routes>
