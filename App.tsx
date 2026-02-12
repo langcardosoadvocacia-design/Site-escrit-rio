@@ -90,12 +90,12 @@ const BarraNavegacao = () => {
   );
 };
 
-// --- SEÇÕES COMPARTILHADAS (USADAS NA HOME E NAS PÁGINAS INTERNAS) ---
+// --- SEÇÕES COMPARTILHADAS ---
 
 const SecaoEquipe = () => {
   const equipe = [
-    { n: "Dr. Matheus Lang", a: "Sócio Fundador", d: "Estrategista Jurídico e Liderança.", i: IMAGEM_MATHEUS },
-    { n: "Nicolas Brito", a: "Marketing & Tech", d: "Produtos Digitais e Modelos de Assinatura (SaaS); Marketing Estratégico; Social Media.", i: IMG_NICOLAS },
+    { n: "Dr. Matheus Lang", a: "Sócio Fundador", d: "Advocacia corporativa e criminal de alta complexidade.", i: IMAGEM_MATHEUS },
+    { n: "Nicolas Brito", a: "Marketing Estratégico", d: "Produtos Digitais e Modelos de Assinatura (SaaS); Marketing Estratégico; Social Media.", i: IMG_NICOLAS },
     { n: "Jefferson Cooper", a: "Jurídico Trabalhista", d: "Pós Graduado em Direito e Processo do Trabalho; Especialização em Acidentes de Trabalho e Compliance.", i: IMG_JEFFERSON }
   ];
   return (
@@ -211,7 +211,7 @@ const PaginaInicial = () => (
       </div>
     </section>
 
-    {/* RESTAURAÇÃO: EQUIPE E ESTRUTURA NA HOME */}
+    {/* SEÇÕES ADICIONAIS NA HOME */}
     <SecaoEquipe />
     <SecaoEstrutura />
 
@@ -319,14 +319,14 @@ export default function App() {
         } />
         <Route path="/assessoria-empresarial" element={
           <ModeloPaginaServico area="Direito Corporativo" titulo="Direito Cível" subtitulo="Consultoria estratégica focada na segurança patrimonial e viabilidade econômica do seu negócio." 
-            dores={[{t:"Cobranças", d:"Atuação estratégica na recuperação de ativos financeiros..."}, {t:"CONTRATOS", d:"Desenvolvimento e revisão técnica de instrumentos contratuais..."}, {t:"FAMÍLIA", d:"Atendimento especializado e humanizado..."}, {t:"CONSULTORIA", d:"Análise contínua e preventiva..."}]}
-            servicos={[{t:"IMOBILIÁRIO", d:"Consultoria completa para a regularização...", i:<Scale size={28}/>}, {t:"DÍVIDAS", d:"Atuação técnica na renegociação...", i:<Landmark size={28}/>}, {t:"REGULARIZAÇÃO", d:"Soluções jurídicas integradas...", i:<ReceiptText size={28}/>}]}
+            dores={[{t:"Cobranças", d:"Atuação estratégica na recuperação de ativos financeiros através de métodos de cobrança judicial e extrajudicial. Utilizamos técnicas avançadas de investigação patrimonial e inteligência de dados para localizar bens e garantir a efetividade da execução, transformando títulos de crédito em liquidez imediata para o cliente."}, {t:"CONTRATOS", d:"Desenvolvimento e revisão técnica de instrumentos contratuais personalizados. Nossa prioridade é a blindagem jurídica, antecipando cenários de risco e estabelecendo cláusulas de proteção robustas que garantam a segurança do negócio e minimizem a possibilidade de litígios futuros."}, {t:"FAMÍLIA", d:"Atendimento especializado e humanizado em demandas de alta complexidade, como divórcios, partilhas de bens e fixação ou revisão de pensão alimentícia. Focamos na solução estratégica de conflitos, priorizando a preservação do patrimônio familiar e o bem-estar dos envolvidos através de composições técnicas e precisas."}, {t:"CONSULTORIA", d:"Análise contínua e preventiva de relações jurídicas para identificação de vulnerabilidades. Oferecemos suporte consultivo para a tomada de decisões, garantindo que as operações de pessoas físicas ou jurídicas estejam em total conformidade com a legislação vigente, evitando prejuízos financeiros e reputacionais."}]}
+            servicos={[{t:"IMOBILIÁRIO", d:"Consultoria completa para a regularização de propriedades e estruturação de negócios imobiliários. Atuamos desde o due diligence em transações de compra e venda até a elaboração de contratos de locação e incorporação, desburocratizando processos e garantindo a plena segurança do registro patrimonial.", i:<Scale size={28}/>}, {t:"DÍVIDAS", d:"Atuação técnica na renegociação de passivos bancários e estruturação de cronogramas de pagamento sustentáveis. Protegemos o fluxo de caixa e o patrimônio do cliente através da revisão de cláusulas abusivas, juros extorsivos e propostas de acordo que visem o reequilíbrio financeiro e a viabilidade do negócio.", i:<Landmark size={28}/>}, {t:"REGULARIZAÇÃO", d:"Soluções jurídicas integradas para a resolução de pendências em bens móveis e imóveis. Atuamos na retificação de registros, inventários acumulados e desembaraço de ativos, garantindo que o patrimônio esteja livre de entraves legais para exploração comercial ou transferência sucessória.", i:<ReceiptText size={28}/>}]}
           />
         } />
         <Route path="/defesa-criminal" element={
           <ModeloPaginaServico area="Direito Penal de Elite" titulo="Defesa da Liberdade." subtitulo="Atuação tática de urgência com rigor garantista para proteção dos direitos fundamentais."
-            dores={[{t:"VIOLÊNCIA DOMÉSTICA", d:"Atuação técnica e estratégica..."}, {t:"TRIBUNAL DO JÚRI", d:"Defesa especializada em crimes dolosos..."}, {t:"CUSTÓDIA", d:"Atendimento imediato e presencial..."}, {t:"CIBERNÉTICOS", d:"Defesa e investigação especializada..."}]}
-            servicos={[{t:"EMPRESARIAIS", d:"Defesa corporativa de alta performance...", i:<Search size={28}/>}, {t:"FLAGRANTE", d:"Disponibilidade absoluta para acompanhamento...", i:<FileText size={28}/>}, {t:"DEFESA TÉCNICA", d:"Gestão estratégica do processo penal...", i:<Lock size={28}/>}]}
+            dores={[{t:"VIOLÊNCIA DOMÉSTICA", d:"Atuação técnica e estratégica em casos regidos pela Lei Maria da Penha. Oferecemos suporte completo tanto no requerimento quanto na contestação de medidas protetivas de urgência, além de uma defesa criminal combativa que prioriza a preservação dos direitos e a análise minuciosa das provas apresentadas."}, {t:"TRIBUNAL DO JÚRI", d:"Defesa especializada em crimes dolosos contra a vida. Nossa atuação em plenário combina oratória persuasiva, rigor técnico e análise psicológica de provas, visando a melhor estratégia de convencimento frente ao conselho de sentença para garantir a soberania do veredito e a liberdade do cliente."}, {t:"CUSTÓDIA", d:"Atendimento imediato e presencial em casos de prisão em flagrante. Focamos na análise da legalidade do ato prisional e na articulação de pedidos de liberdade provisória ou substituição por medidas cautelares, garantindo que o cliente não permaneça detido ilegalmente."}, {t:"CIBERNÉTICOS", d:"Defesa e investigação especializada em fraudes online, invasão de dispositivos, estelionato eletrônico e crimes de imagem na rede. Atuamos com suporte pericial para rastreamento de evidências digitais, protegendo sua reputação e seu patrimônio no ambiente virtual."}]}
+            servicos={[{t:"EMPRESARIAIS", d:"Defesa corporativa de alta performance em crimes contra o sistema financeiro, ordem tributária, relações de consumo e lavagem de dinheiro. Atuamos na proteção dos sócios e da empresa, mitigando riscos reputacionais e garantindo a conformidade perante os órgãos de fiscalização.", i:<Search size={28}/>}, {t:"FLAGRANTE", d:"Disponibilidade absoluta para acompanhamento em delegacias e órgãos de investigação a qualquer hora. A presença técnica desde os primeiros momentos da prisão é crucial para evitar nulidades, orientar o depoimento e construir a base de uma defesa sólida.", i:<FileText size={28}/>}, {t:"DEFESA TÉCNICA", d:"Gestão estratégica do processo penal em todas as suas fases: desde o acompanhamento de inquéritos policiais até a sustentação oral em recursos nos Tribunais Superiores (TJ, STJ e STF). Cada etapa é tratada como decisiva para o resultado final do processo.", i:<Lock size={28}/>}]}
           />
         } />
       </Routes>
