@@ -99,8 +99,6 @@ const BarraNavegacao = () => {
 
 const SecaoEquipe = () => {
   const equipe = [
-    // Matheus já tem destaque, mas mantemos aqui para consistência ou removemos se preferir. 
-    // Vou manter apenas os colaboradores aqui pois Matheus tem a seção FUNDADOR gigante acima.
     { n: "Nicolas Brito", a: "Marketing Estratégico", d: "Produtos Digitais e Modelos de Assinatura (SaaS); Marketing Estratégico; Social Media.", i: IMG_NICOLAS },
     { n: "Jefferson Cooper", a: "Jurídico Trabalhista", d: "Pós Graduado em Direito e Processo do Trabalho; Especialização em Acidentes de Trabalho e Doença Ocupacional, Compliance Empresarial; Especializando em Direito Criminal e Direito Penal.", i: IMG_JEFFERSON }
   ];
@@ -157,7 +155,7 @@ const SecaoEstrutura = () => (
 
 const PaginaInicial = () => (
   <main className="bg-white">
-    {/* 1. HERO SECTION (NOVA) */}
+    {/* 1. HERO SECTION */}
     <section className="min-h-[90vh] flex flex-col justify-center bg-[#fcfcfc] border-b border-black/5 px-6">
       <div className="container mx-auto">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
@@ -178,7 +176,7 @@ const PaginaInicial = () => (
       </div>
     </section>
 
-    {/* 2. DIREITO & NEGÓCIOS (NOVA SEÇÃO) */}
+    {/* 2. DIREITO & NEGÓCIOS */}
     <section className="py-24 bg-white border-b border-black/5">
       <div className="container mx-auto px-6 grid lg:grid-cols-2 gap-16">
         <div>
@@ -205,14 +203,10 @@ const PaginaInicial = () => (
       </div>
     </section>
 
-    {/* 3. O FUNDADOR (TEXTO EXATO DOS PRINTS) */}
+    {/* 3. O FUNDADOR */}
     <section className="py-24 md:py-40 container mx-auto px-6 grid lg:grid-cols-2 gap-20 items-center border-b border-black/5">
       <div className="order-2 lg:order-1 relative">
         <img src={IMAGEM_MATHEUS} alt="Matheus Lang Cardoso" className="w-full grayscale shadow-2xl border border-black/5" />
-        <div className="absolute -bottom-10 -right-10 bg-black text-white p-8 hidden md:block">
-           <span className="text-4xl font-serif block mb-1">10+</span>
-           <span className="text-[9px] uppercase tracking-widest opacity-60">Anos de Experiência</span>
-        </div>
       </div>
       <div className="order-1 lg:order-2">
         <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-black/30 mb-8 block">O Fundador</span>
@@ -244,7 +238,7 @@ const PaginaInicial = () => (
       </div>
     </section>
 
-    {/* 4. SEÇÕES EXTRAS (EQUIPE E ESTRUTURA) */}
+    {/* 4. SEÇÕES EXTRAS */}
     <SecaoEquipe />
     <SecaoEstrutura />
 
@@ -300,7 +294,6 @@ const PaginaEquipe = () => {
         <h1 className="text-6xl font-serif mb-16 tracking-tighter">Equipe.</h1>
         <p className="text-xl text-black/50 max-w-2xl font-light">Profissionais multidisciplinares unidos por um único propósito: a defesa dos seus interesses.</p>
       </div>
-      {/* Aqui mostramos todos, inclusive o Matheus para a página dedicada de equipe */}
       <section className="py-12 bg-white">
         <div className="container mx-auto px-6 grid md:grid-cols-3 gap-10">
           <CardInterativo className="flex flex-col">
