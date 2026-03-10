@@ -6,7 +6,7 @@ import {
   ChevronDown
 } from 'lucide-react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { HashRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
 
 // --- CONFIGURAÇÃO DE IMAGENS ---
 const IMAGEM_MATHEUS = "/images/advogado.png"; 
@@ -426,7 +426,7 @@ const Rodape = () => (
 
 export default function App() {
   return (
-    <HashRouter>
+    <BrowserRouter>
       <BarraNavegacao />
       <Routes>
         <Route path="/" element={<PaginaInicial />} />
@@ -514,6 +514,6 @@ export default function App() {
           />
         } />
       </Routes>
-    </HashRouter>
+    </BrowserRouter>
   );
 }
