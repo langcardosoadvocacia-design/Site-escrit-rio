@@ -162,7 +162,7 @@ const SecaoEquipe = () => {
     { n: "Nicolas Brito", a: "Marketing Estratégico", d: "Produtos Digitais e Modelos de Assinatura (SaaS); Marketing Estratégico; Social Media.", i: IMG_NICOLAS },
     { n: "Jefferson Cooper", a: "Coordenador Jurídico", d: "Pós Graduado em Direito e Processo do Trabalho; Especialização em Acidentes de Trabalho e Doença Ocupacional, Compliance Empresarial; Especializando em Direito Criminal e Direito Penal.", i: IMG_JEFFERSON },
     { n: "Charlise Martins", a: "Recepcionista", d: "Atendimento de excelência, organização, recepção e rotinas essenciais do escritório.", i: IMG_CHARLISE },
-    { n: "Leandro", a: "Advogado", d: "OAB 138311. Pós graduado em direito penal e criminologia, especializado em direito condominial.", i: IMG_LEANDRO },
+    { n: "Leandro Garcia", a: "Advogado", d: "OAB 138311. Pós graduado em direito penal e criminologia, especializado em direito condominial.", i: IMG_LEANDRO },
     { n: "Cristina Alves de Almeida", a: "Advogada", d: "OAB/RS 140.508. Bacharel em Direito com sólida experiência no Poder Judiciário. Diretrizes nas áreas de Direito Civil, Trabalhista, Administrativo e Penal Militar.", i: IMG_CRISTINA }
   ];
   return (
@@ -373,7 +373,7 @@ const PaginaEquipe = () => {
             { n: "Nicolas Brito", a: "Marketing Estratégico", d: "Produtos Digitais e Modelos de Assinatura (SaaS); Marketing Estratégico; Social Media.", i: IMG_NICOLAS },
             { n: "Jefferson Cooper", a: "Coordenador Jurídico", d: "Pós Graduado em Direito e Processo do Trabalho; Especialização em Acidentes de Trabalho e Doença Ocupacional, Compliance Empresarial; Especializando em Direito Criminal e Direito Penal.", i: IMG_JEFFERSON },
             { n: "Charlise Martins", a: "Recepcionista", d: "Atendimento de excelência, organização, recepção e rotinas essenciais do escritório.", i: IMG_CHARLISE },
-            { n: "Leandro", a: "Advogado", d: "OAB 138311. Pós graduado em direito penal e criminologia, especializado em direito condominial.", i: IMG_LEANDRO },
+            { n: "Leandro Garcia", a: "Advogado", d: "OAB 138311. Pós graduado em direito penal e criminologia, especializado em direito condominial.", i: IMG_LEANDRO },
             { n: "Cristina Alves de Almeida", a: "Advogada", d: "OAB/RS 140.508. Bacharel em Direito com sólida experiência no Poder Judiciário. Diretrizes nas áreas de Direito Civil, , Administrativo e Penal Militar.", i: IMG_CRISTINA }
           ].map((item, idx) => (
              <CardInterativo key={idx} className="flex flex-col">
