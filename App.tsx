@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { 
   Building2, Scale, ArrowRight, Menu, X, ReceiptText, 
   ShieldAlert, MessageCircle, AlertCircle, Landmark, 
-  FileText, Instagram, Linkedin, MapPin, Mail, Lock, Search, CheckCircle2
+  FileText, Instagram, Linkedin, MapPin, Mail, Lock, Search, CheckCircle2,
+  ChevronDown
 } from 'lucide-react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { HashRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
@@ -79,27 +80,77 @@ const CardInterativo: React.FC<{ children: React.ReactNode; className?: string }
 const BarraNavegacao = () => {
   const [rolou, setRolou] = useState(false); const [menu, setMenu] = useState(false);
   const local = useLocation();
+  const [dropdownAberto, setDropdownAberto] = useState(false);
+
   useEffect(() => { const mon = () => setRolou(window.scrollY > 20); window.addEventListener('scroll', mon); return () => window.removeEventListener('scroll', mon); }, []);
-  const links = [
-    { nome: 'Início', caminho: '/' },
+  
+  const areas = [
     { nome: 'Criminal', caminho: '/criminal' },
     { nome: 'Empresarial', caminho: '/empresarial' },
     { nome: 'Trabalhista & Prev', caminho: '/trabalhista' },
     { nome: 'Cível', caminho: '/civel' },
-    { nome: 'Imobiliário', caminho: '/imobiliario' },
-    { nome: 'Equipe', caminho: '/equipe' }
+    { nome: 'Imobiliário', caminho: '/imobiliario' }
   ];
+
   return (
     <nav className={`fixed top-0 w-full z-[100] transition-all duration-300 ${rolou ? 'py-2 bg-white border-b border-black/5' : 'py-6 bg-transparent'}`}>
       <div className="container mx-auto px-6 flex justify-between items-center">
         <Link to="/"><Logotipo reduzido /></Link>
         <div className="hidden lg:flex gap-10 items-center">
-          {links.map(l => <Link key={l.caminho} to={l.caminho} className={`text-[10px] font-bold uppercase tracking-widest ${local.pathname === l.caminho ? 'text-black' : 'text-black/40 hover:text-black'}`}>{l.nome}</Link>)}
+          <Link to="/" className={`text-[10px] font-bold uppercase tracking-widest ${local.pathname === '/' ? 'text-black' : 'text-black/40 hover:text-black'}`}>Início</Link>
+          
+          <div 
+            className="relative"
+            onMouseEnter={() => setDropdownAberto(true)}
+            onMouseLeave={() => setDropdownAberto(false)}
+          >
+            <button className={`flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest ${dropdownAberto || areas.some(a => a.caminho === local.pathname) ? 'text-black' : 'text-black/40 hover:text-black'}`}>
+              Áreas de Atuação <ChevronDown size={14} className={`transition-transform duration-300 ${dropdownAberto ? 'rotate-180' : ''}`} />
+            </button>
+            
+            <AnimatePresence>
+              {dropdownAberto && (
+                <motion.div 
+                  initial={{ opacity: 0, y: 10 }} 
+                  animate={{ opacity: 1, y: 0 }} 
+                  exit={{ opacity: 0, y: 10 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute top-full left-0 mt-6 bg-[#2A2A2A] border border-[#3A3A3A] min-w-[280px] shadow-2xl flex flex-col"
+                >
+                  {areas.map((a, idx) => (
+                    <Link 
+                      key={a.caminho} 
+                      to={a.caminho} 
+                      className={`px-6 py-4 text-[11px] font-bold uppercase tracking-widest text-white/80 hover:text-white hover:bg-white/5 transition-colors ${idx !== areas.length - 1 ? 'border-b border-[#3A3A3A]' : ''}`}
+                    >
+                      {a.nome}
+                    </Link>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          <Link to="/equipe" className={`text-[10px] font-bold uppercase tracking-widest ${local.pathname === '/equipe' ? 'text-black' : 'text-black/40 hover:text-black'}`}>Equipe</Link>
+          
           <a href={LINK_WHATSAPP} onClick={dispararConversaoWhatsApp} className="px-6 py-3 bg-black text-white text-[9px] font-bold uppercase tracking-widest cursor-pointer">Atendimento</a>
         </div>
         <button className="lg:hidden" onClick={() => setMenu(!menu)}>{menu ? <X /> : <Menu />}</button>
       </div>
-      <AnimatePresence>{menu && <motion.div className="lg:hidden bg-white p-8 flex flex-col gap-6 shadow-xl fixed top-20 right-0 w-full z-50">{links.map(l => <Link key={l.caminho} to={l.caminho} onClick={() => setMenu(false)} className="text-[12px] font-bold uppercase tracking-widest">{l.nome}</Link>)}</motion.div>}</AnimatePresence>
+      <AnimatePresence>
+        {menu && (
+          <motion.div className="lg:hidden bg-white p-8 flex flex-col gap-6 shadow-xl fixed top-20 right-0 w-full z-50 overflow-y-auto max-h-[80vh]">
+            <Link to="/" onClick={() => setMenu(false)} className="text-[12px] font-bold uppercase tracking-widest text-black">Início</Link>
+            <div className="flex flex-col gap-4">
+              <span className="text-[10px] font-bold uppercase tracking-widest text-black/40">Áreas de Atuação</span>
+              {areas.map(a => (
+                <Link key={a.caminho} to={a.caminho} onClick={() => setMenu(false)} className="pl-4 text-[12px] font-bold uppercase tracking-widest text-black/80 border-l border-black/10">{a.nome}</Link>
+              ))}
+            </div>
+            <Link to="/equipe" onClick={() => setMenu(false)} className="text-[12px] font-bold uppercase tracking-widest text-black">Equipe</Link>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 };
