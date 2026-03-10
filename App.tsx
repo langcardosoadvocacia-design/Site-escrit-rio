@@ -361,7 +361,7 @@ const PaginaEquipe = () => {
         <div className="container mx-auto px-6 grid md:grid-cols-3 gap-10">
           <CardInterativo className="flex flex-col">
               <div className="aspect-[3/4] overflow-hidden grayscale hover:grayscale-0 transition-all duration-500">
-                <img src={IMAGEM_MATHEUS} className="w-full h-full object-cover" alt="Dr. Matheus Lang" />
+                <img src={IMAGEM_MATHEUS} className="w-full h-full object-cover" alt="Dr. Matheus Lang Cardoso" />
               </div>
               <div className="p-8 text-center bg-white flex-grow flex flex-col justify-center">
                 <h3 className="font-serif text-2xl mb-2">Dr. Matheus Lang</h3>
