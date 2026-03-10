@@ -15,6 +15,10 @@ const IMG_ESCRITORIO_1 = "/images/escritorio1.PNG";
 const IMG_ESCRITORIO_2 = "/images/escritorio2.PNG";
 const IMG_ESCRITORIO_3 = "/images/escritorio3.PNG";
 
+const IMG_CHARLISE = "/images/charlise.png";
+const IMG_LEANDRO = "/images/leandro.png";
+const IMG_CRISTINA = "/images/cristina.png";
+
 // --- MENSAGEM DO WHATSAPP ATUALIZADA ---
 const MENSAGEM_WA = encodeURIComponent("Olá, vim através do site e preciso de ajuda.");
 const LINK_WHATSAPP = `https://wa.me/555532176378?text=${MENSAGEM_WA}`;
@@ -78,10 +82,12 @@ const BarraNavegacao = () => {
   useEffect(() => { const mon = () => setRolou(window.scrollY > 20); window.addEventListener('scroll', mon); return () => window.removeEventListener('scroll', mon); }, []);
   const links = [
     { nome: 'Início', caminho: '/' },
-    { nome: 'Empresarial & Cível', caminho: '/assessoria-empresarial' },
-    { nome: 'Criminal', caminho: '/defesa-criminal' },
-    { nome: 'Equipe', caminho: '/equipe' },
-    { nome: 'Estrutura', caminho: '/estrutura' }
+    { nome: 'Criminal', caminho: '/criminal' },
+    { nome: 'Empresarial', caminho: '/empresarial' },
+    { nome: 'Trabalhista & Prev', caminho: '/trabalhista' },
+    { nome: 'Cível', caminho: '/civel' },
+    { nome: 'Imobiliário', caminho: '/imobiliario' },
+    { nome: 'Equipe', caminho: '/equipe' }
   ];
   return (
     <nav className={`fixed top-0 w-full z-[100] transition-all duration-300 ${rolou ? 'py-2 bg-white border-b border-black/5' : 'py-6 bg-transparent'}`}>
@@ -103,7 +109,10 @@ const BarraNavegacao = () => {
 const SecaoEquipe = () => {
   const equipe = [
     { n: "Nicolas Brito", a: "Marketing Estratégico", d: "Produtos Digitais e Modelos de Assinatura (SaaS); Marketing Estratégico; Social Media.", i: IMG_NICOLAS },
-    { n: "Jefferson Cooper", a: "Jurídico Trabalhista", d: "Pós Graduado em Direito e Processo do Trabalho; Especialização em Acidentes de Trabalho e Doença Ocupacional, Compliance Empresarial; Especializando em Direito Criminal e Direito Penal.", i: IMG_JEFFERSON }
+    { n: "Jefferson Cooper", a: "Jurídico Trabalhista", d: "Pós Graduado em Direito e Processo do Trabalho; Especialização em Acidentes de Trabalho e Doença Ocupacional, Compliance Empresarial; Especializando em Direito Criminal e Direito Penal.", i: IMG_JEFFERSON },
+    { n: "Charlise Martins", a: "Recepcionista", d: "Atendimento de excelência, organização, recepção e rotinas essenciais do escritório.", i: IMG_CHARLISE },
+    { n: "Leandro", a: "Advogado", d: "OAB 138311. Pós graduado em direito penal e criminologia, especializado em direito condominial.", i: IMG_LEANDRO },
+    { n: "Cristina Alves de Almeida", a: "Advogada", d: "OAB/RS 140.508. Bacharel em Direito com sólida experiência no Poder Judiciário. Diretrizes nas áreas de Direito Civil, Trabalhista, Administrativo e Penal Militar.", i: IMG_CRISTINA }
   ];
   return (
     <section className="py-24 bg-white border-y border-black/5">
@@ -171,7 +180,7 @@ const PaginaInicial = () => (
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <BotaoCTA texto="CONECTAR AGORA" primario={true} />
-            <Link to="/assessoria-empresarial">
+            <Link to="/empresarial">
                <BotaoCTA texto="EXPLORAR SOLUÇÕES" primario={false} />
             </Link>
           </div>
@@ -309,26 +318,24 @@ const PaginaEquipe = () => {
                 <p className="text-[10px] uppercase tracking-wide text-black/40 leading-relaxed">Advocacia corporativa e criminal de alta complexidade.</p>
               </div>
           </CardInterativo>
-          <CardInterativo className="flex flex-col">
-              <div className="aspect-[3/4] overflow-hidden grayscale hover:grayscale-0 transition-all duration-500">
-                <img src={IMG_NICOLAS} className="w-full h-full object-cover" alt="Nicolas Brito" />
-              </div>
-              <div className="p-8 text-center bg-white flex-grow flex flex-col justify-center">
-                <h3 className="font-serif text-2xl mb-2">Nicolas Brito</h3>
-                <span className="text-[9px] font-bold uppercase tracking-widest text-black/60 mb-4 block">Marketing Estratégico</span>
-                <p className="text-[10px] uppercase tracking-wide text-black/40 leading-relaxed">Produtos Digitais e Modelos de Assinatura (SaaS); Marketing Estratégico; Social Media.</p>
-              </div>
-          </CardInterativo>
-          <CardInterativo className="flex flex-col">
-              <div className="aspect-[3/4] overflow-hidden grayscale hover:grayscale-0 transition-all duration-500">
-                <img src={IMG_JEFFERSON} className="w-full h-full object-cover" alt="Jefferson Cooper" />
-              </div>
-              <div className="p-8 text-center bg-white flex-grow flex flex-col justify-center">
-                <h3 className="font-serif text-2xl mb-2">Jefferson Cooper</h3>
-                <span className="text-[9px] font-bold uppercase tracking-widest text-black/60 mb-4 block">Jurídico Trabalhista</span>
-                <p className="text-[10px] uppercase tracking-wide text-black/40 leading-relaxed">Pós Graduado em Direito e Processo do Trabalho; Especialização em Acidentes de Trabalho e Doença Ocupacional, Compliance Empresarial; Especializando em Direito Criminal e Direito Penal.</p>
-              </div>
-          </CardInterativo>
+          {[
+            { n: "Nicolas Brito", a: "Marketing Estratégico", d: "Produtos Digitais e Modelos de Assinatura (SaaS); Marketing Estratégico; Social Media.", i: IMG_NICOLAS },
+            { n: "Jefferson Cooper", a: "Jurídico Trabalhista", d: "Pós Graduado em Direito e Processo do Trabalho; Especialização em Acidentes de Trabalho e Doença Ocupacional, Compliance Empresarial; Especializando em Direito Criminal e Direito Penal.", i: IMG_JEFFERSON },
+            { n: "Charlise Martins", a: "Recepcionista", d: "Atendimento de excelência, organização, recepção e rotinas essenciais do escritório.", i: IMG_CHARLISE },
+            { n: "Leandro", a: "Advogado", d: "OAB 138311. Pós graduado em direito penal e criminologia, especializado em direito condominial.", i: IMG_LEANDRO },
+            { n: "Cristina Alves de Almeida", a: "Advogada", d: "OAB/RS 140.508. Bacharel em Direito com sólida experiência no Poder Judiciário. Diretrizes nas áreas de Direito Civil, Trabalhista, Administrativo e Penal Militar.", i: IMG_CRISTINA }
+          ].map((item, idx) => (
+             <CardInterativo key={idx} className="flex flex-col">
+                 <div className="aspect-[3/4] overflow-hidden grayscale hover:grayscale-0 transition-all duration-500">
+                   <img src={item.i} className="w-full h-full object-cover" alt={item.n} />
+                 </div>
+                 <div className="p-8 text-center bg-white flex-grow flex flex-col justify-center">
+                   <h3 className="font-serif text-2xl mb-2">{item.n}</h3>
+                   <span className="text-[9px] font-bold uppercase tracking-widest text-black/60 mb-4 block">{item.a}</span>
+                   <p className="text-[10px] uppercase tracking-wide text-black/40 leading-relaxed">{item.d}</p>
+                 </div>
+             </CardInterativo>
+          ))}
         </div>
       </section>
       <Rodape />
@@ -380,33 +387,78 @@ export default function App() {
             <Rodape />
           </main>
         } />
-        <Route path="/assessoria-empresarial" element={
-          <ModeloPaginaServico area="Direito Corporativo" titulo="Direito Cível" subtitulo="Consultoria estratégica focada na segurança patrimonial e viabilidade econômica do seu negócio." 
+        <Route path="/civel" element={
+          <ModeloPaginaServico area="Soluções e Prevenções" titulo="Direito Cível" subtitulo="Consultoria estratégica focada na segurança patrimonial e viabilidade econômica do seu negócio ou vida privada." 
             dores={[
-              {t:"Cobranças", d:"Atuação estratégica na recuperação de ativos financeiros através de métodos de cobrança judicial e extrajudicial. Utilizamos técnicas avançadas de investigação patrimonial e inteligência de dados para localizar bens e garantir a efetividade da execução, transformando títulos de crédito em liquidez imediata para o cliente."}, 
-              {t:"CONTRATOS", d:"Desenvolvimento e revisão técnica de instrumentos contratuais personalizados. Nossa prioridade é a blindagem jurídica, antecipando cenários de risco e estabelecendo cláusulas de proteção robustas que garantam a segurança do negócio e minimizem a possibilidade de litígios futuros."}, 
-              {t:"FAMÍLIA", d:"Atendimento especializado e humanizado em demandas de alta complexidade, como divórcios, partilhas de bens e fixação ou revisão de pensão alimentícia. Focamos na solução estratégica de conflitos, priorizando a preservação do patrimônio familiar e o bem-estar dos envolvidos através de composições técnicas e precisas."}, 
-              {t:"CONSULTORIA", d:"Análise contínua e preventiva de relações jurídicas para identificação de vulnerabilidades. Oferecemos suporte consultivo para a tomada de decisões, garantindo que as operações de pessoas físicas ou jurídicas estejam em total conformidade com a legislação vigente, evitando prejuízos financeiros e reputacionais."}
+              {t:"Cobranças", d:"Atuação estratégica na recuperação de ativos financeiros através de métodos de cobrança judicial e extrajudicial. Utilizamos técnicas avançadas de inteligência de dados para transformando títulos de crédito em liquidez imediata."}, 
+              {t:"CONTRATOS", d:"Desenvolvimento e revisão técnica de instrumentos contratuais personalizados. Nossa prioridade é a blindagem jurídica, estabelecendo cláusulas de proteção que garantam a segurança da negociação."}, 
+              {t:"FAMÍLIA E SUCESSÕES", d:"Atendimento especializado em demandas como divórcios, partilhas de bens, pensão alimentícia e inventários. Focamos na solução ética e eficiente, priorizando o mínimo desgaste e máxima preservação patrimonial."}, 
+              {t:"CONSULTORIA CÍVEL", d:"Análise contínua e preventiva de relações jurídicas. Oferecemos suporte para a tomada de decisões garantindo que atitudes cotidianas tenham esteio legal seguro sob o Código Civil."}
             ]}
             servicos={[
-              {t:"IMOBILIÁRIO", d:"Consultoria completa para a regularização de propriedades e estruturação de negócios imobiliários. Atuamos desde o due diligence em transações de compra e venda até a elaboração de contratos de locação e incorporação, desburocratizando processos e garantindo a plena segurança do registro patrimonial.", i:<Scale size={28}/>}, 
-              {t:"DÍVIDAS", d:"Atuação técnica na renegociação de passivos bancários e estruturação de cronogramas de pagamento sustentáveis. Protegemos o fluxo de caixa e o patrimônio do cliente através da revisão de cláusulas abusivas, juros extorsivos e propostas de acordo que visem o reequilíbrio financeiro e a viabilidade do negócio.", i:<Landmark size={28}/>}, 
-              {t:"REGULARIZAÇÃO", d:"Soluções jurídicas integradas para a resolução de pendências em bens móveis e imóveis. Atuamos na retificação de registros, inventários acumulados e desembaraço de ativos, garantindo que o patrimônio esteja livre de entraves legais para exploração comercial ou transferência sucessória.", i:<ReceiptText size={28}/>}
+              {t:"RESPONSABILIDADE CIVIL", d:"Demandas reparatórias para minimizar perdas e danos por eventuais descumprimentos ou acidentes.", i:<AlertCircle size={28}/>}, 
+              {t:"EXECUÇÕES", d:"Cobrança ágil com bloqueio de ativos que garanta eficácia do Judiciário e satisfação mais célere do crédito.", i:<Landmark size={28}/>}, 
+              {t:"BENS", d:"Soluções integradas para regularizações e pendências judiciais garantindo proteção possessória e petitória.", i:<ReceiptText size={28}/>}
             ]}
           />
         } />
-        <Route path="/defesa-criminal" element={
-          <ModeloPaginaServico area="Direito Penal de Elite" titulo="Defesa da Liberdade." subtitulo="Atuação tática de urgência com rigor garantista para proteção dos direitos fundamentais."
+        <Route path="/criminal" element={
+          <ModeloPaginaServico area="Direito Penal" titulo="Área Criminal" subtitulo="Atuação tática de excelência técnica com rigor garantista para proteção dos direitos fundamentais e resguardo da liberdade."
             dores={[
-              {t:"VIOLÊNCIA DOMÉSTICA", d:"Atuação técnica e estratégica em casos regidos pela Lei Maria da Penha. Oferecemos suporte completo tanto no requerimento quanto na contestação de medidas protetivas de urgência, além de uma defesa criminal combativa que prioriza a preservação dos direitos e a análise minuciosa das provas apresentadas."}, 
-              {t:"TRIBUNAL DO JÚRI", d:"Defesa especializada em crimes dolosos contra a vida. Nossa atuação em plenário combina oratória persuasiva, rigor técnico e análise psicológica de provas, visando a melhor estratégia de convencimento frente ao conselho de sentença para garantir a soberania do veredito e a liberdade do cliente."}, 
-              {t:"CUSTÓDIA", d:"Atendimento imediato e presencial em casos de prisão em flagrante. Focamos na análise da legalidade do ato prisional e na articulação de pedidos de liberdade provisória ou substituição por medidas cautelares, garantindo que o cliente não permaneça detido ilegalmente."}, 
-              {t:"CIBERNÉTICOS", d:"Defesa e investigação especializada em fraudes online, invasão de dispositivos, estelionato eletrônico e crimes de imagem na rede. Atuamos com suporte pericial para rastreamento de evidências digitais, protegendo sua reputação e seu patrimônio no ambiente virtual."}
+              {t:"TRIBUNAL DO JÚRI", d:"Defesa especializada em crimes dolosos contra a vida. Nossa atuação em plenário combina oratória persuasiva, rigor técnico análise de provas, visando a melhor defesa técnica e humana do cliente."}, 
+              {t:"ACOMPANHAMENTO EM DELEGACIA", d:"Presença presencial em flagrantes e inquéritos policiais, evitando arbítrios e consolidando uma defesa correta a partir dos primeiros momentos."}, 
+              {t:"CIBERNÉTICOS E GOLPES", d:"Atuação especializada em fraudes, estelionatos na internet e crimes onde provas digitais são necessárias. Intermediação técnica e policial de ponta."}, 
+              {t:"VIOLÊNCIA DOMÉSTICA", d:"Abordagem correta com a devida técnica penal sob a legislação especial, conferindo proteção sob o rito da Lei Maria da Penha sem excessos e com pleno direito de defesa."}
             ]}
             servicos={[
-              {t:"EMPRESARIAIS", d:"Defesa corporativa de alta performance em crimes contra o sistema financeiro, ordem tributária, relações de consumo e lavagem de dinheiro. Atuamos na proteção dos sócios e da empresa, mitigando riscos reputacionais e garantindo a conformidade perante os órgãos de fiscalização.", i:<Search size={28}/>}, 
-              {t:"FLAGRANTE", d:"Disponibilidade absoluta para acompanhamento em delegacias e órgãos de investigação a qualquer hora. A presença técnica desde os primeiros momentos da prisão é crucial para evitar nulidades, orientar o depoimento e construir a base de uma defesa sólida.", i:<FileText size={28}/>}, 
-              {t:"DEFESA TÉCNICA", d:"Gestão estratégica do processo penal em todas as suas fases: desde o acompanhamento de inquéritos policiais até a sustentação oral em recursos nos Tribunais Superiores (TJ, STJ e STF). Cada etapa é tratada como decisiva para o resultado final do processo.", i:<Lock size={28}/>}
+              {t:"CORPORATIVOS", d:"Defesa corporativa de alta performance contra sistema financeiro, ordem tributária e responsabilizações indevidas a sócios.", i:<Search size={28}/>}, 
+              {t:"CUSTÓDIA", d:"Pedido de restabelecimento de liberdade com atuação desde a audiência de custódia e habeas corpus em instâncias superiores.", i:<Lock size={28}/>}, 
+              {t:"DEFESA TÉCNICA", d:"Gestão estratégica do processo no TJ, STJ e STF garantindo amplitude do contraditório e buscando sempre nulidades processuais a favor da defesa.", i:<FileText size={28}/>}
+            ]}
+          />
+        } />
+        <Route path="/empresarial" element={
+          <ModeloPaginaServico area="Corporate & Busines" titulo="Direito Empresarial" subtitulo="Blindagem corporativa, societária e compliance, atuando em conformidade com as exigências regulatórias do mercado."
+            dores={[
+              {t:"PLANEJAMENTO SOCIETÁRIO", d:"Organização de holdings e estruturas de governança corporativa. Maior eficiência na administração, preparando o negócio para crescimento escalável ou captação de sócios/investidores."}, 
+              {t:"RECUPERAÇÃO E FALÊNCIA", d:"Abordagem preventiva com pedidos de recuperação empresarial e acompanhamento minucioso nos casos de liquidação de ativos. Respiro para a empresa sobreviver."}, 
+              {t:"CONTRATOS EMPRESARIAIS", d:"Elaboração de memorandos de entendimento (MoU), Acordos de Sócios, Contratos de Vesting, Mútuo Conversível e toda papelada exigida pelas rotinas empresariais de ponta."}, 
+              {t:"FRANQUIAS E MARCAS", d:"Estruturação de rede de franqueados e registro ativo de proteção imaterial intelectual ou industrial perante os órgãos de proteção."}
+            ]}
+            servicos={[
+              {t:"DUE DILIGENCE", d:"Levantamento de contingências passivas corporativas prevenindo surpresas na aquisição ou venda de negócios (M&A).", i:<Search size={28}/>}, 
+              {t:"COMPLIANCE", d:"Implementação de códigos de conduta visando lisura, Lei Anticorrupção (LGPD) em todas hierarquias da empresa.", i:<Lock size={28}/>}, 
+              {t:"DEFESA TRIBUTÁRIA", d:"Análise visando diminuição da carga perante o Fisco e ampla defesa em processos administrativos ou execuções fiscais.", i:<Landmark size={28}/>}
+            ]}
+          />
+        } />
+        <Route path="/trabalhista" element={
+          <ModeloPaginaServico area="Laboral & SS" titulo="Trabalhista & Previdenciário" subtitulo="Segurança em rotinas laborais, redução de passivos e busca imediata de benefícios assistenciais ou previdenciários."
+            dores={[
+              {t:"DEFESA TRABALHISTA PATRONAL", d:"Análise de riscos das rotinas e contencioso volumoso; defesa aguerrida em ações propostas pelos colaboradores. Redução do passivo trabalhista por meio de acordos inteligentes ou argumentação técnica."}, 
+              {t:"RECLAMATÓRIAS (RECLAMANTE)", d:"Reconhecimento de vínculos, danos morais organizacionais, horas extras devidas e não pagas. Postulação máxima de todos os direitos infringidos pelo empregador."}, 
+              {t:"APOSENTADORIAS", d:"Encaminhamento no INSS, planejamento previdenciário e recurso em face de negativas para tempo de contribuição especial, idade, e demais normas afetas do instituto (RPPS e RGPS)."}, 
+              {t:"DOENÇAS OCUPACIONAIS", d:"Representação por contestações relativas à afastamentos, auxílio-doença (B31, B91), limbo previdenciário e estabilidades no trabalho, seja sob ótima do obreiro ou empreendedor."}
+            ]}
+            servicos={[
+              {t:"COMPLIANCE TRABALHISTA", d:"Revisão de procedimentos internos como espelho de ponto, contratação, PCMSO, evitando multas na fiscalização.", i:<FileText size={28}/>}, 
+              {t:"PLANEJAMENTO", d:"Parecer sobre cenários de aposentadorias que determinam quando é a hora mais rentável para deixar de contribuir ou se afastar.", i:<ReceiptText size={28}/>}, 
+              {t:"LOAS E BPC", d:"Pedidos especializados a quem possui critérios estabelecidos de deficiência contínua e impedimento à uma vida compatível socialmente.", i:<CheckCircle2 size={28}/>}
+            ]}
+          />
+        } />
+        <Route path="/imobiliario" element={
+          <ModeloPaginaServico area="Investimentos & Propriedade" titulo="Direito Imobiliário" subtitulo="Soluções inteligentes que viabilizam o tráfego imobiliário de alta performance sem receio de contingências legais que esvaziem seu imóvel."
+            dores={[
+              {t:"COMPRA E VENDA", d:"Acompanhamento e assessoria ostensiva desde a minuta inicial até elaboração de escritura no tabelionato. Revisão de certidões e análise real de viabilidade negocial."}, 
+              {t:"USUCAPIÃO E REGULARIZAÇÃO", d:"Judicial e extrajudicial. Transformamos a posse num registro pleno assegurando o verdadeiro domínio econômico sobre seu imóvel de fato, para transacioná-lo em mercado aberto."}, 
+              {t:"CONTRATOS LOCATÍCIOS", d:"Defesas em despejos ou confecção especializada dos termos de locação residencial, comercial (buit-to-suit), em shoppings centers e afins, com fixação de garantias imbatíveis."}, 
+              {t:"INCORPORAÇÕES E CONDOMÍNIOS", d:"Atuação direta para síndicos e incorporadoras, com regularização perante registro de imóveis, confecção de convenção condominial e cobranças extremas de inadimplentes."}
+            ]}
+            servicos={[
+              {t:"DUE DILIGENCE", d:"Apuramos antes toda a vida útil, tributária e cível dos vendedores ou litígios pretéritos envolvendo a terra para evitar surpresas.", i:<Search size={28}/>}, 
+              {t:"ARRENDAMENTOS RURAIS", d:"Forte vivência no agronegócio e parceira rural, mitigando atritos nas colheitas e estipulando garantias fortes aos envolvidos.", i:<FileText size={28}/>}, 
+              {t:"LEILÕES", d:"Suporte à arrematação imobiliária com estudos de casos sobre processos vigentes, calculando o melhor valuation e desocupando com segurança.", i:<Landmark size={28}/>}
             ]}
           />
         } />
