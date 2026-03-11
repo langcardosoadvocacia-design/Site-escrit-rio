@@ -26,7 +26,7 @@ const LINK_WHATSAPP = `https://wa.me/555532176378?text=${MENSAGEM_WA}`;
 
 const EMAIL_CONTATO = "contato@langcardoso.adv.br";
 const LINK_INSTAGRAM = "https://www.instagram.com/langcardosoadvocacia";
-const LINK_MAPA = "https://www.google.com/maps/search/?api=1&query=Alameda+Montevideo,+322,+Sala+108,+Santa+Maria+-+RS";
+const LINK_MAPA = "https://www.google.com/maps/search/?api=1&query=Alameda+Antofagasta,+77+-+401+-+Nossa+Sra.+das+Dores,+Santa+Maria+-+RS,+CEP+97050-660";
 
 // --- Declaração Global para o Gtag ---
 declare global {
@@ -402,7 +402,10 @@ const Rodape = () => (
         <a href={LINK_MAPA} target="_blank" className="group">
           <MapPin className="mx-auto mb-4 group-hover:scale-110 transition-transform" /> 
           <h5 className="text-[11px] font-bold uppercase mb-2">Localização</h5> 
-          <p className="text-xs text-black/40 group-hover:text-black">Santa Maria - RS</p>
+          <p className="text-xs text-black/40 group-hover:text-black leading-relaxed">
+            Alameda Antofagasta, 77 - 401<br/>
+            Santa Maria - RS
+          </p>
         </a>
         <a href={LINK_WHATSAPP} onClick={dispararConversaoWhatsApp} className="group cursor-pointer">
           <MessageCircle className="mx-auto mb-4 group-hover:scale-110 transition-transform" /> 
