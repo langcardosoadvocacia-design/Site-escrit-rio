@@ -59,7 +59,7 @@ const BotaoCTA: React.FC<{ texto: string; link?: string; primario?: boolean }> =
     target="_blank" 
     rel="noopener noreferrer" 
     onClick={primario ? dispararConversaoWhatsApp : undefined} 
-    className={`inline-flex items-center gap-4 px-10 py-5 font-bold uppercase text-[10px] tracking-[0.3em] transition-all cursor-pointer shadow-lg
+    className={`inline-flex items-center gap-4 px-10 py-5 font-bold uppercase text-[10px] tracking-[0.3em] transition-all cursor-pointer shadow-lg rounded-lg
       ${primario ? 'bg-black text-white hover:bg-gray-800' : 'bg-white text-black border border-black hover:bg-gray-50'}`}
   >
     {texto} <ArrowRight size={14} />
@@ -175,7 +175,7 @@ const SecaoEquipe = () => {
         <div className="grid md:grid-cols-2 gap-10 max-w-4xl mx-auto">
           {equipe.map((m, idx) => (
             <CardInterativo key={idx} className="flex flex-col">
-              <div className="aspect-[3/4] overflow-hidden grayscale hover:grayscale-0 transition-all duration-500">
+              <div className="aspect-square overflow-hidden grayscale hover:grayscale-0 transition-all duration-500 rounded-full border-4 border-black/5 mx-auto w-48 h-48">
                 <img src={m.i} className="w-full h-full object-cover" alt={m.n} />
               </div>
               <div className="p-8 text-center bg-white flex-grow flex flex-col justify-center">
@@ -360,7 +360,7 @@ const PaginaEquipe = () => {
       <section className="py-12 bg-white">
         <div className="container mx-auto px-6 grid md:grid-cols-3 gap-10">
           <CardInterativo className="flex flex-col">
-              <div className="aspect-[3/4] overflow-hidden grayscale hover:grayscale-0 transition-all duration-500">
+              <div className="aspect-square overflow-hidden grayscale hover:grayscale-0 transition-all duration-500 rounded-full border-4 border-black/5 mx-auto w-48 h-48">
                 <img src={IMAGEM_MATHEUS} className="w-full h-full object-cover" alt="Dr. Matheus Lang Cardoso" />
               </div>
               <div className="p-8 text-center bg-white flex-grow flex flex-col justify-center">
@@ -377,7 +377,7 @@ const PaginaEquipe = () => {
             { n: "Nicolas Brito", a: "Marketing Estratégico", d: "Produtos Digitais e Modelos de Assinatura (SaaS); Marketing Estratégico; Social Media.", i: IMG_NICOLAS }
           ].map((item, idx) => (
              <CardInterativo key={idx} className="flex flex-col">
-                 <div className="aspect-[3/4] overflow-hidden grayscale hover:grayscale-0 transition-all duration-500">
+                 <div className="aspect-square overflow-hidden grayscale hover:grayscale-0 transition-all duration-500 rounded-full border-4 border-black/5 mx-auto w-48 h-48">
                    <img src={item.i} className="w-full h-full object-cover" alt={item.n} />
                  </div>
                  <div className="p-8 text-center bg-white flex-grow flex flex-col justify-center">
