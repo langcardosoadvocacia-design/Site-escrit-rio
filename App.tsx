@@ -19,6 +19,8 @@ const IMG_ESCRITORIO_3 = "/images/escritorio3.PNG";
 const IMG_CHARLISE = "/images/charlise.png";
 const IMG_LEANDRO = "/images/leandro.png";
 const IMG_CRISTINA = "/images/cristina.png";
+const IMG_RAFA = "/images/rafa.png";
+const IMG_CARLA = "/images/carla.png";
 
 // --- MENSAGEM DO WHATSAPP ATUALIZADA ---
 const MENSAGEM_WA = encodeURIComponent("Olá, vim através do site e preciso de ajuda.");
@@ -162,6 +164,8 @@ const SecaoEquipe = () => {
     { n: "Jefferson Cooper", a: "Coordenador Jurídico", d: "Pós Graduado em Direito e Processo do Trabalho; Especialização em Acidentes de Trabalho e Doença Ocupacional, Compliance Empresarial; Especializando em Direito Criminal e Direito Penal.", i: IMG_JEFFERSON },
     { n: "Leandro Garcia", a: "Advogado Associado", d: "OAB 138311. Pós graduado em direito penal e criminologia, especializado em direito condominial.", i: IMG_LEANDRO },
     { n: "Cristina Alves de Almeida", a: "Advogada Associada", d: "OAB/RS 140.508. Bacharel em Direito com sólida experiência no Poder Judiciário. Diretrizes nas áreas de Direito Civil, Trabalhista, Administrativo e Penal Militar.", i: IMG_CRISTINA },
+    { n: "Rafaela Bellini Do Nascimento", a: "Advogada Associada", d: "OAB 132.260. Direito Criminal. Direito Cível. Direito Agrario.", i: IMG_RAFA },
+    { n: "Carla Augusti Buzzetto", a: "Advogada Associada", d: "OAB 135.016. Direito Previdenciário, Direito do Trabalho.", i: IMG_CARLA },
     { n: "Charlise Martins", a: "Secretária", d: "Atendimento de excelência, organização, recepção e rotinas essenciais do escritório.", i: IMG_CHARLISE },
     { n: "Nicolas Brito", a: "Marketing Estratégico", d: "Produtos Digitais e Modelos de Assinatura (SaaS); Marketing Estratégico; Social Media.", i: IMG_NICOLAS }
   ];
@@ -370,11 +374,13 @@ const PaginaEquipe = () => {
               </div>
           </CardInterativo>
           {[
-            { n: "Jefferson Cooper", a: "Coordenador Jurídico", d: "Pós Graduado em Direito e Processo do Trabalho; Especialização em Acidentes de Trabalho e Doença Ocupacional, Compliance Empresarial; Especializando em Direito Criminal e Direito Penal.", i: IMG_JEFFERSON },
-            { n: "Leandro Garcia", a: "Advogado Associado", d: "OAB 138311. Pós graduado em direito penal e criminologia, especializado em direito condominial.", i: IMG_LEANDRO },
-            { n: "Cristina Alves de Almeida", a: "Advogada Associada", d: "OAB/RS 140.508. Bacharel em Direito com sólida experiência no Poder Judiciário. Diretrizes nas áreas de Direito Civil, Trabalhista, Administrativo e Penal Militar.", i: IMG_CRISTINA },
-            { n: "Charlise Martins", a: "Secretária", d: "Atendimento de excelência, organização, recepção e rotinas essenciais do escritório.", i: IMG_CHARLISE },
-            { n: "Nicolas Brito", a: "Marketing Estratégico", d: "Produtos Digitais e Modelos de Assinatura (SaaS); Marketing Estratégico; Social Media.", i: IMG_NICOLAS }
+          { n: "Jefferson Cooper", a: "Coordenador Jurídico", d: "Pós Graduado em Direito e Processo do Trabalho; Especialização em Acidentes de Trabalho e Doença Ocupacional, Compliance Empresarial; Especializando em Direito Criminal e Direito Penal.", i: IMG_JEFFERSON },
+          { n: "Leandro Garcia", a: "Advogado Associado", d: "OAB 138311. Pós graduado em direito penal e criminologia, especializado em direito condominial.", i: IMG_LEANDRO },
+          { n: "Cristina Alves de Almeida", a: "Advogada Associada", d: "OAB/RS 140.508. Bacharel em Direito com sólida experiência no Poder Judiciário. Diretrizes nas áreas de Direito Civil, Trabalhista, Administrativo e Penal Militar.", i: IMG_CRISTINA },
+          { n: "Rafaela Bellini Do Nascimento", a: "Advogada Associada", d: "OAB 132.260. Direito Criminal. Direito Cível. Direito Agrario.", i: IMG_RAFA },
+          { n: "Carla Augusti Buzzetto", a: "Advogada Associada", d: "OAB 135.016. Direito Previdenciário, Direito do Trabalho.", i: IMG_CARLA },
+          { n: "Charlise Martins", a: "Secretária", d: "Atendimento de excelência, organização, recepção e rotinas essenciais do escritório.", i: IMG_CHARLISE },
+          { n: "Nicolas Brito", a: "Marketing Estratégico", d: "Produtos Digitais e Modelos de Assinatura (SaaS); Marketing Estratégico; Social Media.", i: IMG_NICOLAS }
           ].map((item, idx) => (
              <CardInterativo key={idx} className="flex flex-col">
                  <div className="aspect-square overflow-hidden grayscale hover:grayscale-0 transition-all duration-500 rounded-full border-4 border-black/5 mx-auto w-48 h-48">
