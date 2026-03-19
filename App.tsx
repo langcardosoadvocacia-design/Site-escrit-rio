@@ -169,7 +169,7 @@ const SecaoEquipe = () => {
     { n: "Carla Augusti Buzzetto", a: "Advogada Associada", d: "OAB/RS 135.016. Direito Previdenciário, Direito do Trabalho.", i: IMG_CARLA },
     { n: "Daiane De Almeida", a: "Advogada Associada", d: "OAB/RS 138.571. Direito Empresarial. DIREITO CIVIL. LGPD.", i: IMG_DAIANE },
     { n: "Charlise Martins", a: "Secretária", d: "Atendimento de excelência, organização, recepção e rotinas essenciais do escritório.", i: IMG_CHARLISE },
-    { n: "Nicolas Brito", a: "Marketing Estratégico", d: "Produtos Digitais e Modelos de Assinatura (SaaS); Marketing Estratégico; Social Media.", i: IMG_NICOLAS }
+    { n: "Nicolas Brito", a: "Marketing Estratégico", d: "Marketing Estratégico; Social Media.", i: IMG_NICOLAS }
   ];
   return (
     <section className="py-24 bg-white border-y border-black/5">
@@ -383,7 +383,7 @@ const PaginaEquipe = () => {
           { n: "Carla Augusti Buzzetto", a: "Advogada Associada", d: "OAB/RS 135.016. Direito Previdenciário, Direito do Trabalho.", i: IMG_CARLA },
           { n: "Daiane De Almeida", a: "Advogada Associada", d: "OAB/RS 138.571. Direito Empresarial. DIREITO CIVIL. LGPD.", i: IMG_DAIANE },
           { n: "Charlise Martins", a: "Secretária", d: "Atendimento de excelência, organização, recepção e rotinas essenciais do escritório.", i: IMG_CHARLISE },
-          { n: "Nicolas Brito", a: "Marketing Estratégico", d: "Produtos Digitais e Modelos de Assinatura (SaaS); Marketing Estratégico; Social Media.", i: IMG_NICOLAS }
+          { n: "Nicolas Brito", a: "Marketing Estratégico", d: "Marketing Estratégico; Social Media.", i: IMG_NICOLAS }
           ].map((item, idx) => (
              <CardInterativo key={idx} className="flex flex-col">
                  <div className="aspect-[4/5] overflow-hidden grayscale hover:grayscale-0 transition-all duration-500">
