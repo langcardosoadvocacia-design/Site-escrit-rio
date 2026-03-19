@@ -168,7 +168,7 @@ const SecaoEquipe = () => {
     { n: "Rafaela Bellini Do Nascimento", a: "Advogada Associada", d: "OAB/RS 132.260. Direito Criminal. Direito Cível. Direito Agrario.", i: IMG_RAFA },
     { n: "Carla Augusti Buzzetto", a: "Advogada Associada", d: "OAB/RS 135.016. Direito Previdenciário, Direito do Trabalho.", i: IMG_CARLA },
     { n: "Daiane De Almeida", a: "Advogada Associada", d: "OAB/RS 138.571. Direito Empresarial. DIREITO CIVIL. LGPD.", i: IMG_DAIANE },
-    { n: "Charlise Martins", a: "Secretária", d: "Atendimento de excelência, organização, recepção e rotinas essenciais do escritório.", i: IMG_CHARLISE },
+    { n: "Charlise Martins", a: "Secretária", d: "AtendimentO. recepção e rotinas essenciais do escritório.", i: IMG_CHARLISE },
     { n: "Nicolas Brito", a: "Marketing Estratégico", d: "Marketing Estratégico; Social Media.", i: IMG_NICOLAS }
   ];
   return (
@@ -382,7 +382,7 @@ const PaginaEquipe = () => {
           { n: "Rafaela Bellini Do Nascimento", a: "Advogada Associada", d: "OAB/RS 132.260. Direito Criminal. Direito Cível. Direito Agrario.", i: IMG_RAFA },
           { n: "Carla Augusti Buzzetto", a: "Advogada Associada", d: "OAB/RS 135.016. Direito Previdenciário, Direito do Trabalho.", i: IMG_CARLA },
           { n: "Daiane De Almeida", a: "Advogada Associada", d: "OAB/RS 138.571. Direito Empresarial. DIREITO CIVIL. LGPD.", i: IMG_DAIANE },
-          { n: "Charlise Martins", a: "Secretária", d: "Atendimento de excelência, organização, recepção e rotinas essenciais do escritório.", i: IMG_CHARLISE },
+          { n: "Charlise Martins", a: "Secretária", d: "Atendimento, recepção e rotinas essenciais do escritório.", i: IMG_CHARLISE },
           { n: "Nicolas Brito", a: "Marketing Estratégico", d: "Marketing Estratégico; Social Media.", i: IMG_NICOLAS }
           ].map((item, idx) => (
              <CardInterativo key={idx} className="flex flex-col">
