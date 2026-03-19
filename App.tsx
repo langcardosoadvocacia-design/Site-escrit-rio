@@ -21,6 +21,7 @@ const IMG_LEANDRO = "/images/leandro.png";
 const IMG_CRISTINA = "/images/cristina.png";
 const IMG_RAFA = "/images/rafa.png";
 const IMG_CARLA = "/images/carla.png";
+const IMG_DAIANE = "/images/daiane.png";
 
 // --- MENSAGEM DO WHATSAPP ATUALIZADA ---
 const MENSAGEM_WA = encodeURIComponent("Olá, vim através do site e preciso de ajuda.");
@@ -166,6 +167,7 @@ const SecaoEquipe = () => {
     { n: "Cristina Alves de Almeida", a: "Advogada Associada", d: "OAB/RS 140.508. Bacharel em Direito com sólida experiência no Poder Judiciário. Diretrizes nas áreas de Direito Civil, Trabalhista, Administrativo e Penal Militar.", i: IMG_CRISTINA },
     { n: "Rafaela Bellini Do Nascimento", a: "Advogada Associada", d: "OAB/RS 132.260. Direito Criminal. Direito Cível. Direito Agrario.", i: IMG_RAFA },
     { n: "Carla Augusti Buzzetto", a: "Advogada Associada", d: "OAB/RS 135.016. Direito Previdenciário, Direito do Trabalho.", i: IMG_CARLA },
+    { n: "Daiane De Almeda", a: "Advogada Associada", d: "OAB/RS 138.571. Direito Empresarial.", i: IMG_DAIANE },
     { n: "Charlise Martins", a: "Secretária", d: "Atendimento de excelência, organização, recepção e rotinas essenciais do escritório.", i: IMG_CHARLISE },
     { n: "Nicolas Brito", a: "Marketing Estratégico", d: "Produtos Digitais e Modelos de Assinatura (SaaS); Marketing Estratégico; Social Media.", i: IMG_NICOLAS }
   ];
@@ -379,6 +381,7 @@ const PaginaEquipe = () => {
           { n: "Cristina Alves de Almeida", a: "Advogada Associada", d: "OAB/RS 140.508. Bacharel em Direito com sólida experiência no Poder Judiciário. Diretrizes nas áreas de Direito Civil, Trabalhista, Administrativo e Penal Militar.", i: IMG_CRISTINA },
           { n: "Rafaela Bellini Do Nascimento", a: "Advogada Associada", d: "OAB/RS 132.260. Direito Criminal. Direito Cível. Direito Agrario.", i: IMG_RAFA },
           { n: "Carla Augusti Buzzetto", a: "Advogada Associada", d: "OAB/RS 135.016. Direito Previdenciário, Direito do Trabalho.", i: IMG_CARLA },
+          { n: "Daiane De Almeda", a: "Advogada Associada", d: "OAB/RS 138.571. Direito Empresarial.", i: IMG_DAIANE },
           { n: "Charlise Martins", a: "Secretária", d: "Atendimento de excelência, organização, recepção e rotinas essenciais do escritório.", i: IMG_CHARLISE },
           { n: "Nicolas Brito", a: "Marketing Estratégico", d: "Produtos Digitais e Modelos de Assinatura (SaaS); Marketing Estratégico; Social Media.", i: IMG_NICOLAS }
           ].map((item, idx) => (
