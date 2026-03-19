@@ -162,12 +162,12 @@ const BarraNavegacao = () => {
 
 const SecaoEquipe = () => {
   const equipe = [
-    { n: "Jefferson Cooper", a: "Coordenador Jurídico", d: "Pós Graduado em Direito e Processo do Trabalho; Especialização em Acidentes de Trabalho e Doença Ocupacional, Compliance Empresarial; Especializando em Direito Criminal e Direito Penal.", i: IMG_JEFFERSON },
-    { n: "Leandro Garcia", a: "Advogado Associado", d: "OAB 138311. Pós graduado em direito penal e criminologia, especializado em direito condominial.", i: IMG_LEANDRO },
-    { n: "Cristina Alves de Almeida", a: "Advogada Associada", d: "OAB/RS 140.508. Bacharel em Direito com sólida experiência no Poder Judiciário. Diretrizes nas áreas de Direito Civil, Trabalhista, Administrativo e Penal Militar.", i: IMG_CRISTINA },
+    { n: "Jefferson Cooper", a: "Coordenador Jurídico", d: "OAB/RS 130.300. Direito do Trabalho. Direito Criminal. Compliance Empresarial.", i: IMG_JEFFERSON },
+    { n: "Leandro Garcia", a: "Advogado Associado", d: "OAB 138311. Pós graduado em direito penal e criminologia, direito condominial.", i: IMG_LEANDRO },
+    { n: "Cristina Alves de Almeida", a: "Advogada Associada", d: "OAB/RS 140.508. Direito Civil. Direito Trabalhista. Direito Administrativo.", i: IMG_CRISTINA },
     { n: "Rafaela Bellini Do Nascimento", a: "Advogada Associada", d: "OAB/RS 132.260. Direito Criminal. Direito Cível. Direito Agrario.", i: IMG_RAFA },
     { n: "Carla Augusti Buzzetto", a: "Advogada Associada", d: "OAB/RS 135.016. Direito Previdenciário, Direito do Trabalho.", i: IMG_CARLA },
-    { n: "Daiane De Almeida", a: "Advogada Associada", d: "OAB/RS 138.571. Direito Empresarial.", i: IMG_DAIANE },
+    { n: "Daiane De Almeida", a: "Advogada Associada", d: "OAB/RS 138.571. Direito Empresarial. DIREITO CIVIL. LGPD.", i: IMG_DAIANE },
     { n: "Charlise Martins", a: "Secretária", d: "Atendimento de excelência, organização, recepção e rotinas essenciais do escritório.", i: IMG_CHARLISE },
     { n: "Nicolas Brito", a: "Marketing Estratégico", d: "Produtos Digitais e Modelos de Assinatura (SaaS); Marketing Estratégico; Social Media.", i: IMG_NICOLAS }
   ];
@@ -376,12 +376,12 @@ const PaginaEquipe = () => {
               </div>
           </CardInterativo>
           {[
-          { n: "Jefferson Cooper", a: "Coordenador Jurídico", d: "Pós Graduado em Direito e Processo do Trabalho; Especialização em Acidentes de Trabalho e Doença Ocupacional, Compliance Empresarial; Especializando em Direito Criminal e Direito Penal.", i: IMG_JEFFERSON },
-          { n: "Leandro Garcia", a: "Advogado Associado", d: "OAB 138311. Pós graduado em direito penal e criminologia, especializado em direito condominial.", i: IMG_LEANDRO },
-          { n: "Cristina Alves de Almeida", a: "Advogada Associada", d: "OAB/RS 140.508. Bacharel em Direito com sólida experiência no Poder Judiciário. Diretrizes nas áreas de Direito Civil, Trabalhista, Administrativo e Penal Militar.", i: IMG_CRISTINA },
+          { n: "Jefferson Cooper", a: "Coordenador Jurídico", d: "OAB/RS 130.300. Direito do Trabalho. Direito Criminal. Compliance Empresarial.", i: IMG_JEFFERSON },
+          { n: "Leandro Garcia", a: "Advogado Associado", d: "OAB 138311. direito penal e criminologia. direito condominial.", i: IMG_LEANDRO },
+          { n: "Cristina Alves de Almeida", a: "Advogada Associada", d: "OAB/RS 140.508. Direito Civil. Direito Trabalhista. Direito Administrativo.", i: IMG_CRISTINA },
           { n: "Rafaela Bellini Do Nascimento", a: "Advogada Associada", d: "OAB/RS 132.260. Direito Criminal. Direito Cível. Direito Agrario.", i: IMG_RAFA },
           { n: "Carla Augusti Buzzetto", a: "Advogada Associada", d: "OAB/RS 135.016. Direito Previdenciário, Direito do Trabalho.", i: IMG_CARLA },
-          { n: "Daiane De Almeida", a: "Advogada Associada", d: "OAB/RS 138.571. Direito Empresarial.", i: IMG_DAIANE },
+          { n: "Daiane De Almeida", a: "Advogada Associada", d: "OAB/RS 138.571. Direito Empresarial. DIREITO CIVIL. LGPD.", i: IMG_DAIANE },
           { n: "Charlise Martins", a: "Secretária", d: "Atendimento de excelência, organização, recepção e rotinas essenciais do escritório.", i: IMG_CHARLISE },
           { n: "Nicolas Brito", a: "Marketing Estratégico", d: "Produtos Digitais e Modelos de Assinatura (SaaS); Marketing Estratégico; Social Media.", i: IMG_NICOLAS }
           ].map((item, idx) => (
