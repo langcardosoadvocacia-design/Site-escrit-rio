@@ -164,7 +164,7 @@ const SecaoEquipe = () => {
   const equipe = [
     { n: "Jefferson Cooper", a: "Coordenador Jurídico", d: "OAB/RS 130.300. Direito do Trabalho. Direito Criminal.", i: IMG_JEFFERSON },
     { n: "Leandro Garcia", a: "Advogado Associado", d: "OAB 138311. Pós graduado em direito penal e criminologia, direito condominial.", i: IMG_LEANDRO },
-    { n: "Cristina Alves de Almeida", a: "Advogada Associada", d: "OAB/RS 140.508. Direito Civil. Direito Trabalhista.", i: IMG_CRISTINA },
+    { n: "Cristina Alves de Almeida", a: "Advogada Associada", d: "OAB/RS 140.508. Direito Civil. Direito Penal Militar.", i: IMG_CRISTINA },
     { n: "Rafaela Bellini Do Nascimento", a: "Advogada Associada", d: "OAB/RS 132.260. Direito Criminal. Direito Cível. Direito Agrario.", i: IMG_RAFA },
     { n: "Carla Augusti Buzzetto", a: "Advogada Associada", d: "OAB/RS 135.016. Direito Previdenciário, Direito do Trabalho.", i: IMG_CARLA },
     { n: "Daiane De Almeida", a: "Advogada Associada", d: "OAB/RS 138.571. Direito Empresarial. DIREITO CIVIL. LGPD.", i: IMG_DAIANE },
@@ -378,7 +378,7 @@ const PaginaEquipe = () => {
           {[
           { n: "Jefferson Cooper", a: "Coordenador Jurídico", d: "OAB/RS 130.300. Direito do Trabalho. Direito Criminal.", i: IMG_JEFFERSON },
           { n: "Leandro Garcia", a: "Advogado Associado", d: "OAB 138311. direito penal e criminologia. direito condominial.", i: IMG_LEANDRO },
-          { n: "Cristina Alves de Almeida", a: "Advogada Associada", d: "OAB/RS 140.508. Direito Civil. Direito Trabalhista.", i: IMG_CRISTINA },
+          { n: "Cristina Alves de Almeida", a: "Advogada Associada", d: "OAB/RS 140.508. Direito Civil. Direito Penal Militar.", i: IMG_CRISTINA },
           { n: "Rafaela Bellini Do Nascimento", a: "Advogada Associada", d: "OAB/RS 132.260. Direito Criminal. Direito Cível. Direito Agrario.", i: IMG_RAFA },
           { n: "Carla Augusti Buzzetto", a: "Advogada Associada", d: "OAB/RS 135.016. Direito Previdenciário, Direito do Trabalho.", i: IMG_CARLA },
           { n: "Daiane De Almeida", a: "Advogada Associada", d: "OAB/RS 138.571. Direito Empresarial. DIREITO CIVIL. LGPD.", i: IMG_DAIANE },
