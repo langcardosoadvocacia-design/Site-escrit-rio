@@ -372,7 +372,7 @@ const PaginaEquipe = () => {
               <div className="p-8 text-center bg-white flex-grow flex flex-col justify-center">
                 <h3 className="font-serif text-2xl mb-2">Dr. Matheus Lang</h3>
                 <span className="text-[9px] font-bold uppercase tracking-widest text-black/60 mb-4 block">Sócio Fundador</span>
-                <p className="text-[10px] uppercase tracking-wide text-black/40 leading-relaxed">Advocacia corporativa e criminal de alta complexidade.</p>
+                <p className="text-[10px] uppercase tracking-wide text-black/40 leading-relaxed">DIREITO CRIMINAL. DIREITO EMPRESARIAL. DIREITO IMOBILIARIO.</p>
               </div>
           </CardInterativo>
           {[
